@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="arwidev — Frontend Web Developer. Tworzę nowoczesne, szybkie i dopracowane interfejsy webowe. React, Vue, Angular, Node.js i więcej." />
+  <meta name="author" content="arwidev" />
+  <meta name="theme-color" content="#070b18" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="arwidev — Frontend Web Developer" />
+  <meta property="og:description" content="Tworzę nowoczesne, szybkie i dopracowane interfejsy webowe." />
+  <meta property="og:type" content="website" />
+
+  <title>arwidev — Frontend Web Developer</title>
+
+  <!-- Ikony technologii -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  <!-- Typografia -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Pasek postępu scrolla -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- Ekran ładowania -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__inner">
+      <span class="preloader__logo">arwi<span>dev</span></span>
+      <div class="preloader__bar"><span></span></div>
+    </div>
+  </div>
+
+  <!-- Nawigacja -->
+  <header class="nav" id="nav">
+    <a href="#hero" class="nav__brand" data-magnetic>
+      <span class="nav__brand-mark"></span>
+      <span class="nav__brand-text">arwi<span>dev</span></span>
+    </a>
+
+    <nav class="nav__links" id="navLinks">
+      <a href="#about" class="nav__link">O mnie</a>
+      <a href="#process" class="nav__link">Proces</a>
+      <a href="#skills" class="nav__link">Umiejętności</a>
+      <a href="#contact" class="nav__link nav__link--cta">Kontakt</a>
+    </nav>
+
+    <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="hero__aurora" aria-hidden="true"></div>
+      <div class="hero__grid" aria-hidden="true"></div>
+
+      <!-- Pływające kształty (parallax) -->
+      <div class="floaty floaty--1" data-parallax="0.18" aria-hidden="true"></div>
+      <div class="floaty floaty--2" data-parallax="-0.12" aria-hidden="true"></div>
+      <div class="floaty floaty--3" data-parallax="0.08" aria-hidden="true"></div>
+
+      <div class="hero__content" data-parallax="0.05">
+        <p class="hero__eyebrow reveal">
+          <span class="hero__status-dot"></span> Dostępny do współpracy
+        </p>
+        <h1 class="hero__title">
+          <span class="hero__line"><span>Cześć, jestem</span></span>
+          <span class="hero__line hero__title-name"><span>arwidev</span></span>
+        </h1>
+        <p class="hero__role reveal">
+          <span class="hero__role-static">Frontend Web Developer</span>
+          <span class="hero__rotator" id="rotator" aria-hidden="true"></span>
+        </p>
+        <p class="hero__lead reveal">
+          Zamieniam pomysły w nowoczesne, szybkie i dopracowane interfejsy webowe —
+          od pierwszej linii planu po finalne wdrożenie.
+        </p>
+        <div class="hero__actions reveal">
+          <a href="#skills" class="btn btn--primary" data-magnetic>
+            <span>Zobacz umiejętności</span>
+          </a>
+          <a href="#contact" class="btn btn--ghost" data-magnetic>
+            <span>Napisz do mnie</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="#about" class="hero__scroll" aria-label="Przewiń niżej">
+        <span class="hero__scroll-text">scroll</span>
+        <span class="hero__scroll-line"></span>
+      </a>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about">
+      <div class="container">
+        <header class="section__head">
+          <span class="section__index reveal">01</span>
+          <h2 class="section__title reveal">O mnie</h2>
+        </header>
+
+        <div class="about__grid">
+          <div class="about__text">
+            <p class="about__lead reveal">
+              Jestem frontendowcem zakochanym w detalu, animacji i czystym kodzie.
+            </p>
+            <p class="reveal">
+              Buduję strony i aplikacje, które nie tylko świetnie wyglądają, ale też
+              błyskawicznie działają i są przyjemne w obsłudze. Łączę warsztat
+              programistyczny z wyczuciem designu — dlatego efekt końcowy robi
+              <strong>WOW</strong>, a pod maską jest porządnie poukładany.
+            </p>
+            <p class="reveal">
+              Pracuję na nowoczesnym stacku (React, Vue, Angular, Node.js), dbam o
+              wydajność, dostępność i responsywność. Każdy projekt traktuję jak rzemiosło —
+              od planu, przez design, aż po wdrożenie.
+            </p>
+          </div>
+
+          <ul class="stats">
+            <li class="stat reveal">
+              <span class="stat__num" data-count="50" data-suffix="+">0</span>
+              <span class="stat__label">Zrealizowanych projektów</span>
+            </li>
+            <li class="stat reveal">
+              <span class="stat__num" data-count="10" data-suffix="">0</span>
+              <span class="stat__label">Opanowanych technologii</span>
+            </li>
+            <li class="stat reveal">
+              <span class="stat__num" data-count="100" data-suffix="%">0</span>
+              <span class="stat__label">Zaangażowania w projekt</span>
+            </li>
+            <li class="stat reveal">
+              <span class="stat__num" data-count="∞" data-suffix="">∞</span>
+              <span class="stat__label">Wypitej kawy ☕</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCES ============ -->
+    <section class="section process" id="process">
+      <div class="process__glow" aria-hidden="true"></div>
+      <div class="container">
+        <header class="section__head">
+          <span class="section__index reveal">02</span>
+          <h2 class="section__title reveal">Mój proces tworzenia</h2>
+          <p class="section__subtitle reveal">
+            Każdy projekt prowadzę przez pięć przemyślanych etapów — bez chaosu, z pełną kontrolą.
+          </p>
+        </header>
+
+        <ol class="timeline" id="timeline">
+          <li class="step reveal">
+            <div class="step__marker"><span>01</span></div>
+            <div class="step__card" data-tilt>
+              <div class="step__icon">🧭</div>
+              <h3 class="step__title">Planowanie</h3>
+              <p class="step__desc">
+                Analiza wymagań, research, cele biznesowe i architektura informacji.
+                Ustalam zakres, technologie i mapę projektu.
+              </p>
+              <ul class="step__tags">
+                <li>Analiza</li><li>Research</li><li>Architektura</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="step reveal">
+            <div class="step__marker"><span>02</span></div>
+            <div class="step__card" data-tilt>
+              <div class="step__icon">🎨</div>
+              <h3 class="step__title">Projektowanie</h3>
+              <p class="step__desc">
+                Wireframe'y, prototypy i system designu. UI/UX z naciskiem na
+                czytelność, hierarchię i charakter marki.
+              </p>
+              <ul class="step__tags">
+                <li>UI / UX</li><li>Prototyp</li><li>Design System</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="step reveal">
+            <div class="step__marker"><span>03</span></div>
+            <div class="step__card" data-tilt>
+              <div class="step__icon">⚙️</div>
+              <h3 class="step__title">Development</h3>
+              <p class="step__desc">
+                Czysty, skalowalny kod i komponenty wielokrotnego użytku.
+                Animacje, interakcje i logika dopięte na ostatni guzik.
+              </p>
+              <ul class="step__tags">
+                <li>Czysty kod</li><li>Komponenty</li><li>Animacje</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="step reveal">
+            <div class="step__marker"><span>04</span></div>
+            <div class="step__card" data-tilt>
+              <div class="step__icon">🧪</div>
+              <h3 class="step__title">Testowanie</h3>
+              <p class="step__desc">
+                Testy responsywności, wydajności i dostępności. Cross-browser,
+                Lighthouse i polerowanie każdego detalu.
+              </p>
+              <ul class="step__tags">
+                <li>QA</li><li>Responsywność</li><li>Wydajność</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="step reveal">
+            <div class="step__marker"><span>05</span></div>
+            <div class="step__card" data-tilt>
+              <div class="step__icon">🚀</div>
+              <h3 class="step__title">Wdrożenie</h3>
+              <p class="step__desc">
+                Publikacja, optymalizacja, monitoring i dalszy rozwój.
+                Projekt żyje i rośnie razem z Twoim biznesem.
+              </p>
+              <ul class="step__tags">
+                <li>Deploy</li><li>Optymalizacja</li><li>Wsparcie</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS / DRZEWKO ============ -->
+    <section class="section skills" id="skills">
+      <div class="container">
+        <header class="section__head">
+          <span class="section__index reveal">03</span>
+          <h2 class="section__title reveal">Drzewko umiejętności</h2>
+          <p class="section__subtitle reveal">
+            Najedź na gałąź, by poznać poziom zaawansowania. Wszystko wyrasta z mocnych podstaw.
+          </p>
+        </header>
+
+        <div class="tree" id="tree">
+          <!-- Linie łączące (rysowane przy scrollu) -->
+          <svg class="tree__lines" id="treeLines" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+          <!-- KORZEŃ -->
+          <div class="tree__row tree__row--root">
+            <div class="node node--root" data-node="root">
+              <div class="node__core">
+                <span class="node__title">arwidev</span>
+                <span class="node__sub">core</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KATEGORIE -->
+          <div class="tree__row tree__row--branch">
+            <div class="node node--branch" data-node="frontend">
+              <span class="node__label">Frontend</span>
+            </div>
+            <div class="node node--branch" data-node="backend">
+              <span class="node__label">Backend</span>
+            </div>
+            <div class="node node--branch" data-node="data">
+              <span class="node__label">Bazy danych</span>
+            </div>
+          </div>
+
+          <!-- LIŚCIE / TECHNOLOGIE -->
+          <div class="tree__row tree__row--leaves">
+            <!-- Frontend -->
+            <button class="node node--leaf" data-node="html" data-parent="frontend" data-level="98" style="--accent:#e44d26">
+              <i class="devicon-html5-plain colored"></i>
+              <span class="node__name">HTML</span>
+              <span class="node__bar"><i style="--lvl:98%"></i></span>
+              <span class="node__pct">98%</span>
+            </button>
+            <button class="node node--leaf" data-node="css" data-parent="frontend" data-level="95" style="--accent:#2965f1">
+              <i class="devicon-css3-plain colored"></i>
+              <span class="node__name">CSS</span>
+              <span class="node__bar"><i style="--lvl:95%"></i></span>
+              <span class="node__pct">95%</span>
+            </button>
+            <button class="node node--leaf" data-node="js" data-parent="frontend" data-level="93" style="--accent:#f7df1e">
+              <i class="devicon-javascript-plain colored"></i>
+              <span class="node__name">JavaScript</span>
+              <span class="node__bar"><i style="--lvl:93%"></i></span>
+              <span class="node__pct">93%</span>
+            </button>
+            <button class="node node--leaf" data-node="react" data-parent="frontend" data-level="90" style="--accent:#61dafb">
+              <i class="devicon-react-original colored"></i>
+              <span class="node__name">React</span>
+              <span class="node__bar"><i style="--lvl:90%"></i></span>
+              <span class="node__pct">90%</span>
+            </button>
+            <button class="node node--leaf" data-node="vue" data-parent="frontend" data-level="85" style="--accent:#42b883">
+              <i class="devicon-vuejs-plain colored"></i>
+              <span class="node__name">Vue</span>
+              <span class="node__bar"><i style="--lvl:85%"></i></span>
+              <span class="node__pct">85%</span>
+            </button>
+            <button class="node node--leaf" data-node="angular" data-parent="frontend" data-level="80" style="--accent:#dd0031">
+              <i class="devicon-angularjs-plain colored"></i>
+              <span class="node__name">Angular</span>
+              <span class="node__bar"><i style="--lvl:80%"></i></span>
+              <span class="node__pct">80%</span>
+            </button>
+            <button class="node node--leaf" data-node="bootstrap" data-parent="frontend" data-level="88" style="--accent:#7952b3">
+              <i class="devicon-bootstrap-plain colored"></i>
+              <span class="node__name">Bootstrap</span>
+              <span class="node__bar"><i style="--lvl:88%"></i></span>
+              <span class="node__pct">88%</span>
+            </button>
+
+            <!-- Backend -->
+            <button class="node node--leaf" data-node="node" data-parent="backend" data-level="85" style="--accent:#83cd29">
+              <i class="devicon-nodejs-plain colored"></i>
+              <span class="node__name">Node.js</span>
+              <span class="node__bar"><i style="--lvl:85%"></i></span>
+              <span class="node__pct">85%</span>
+            </button>
+
+            <!-- Bazy danych -->
+            <button class="node node--leaf" data-node="mongo" data-parent="data" data-level="82" style="--accent:#4db33d">
+              <i class="devicon-mongodb-plain colored"></i>
+              <span class="node__name">MongoDB</span>
+              <span class="node__bar"><i style="--lvl:82%"></i></span>
+              <span class="node__pct">82%</span>
+            </button>
+            <button class="node node--leaf" data-node="mysql" data-parent="data" data-level="80" style="--accent:#00758f">
+              <i class="devicon-mysql-plain colored"></i>
+              <span class="node__name">MySQL</span>
+              <span class="node__bar"><i style="--lvl:80%"></i></span>
+              <span class="node__pct">80%</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KONTAKT ============ -->
+    <section class="section contact" id="contact">
+      <div class="contact__glow" aria-hidden="true"></div>
+      <div class="container">
+        <header class="section__head section__head--center">
+          <span class="section__index reveal">04</span>
+          <h2 class="section__title reveal">Zróbmy coś razem</h2>
+          <p class="section__subtitle reveal">
+            Masz pomysł na stronę lub aplikację? Napisz — zamienię go w coś, co robi WOW.
+          </p>
+        </header>
+
+        <div class="contact__cta reveal">
+          <a href="mailto:kontakt.lukaszewski@gmail.com" class="btn btn--primary btn--lg" data-magnetic>
+            <span>kontakt.lukaszewski@gmail.com</span>
+          </a>
+        </div>
+
+        <ul class="contact__links reveal">
+          <li><a href="mailto:kontakt.lukaszewski@gmail.com" data-magnetic>E-mail</a></li>
+          <li><a href="https://github.com/arwidev" target="_blank" rel="noopener" data-magnetic>GitHub</a></li>
+          <li><a href="#" target="_blank" rel="noopener" data-magnetic>LinkedIn</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#hero" class="footer__brand">arwi<span>dev</span></a>
+      <p class="footer__copy">© <span id="year"></span> arwidev · Frontend Web Developer</p>
+      <a href="#hero" class="footer__top" data-magnetic aria-label="Do góry">↑</a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
