@@ -1,46 +1,46 @@
 # arwidev — Frontend Web Developer
 
-Jednostronicowe (one-page) portfolio zbudowane jako **czysty statyczny HTML + CSS + JS**,
-gotowe do hostowania na **GitHub Pages** (`arwidev.github.io`). Bez frameworków, bez build-stepa —
-wystarczy, że pliki trafią na branch publikacji.
+A one-page portfolio built as **plain static HTML + CSS + JS**, ready to host on
+**GitHub Pages**. No frameworks, no build step — just publish the files.
 
-## ✨ Co jest na stronie
-- **Hero** z animowaną siecią cząsteczek (canvas), aurorą i efektem parallax
-- **O mnie** z animowanymi licznikami
-- **Mój proces tworzenia** — interaktywna oś czasu: Planowanie → Projektowanie → Development → Testowanie → Wdrożenie
-- **Drzewko umiejętności** — interaktywne drzewo technologii z liniami rysowanymi przy scrollu
-  (HTML, CSS, JS, React, Vue, Angular, Bootstrap, Node.js, MongoDB, MySQL)
-- **Kontakt** + stopka
-- Custom cursor, magnetyczne przyciski, scroll progress, reveal przy scrollu
-- Ciemny motyw z niebieskimi odcieniami
-- W pełni responsywne, wspiera `prefers-reduced-motion`
+## ✨ Highlights
+- **Modern, squared, refined dark theme** with blue accents (toned-down, no heavy neon)
+- **Hero** with a subtle animated "blueprint" field (canvas) and **parallax** floating squares
+- **About** with animated counters
+- **My creative process** — interactive timeline: Planning → Design → Development → Testing → Deployment
+- **Skill tree** — interactive tech tree with SVG connectors drawn on scroll
+  (HTML, CSS, JavaScript, React, Vue, Angular, Bootstrap, Node.js, MongoDB, MySQL)
+- **Custom monochrome SVG icons** (hand-built sprite — no icon-font/CDN dependency)
+- **Contact** via Discord
+- Squared custom cursor, magnetic buttons, scroll progress, reveal-on-scroll
+- Fully responsive, honours `prefers-reduced-motion`
 
-## 📁 Struktura
+## 📁 Structure
 ```
 .
-├── index.html      # struktura strony
-├── css/style.css   # motyw, animacje, parallax, drzewko
-├── js/main.js      # cursor, canvas, parallax, liczniki, drzewko
-├── .nojekyll       # wyłącza przetwarzanie Jekyll na GitHub Pages
+├── index.html      # markup + inline monochrome SVG icon sprite
+├── css/style.css   # theme, motion, parallax, skill tree
+├── js/main.js      # cursor, canvas, parallax, counters, tree
+├── .nojekyll       # disables Jekyll processing on GitHub Pages
 └── README.md
 ```
 
-## 🚀 Publikacja na GitHub Pages
-1. Wejdź w **Settings → Pages** w repozytorium.
-2. W sekcji *Build and deployment* wybierz źródło **Deploy from a branch**.
-3. Wybierz branch (po zmergowaniu np. `main`) i katalog `/ (root)`.
-4. Strona pojawi się pod adresem `https://arwidev.github.io`.
+## 🚀 Publishing on GitHub Pages
+1. Open **Settings → Pages**.
+2. Under *Build and deployment* choose **Deploy from a branch**.
+3. Pick the branch (`main`) and the `/ (root)` folder → **Save**.
+4. The site goes live at your Pages URL within a minute or two.
 
-## ⚙️ Personalizacja
-- **Treści** — edytuj sekcje w `index.html`.
-- **Statystyki** — atrybuty `data-count` w sekcji „O mnie".
-- **Poziomy umiejętności** — atrybuty `data-level` oraz `--lvl` przy każdym `node--leaf`.
-- **Linki/Kontakt** — sekcja `#contact` oraz stopka (e-mail, GitHub, LinkedIn).
-- **Kolory** — zmienne CSS w `:root` (`--blue`, `--cyan`, `--indigo`, gradienty).
+## ⚙️ Customising
+- **Copy** — edit the sections in `index.html`.
+- **Stats** — `data-count` attributes in the About section.
+- **Skill levels** — `data-level` and `--lvl` on each `.node--leaf`.
+- **Icons** — edit the `<symbol>` definitions in the SVG sprite at the top of `index.html`.
+- **Contact** — Discord link in the `#contact` section.
+- **Colours** — CSS variables in `:root` (`--accent`, `--blue`, `--blue-soft`, lines).
 
-## 🧪 Podgląd lokalny
-Dowolny statyczny serwer, np.:
+## 🧪 Local preview
 ```bash
 python3 -m http.server 8000
-# następnie otwórz http://localhost:8000
+# open http://localhost:8000
 ```

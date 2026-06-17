@@ -1,22 +1,18 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="arwidev — Frontend Web Developer. Tworzę nowoczesne, szybkie i dopracowane interfejsy webowe. React, Vue, Angular, Node.js i więcej." />
+  <meta name="description" content="arwidev — Frontend Web Developer. I craft modern, fast and polished web experiences with React, Vue, Angular, Node.js and more." />
   <meta name="author" content="arwidev" />
-  <meta name="theme-color" content="#070b18" />
+  <meta name="theme-color" content="#080b14" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="arwidev — Frontend Web Developer" />
-  <meta property="og:description" content="Tworzę nowoczesne, szybkie i dopracowane interfejsy webowe." />
+  <meta property="og:description" content="I craft modern, fast and polished web experiences." />
   <meta property="og:type" content="website" />
 
   <title>arwidev — Frontend Web Developer</title>
 
-  <!-- Ikony technologii -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-  <!-- Typografia -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -24,14 +20,122 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- Pasek postępu scrolla -->
+  <!-- ============ MONOCHROME SVG ICON SPRITE ============ -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" focusable="false">
+    <defs>
+      <!-- Tech -->
+      <symbol id="i-html" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" d="M4 3l1.4 16L12 21l6.6-2L20 3z"/>
+        <text x="12" y="14.4" text-anchor="middle" fill="currentColor" font-size="7.5" font-weight="700" font-family="'Space Grotesk',sans-serif" letter-spacing="-.3">5</text>
+      </symbol>
+      <symbol id="i-css" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" d="M4 3l1.4 16L12 21l6.6-2L20 3z"/>
+        <text x="12" y="14.4" text-anchor="middle" fill="currentColor" font-size="7.5" font-weight="700" font-family="'Space Grotesk',sans-serif" letter-spacing="-.3">3</text>
+      </symbol>
+      <symbol id="i-js" viewBox="0 0 24 24">
+        <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="12" y="15.6" text-anchor="middle" fill="currentColor" font-size="8" font-weight="700" font-family="'Space Grotesk',sans-serif" letter-spacing="-.5">JS</text>
+      </symbol>
+      <symbol id="i-react" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="1.7" fill="currentColor"/>
+        <g fill="none" stroke="currentColor" stroke-width="1.1">
+          <ellipse cx="12" cy="12" rx="10.4" ry="3.9"/>
+          <ellipse cx="12" cy="12" rx="10.4" ry="3.9" transform="rotate(60 12 12)"/>
+          <ellipse cx="12" cy="12" rx="10.4" ry="3.9" transform="rotate(120 12 12)"/>
+        </g>
+      </symbol>
+      <symbol id="i-vue" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M2.5 4.5L12 20 21.5 4.5"/>
+          <path d="M7 4.5l5 8 5-8"/>
+        </g>
+      </symbol>
+      <symbol id="i-angular" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M12 2.5L21 5.6l-1.4 11.8L12 21.5 4.4 17.4 3 5.6z"/>
+          <path d="M8.7 15.6L12 7l3.3 8.6"/>
+          <path d="M9.9 12.9h4.2"/>
+        </g>
+      </symbol>
+      <symbol id="i-bootstrap" viewBox="0 0 24 24">
+        <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="3.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="11.4" y="16.4" text-anchor="middle" fill="currentColor" font-size="11" font-weight="700" font-family="'Space Grotesk',sans-serif">B</text>
+      </symbol>
+      <symbol id="i-node" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" d="M12 2.4l8.3 4.8v9.6L12 21.6 3.7 16.8V7.2z"/>
+        <path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M9.4 14.6c0 1 .9 1.6 2.2 1.6 1.4 0 2.3-.6 2.3-1.7 0-2.4-4.3-1-4.3-3.3 0-1 .9-1.6 2.1-1.6 1.2 0 2 .5 2.1 1.5"/>
+      </symbol>
+      <symbol id="i-mongo" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M12 2.5c2.8 3.8 4.3 6.8 4.3 10.2 0 3.8-1.9 6.3-4.3 7.8-2.4-1.5-4.3-4-4.3-7.8C7.7 9.3 9.2 6.3 12 2.5z"/>
+          <path d="M12 7.5v13.5"/>
+        </g>
+      </symbol>
+      <symbol id="i-mysql" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.4">
+          <ellipse cx="12" cy="6" rx="7" ry="2.6"/>
+          <path stroke-linecap="round" d="M5 6v12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6"/>
+          <path stroke-linecap="round" d="M5 12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6"/>
+        </g>
+      </symbol>
+
+      <!-- Process -->
+      <symbol id="p-plan" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="8.6"/>
+          <path d="M15.6 8.4L13 13l-4.6 2.6L11 11z"/>
+        </g>
+      </symbol>
+      <symbol id="p-design" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3L4.5 10.5 3 17l6.5-1.5L17 8z"/>
+          <path d="M13.5 4.5l3 3"/>
+          <path d="M4.5 10.5l4 4"/>
+        </g>
+      </symbol>
+      <symbol id="p-dev" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 8l-4 4 4 4"/>
+          <path d="M16 8l4 4-4 4"/>
+          <path d="M13.5 6l-3 12"/>
+        </g>
+      </symbol>
+      <symbol id="p-test" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3h6"/>
+          <path d="M10 3v6.2l-4.6 8.1c-.6 1 .2 2.2 1.4 2.2h10.4c1.2 0 2-1.2 1.4-2.2L14 9.2V3"/>
+          <path d="M7.4 14.5h9.2"/>
+        </g>
+      </symbol>
+      <symbol id="p-deploy" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2.8c3 1.6 5 5 5 9l-2.4 2.4H9.4L7 11.8c0-4 2-7.4 5-9z"/>
+          <circle cx="12" cy="9.4" r="1.4"/>
+          <path d="M9.4 16.8l-1.6 3M14.6 16.8l1.6 3M12 16.8v3.6"/>
+        </g>
+      </symbol>
+
+      <!-- Social -->
+      <symbol id="s-discord" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/>
+      </symbol>
+      <symbol id="s-github" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </symbol>
+      <symbol id="ui-arrow" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Scroll progress -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- Custom cursor -->
+  <!-- Custom (squared) cursor -->
   <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
   <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
-  <!-- Ekran ładowania -->
+  <!-- Preloader -->
   <div class="preloader" id="preloader">
     <div class="preloader__inner">
       <span class="preloader__logo">arwi<span>dev</span></span>
@@ -39,7 +143,7 @@
     </div>
   </div>
 
-  <!-- Nawigacja -->
+  <!-- Navigation -->
   <header class="nav" id="nav">
     <a href="#hero" class="nav__brand" data-magnetic>
       <span class="nav__brand-mark"></span>
@@ -47,10 +151,10 @@
     </a>
 
     <nav class="nav__links" id="navLinks">
-      <a href="#about" class="nav__link">O mnie</a>
-      <a href="#process" class="nav__link">Proces</a>
-      <a href="#skills" class="nav__link">Umiejętności</a>
-      <a href="#contact" class="nav__link nav__link--cta">Kontakt</a>
+      <a href="#about" class="nav__link">About</a>
+      <a href="#process" class="nav__link">Process</a>
+      <a href="#skills" class="nav__link">Skills</a>
+      <a href="#contact" class="nav__link nav__link--cta">Contact</a>
     </nav>
 
     <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
@@ -62,41 +166,44 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
       <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
-      <div class="hero__aurora" aria-hidden="true"></div>
-      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="hero__grid" data-parallax="0.04" aria-hidden="true"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
 
-      <!-- Pływające kształty (parallax) -->
-      <div class="floaty floaty--1" data-parallax="0.18" aria-hidden="true"></div>
-      <div class="floaty floaty--2" data-parallax="-0.12" aria-hidden="true"></div>
-      <div class="floaty floaty--3" data-parallax="0.08" aria-hidden="true"></div>
+      <!-- Floating geometric squares (parallax) -->
+      <div class="shape shape--1" data-parallax="0.22" aria-hidden="true"></div>
+      <div class="shape shape--2" data-parallax="-0.16" aria-hidden="true"></div>
+      <div class="shape shape--3" data-parallax="0.1" aria-hidden="true"></div>
+      <div class="shape shape--4" data-parallax="-0.08" aria-hidden="true"></div>
 
       <div class="hero__content" data-parallax="0.05">
         <p class="hero__eyebrow reveal">
-          <span class="hero__status-dot"></span> Dostępny do współpracy
+          <span class="hero__status-dot"></span> Available for work
         </p>
         <h1 class="hero__title">
-          <span class="hero__line"><span>Cześć, jestem</span></span>
+          <span class="hero__line"><span>Hi, I&rsquo;m</span></span>
           <span class="hero__line hero__title-name"><span>arwidev</span></span>
         </h1>
         <p class="hero__role reveal">
-          <span class="hero__role-static">Frontend Web Developer</span>
+          Frontend Web Developer
+          <span class="hero__role-sep">—</span>
           <span class="hero__rotator" id="rotator" aria-hidden="true"></span>
         </p>
         <p class="hero__lead reveal">
-          Zamieniam pomysły w nowoczesne, szybkie i dopracowane interfejsy webowe —
-          od pierwszej linii planu po finalne wdrożenie.
+          I turn ideas into modern, fast and polished web experiences —
+          from the first line of the plan to the final deployment.
         </p>
         <div class="hero__actions reveal">
           <a href="#skills" class="btn btn--primary" data-magnetic>
-            <span>Zobacz umiejętności</span>
+            <span>View skills</span>
+            <svg class="ico" aria-hidden="true"><use href="#ui-arrow"></use></svg>
           </a>
           <a href="#contact" class="btn btn--ghost" data-magnetic>
-            <span>Napisz do mnie</span>
+            <span>Get in touch</span>
           </a>
         </div>
       </div>
 
-      <a href="#about" class="hero__scroll" aria-label="Przewiń niżej">
+      <a href="#about" class="hero__scroll" aria-label="Scroll down">
         <span class="hero__scroll-text">scroll</span>
         <span class="hero__scroll-line"></span>
       </a>
@@ -106,59 +213,57 @@
     <section class="section about" id="about">
       <div class="container">
         <header class="section__head">
-          <span class="section__index reveal">01</span>
-          <h2 class="section__title reveal">O mnie</h2>
+          <span class="section__index reveal">01 / About</span>
+          <h2 class="section__title reveal">About me</h2>
         </header>
 
         <div class="about__grid">
           <div class="about__text">
             <p class="about__lead reveal">
-              Jestem frontendowcem zakochanym w detalu, animacji i czystym kodzie.
+              I&rsquo;m a frontend developer in love with detail, motion and clean code.
             </p>
             <p class="reveal">
-              Buduję strony i aplikacje, które nie tylko świetnie wyglądają, ale też
-              błyskawicznie działają i są przyjemne w obsłudze. Łączę warsztat
-              programistyczny z wyczuciem designu — dlatego efekt końcowy robi
-              <strong>WOW</strong>, a pod maską jest porządnie poukładany.
+              I build websites and apps that don&rsquo;t just look great — they&rsquo;re blazing
+              fast and a joy to use. I pair engineering craft with an eye for design, so the
+              result feels <strong>WOW</strong> while staying neatly organised under the hood.
             </p>
             <p class="reveal">
-              Pracuję na nowoczesnym stacku (React, Vue, Angular, Node.js), dbam o
-              wydajność, dostępność i responsywność. Każdy projekt traktuję jak rzemiosło —
-              od planu, przez design, aż po wdrożenie.
+              I work with a modern stack (React, Vue, Angular, Node.js) and care about
+              performance, accessibility and responsiveness. Every project is craft —
+              from plan, through design, to deployment.
             </p>
           </div>
 
           <ul class="stats">
             <li class="stat reveal">
               <span class="stat__num" data-count="50" data-suffix="+">0</span>
-              <span class="stat__label">Zrealizowanych projektów</span>
+              <span class="stat__label">Projects delivered</span>
             </li>
             <li class="stat reveal">
               <span class="stat__num" data-count="10" data-suffix="">0</span>
-              <span class="stat__label">Opanowanych technologii</span>
+              <span class="stat__label">Technologies</span>
             </li>
             <li class="stat reveal">
               <span class="stat__num" data-count="100" data-suffix="%">0</span>
-              <span class="stat__label">Zaangażowania w projekt</span>
+              <span class="stat__label">Commitment</span>
             </li>
             <li class="stat reveal">
               <span class="stat__num" data-count="∞" data-suffix="">∞</span>
-              <span class="stat__label">Wypitej kawy ☕</span>
+              <span class="stat__label">Cups of coffee</span>
             </li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- ============ PROCES ============ -->
+    <!-- ============ PROCESS ============ -->
     <section class="section process" id="process">
-      <div class="process__glow" aria-hidden="true"></div>
       <div class="container">
         <header class="section__head">
-          <span class="section__index reveal">02</span>
-          <h2 class="section__title reveal">Mój proces tworzenia</h2>
+          <span class="section__index reveal">02 / Process</span>
+          <h2 class="section__title reveal">My creative process</h2>
           <p class="section__subtitle reveal">
-            Każdy projekt prowadzę przez pięć przemyślanych etapów — bez chaosu, z pełną kontrolą.
+            Every project moves through five deliberate stages — no chaos, full control.
           </p>
         </header>
 
@@ -166,97 +271,87 @@
           <li class="step reveal">
             <div class="step__marker"><span>01</span></div>
             <div class="step__card" data-tilt>
-              <div class="step__icon">🧭</div>
-              <h3 class="step__title">Planowanie</h3>
+              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-plan"></use></svg></div>
+              <h3 class="step__title">Planning</h3>
               <p class="step__desc">
-                Analiza wymagań, research, cele biznesowe i architektura informacji.
-                Ustalam zakres, technologie i mapę projektu.
+                Requirements analysis, research, business goals and information architecture.
+                I define the scope, the stack and the project roadmap.
               </p>
-              <ul class="step__tags">
-                <li>Analiza</li><li>Research</li><li>Architektura</li>
-              </ul>
+              <ul class="step__tags"><li>Analysis</li><li>Research</li><li>Architecture</li></ul>
             </div>
           </li>
 
           <li class="step reveal">
             <div class="step__marker"><span>02</span></div>
             <div class="step__card" data-tilt>
-              <div class="step__icon">🎨</div>
-              <h3 class="step__title">Projektowanie</h3>
+              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-design"></use></svg></div>
+              <h3 class="step__title">Design</h3>
               <p class="step__desc">
-                Wireframe'y, prototypy i system designu. UI/UX z naciskiem na
-                czytelność, hierarchię i charakter marki.
+                Wireframes, prototypes and a design system. UI/UX focused on clarity,
+                hierarchy and brand character.
               </p>
-              <ul class="step__tags">
-                <li>UI / UX</li><li>Prototyp</li><li>Design System</li>
-              </ul>
+              <ul class="step__tags"><li>UI / UX</li><li>Prototype</li><li>Design System</li></ul>
             </div>
           </li>
 
           <li class="step reveal">
             <div class="step__marker"><span>03</span></div>
             <div class="step__card" data-tilt>
-              <div class="step__icon">⚙️</div>
+              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-dev"></use></svg></div>
               <h3 class="step__title">Development</h3>
               <p class="step__desc">
-                Czysty, skalowalny kod i komponenty wielokrotnego użytku.
-                Animacje, interakcje i logika dopięte na ostatni guzik.
+                Clean, scalable code and reusable components. Animations, interactions
+                and logic dialled in to the last detail.
               </p>
-              <ul class="step__tags">
-                <li>Czysty kod</li><li>Komponenty</li><li>Animacje</li>
-              </ul>
+              <ul class="step__tags"><li>Clean code</li><li>Components</li><li>Motion</li></ul>
             </div>
           </li>
 
           <li class="step reveal">
             <div class="step__marker"><span>04</span></div>
             <div class="step__card" data-tilt>
-              <div class="step__icon">🧪</div>
-              <h3 class="step__title">Testowanie</h3>
+              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-test"></use></svg></div>
+              <h3 class="step__title">Testing</h3>
               <p class="step__desc">
-                Testy responsywności, wydajności i dostępności. Cross-browser,
-                Lighthouse i polerowanie każdego detalu.
+                Responsiveness, performance and accessibility testing. Cross-browser,
+                Lighthouse and polishing every detail.
               </p>
-              <ul class="step__tags">
-                <li>QA</li><li>Responsywność</li><li>Wydajność</li>
-              </ul>
+              <ul class="step__tags"><li>QA</li><li>Responsive</li><li>Performance</li></ul>
             </div>
           </li>
 
           <li class="step reveal">
             <div class="step__marker"><span>05</span></div>
             <div class="step__card" data-tilt>
-              <div class="step__icon">🚀</div>
-              <h3 class="step__title">Wdrożenie</h3>
+              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-deploy"></use></svg></div>
+              <h3 class="step__title">Deployment</h3>
               <p class="step__desc">
-                Publikacja, optymalizacja, monitoring i dalszy rozwój.
-                Projekt żyje i rośnie razem z Twoim biznesem.
+                Launch, optimisation, monitoring and ongoing growth. The project lives
+                and scales together with your business.
               </p>
-              <ul class="step__tags">
-                <li>Deploy</li><li>Optymalizacja</li><li>Wsparcie</li>
-              </ul>
+              <ul class="step__tags"><li>Deploy</li><li>Optimise</li><li>Support</li></ul>
             </div>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- ============ SKILLS / DRZEWKO ============ -->
+    <!-- ============ SKILLS / TREE ============ -->
     <section class="section skills" id="skills">
+      <div class="deco deco--a" data-parallax="0.07" aria-hidden="true"></div>
+      <div class="deco deco--c" data-parallax="-0.05" aria-hidden="true"></div>
       <div class="container">
         <header class="section__head">
-          <span class="section__index reveal">03</span>
-          <h2 class="section__title reveal">Drzewko umiejętności</h2>
+          <span class="section__index reveal">03 / Skills</span>
+          <h2 class="section__title reveal">Skill tree</h2>
           <p class="section__subtitle reveal">
-            Najedź na gałąź, by poznać poziom zaawansowania. Wszystko wyrasta z mocnych podstaw.
+            Hover a branch to reveal proficiency. Everything grows from solid foundations.
           </p>
         </header>
 
         <div class="tree" id="tree">
-          <!-- Linie łączące (rysowane przy scrollu) -->
           <svg class="tree__lines" id="treeLines" preserveAspectRatio="none" aria-hidden="true"></svg>
 
-          <!-- KORZEŃ -->
           <div class="tree__row tree__row--root">
             <div class="node node--root" data-node="root">
               <div class="node__core">
@@ -266,82 +361,71 @@
             </div>
           </div>
 
-          <!-- KATEGORIE -->
           <div class="tree__row tree__row--branch">
-            <div class="node node--branch" data-node="frontend">
-              <span class="node__label">Frontend</span>
-            </div>
-            <div class="node node--branch" data-node="backend">
-              <span class="node__label">Backend</span>
-            </div>
-            <div class="node node--branch" data-node="data">
-              <span class="node__label">Bazy danych</span>
-            </div>
+            <div class="node node--branch" data-node="frontend"><span class="node__label">Frontend</span></div>
+            <div class="node node--branch" data-node="backend"><span class="node__label">Backend</span></div>
+            <div class="node node--branch" data-node="data"><span class="node__label">Database</span></div>
           </div>
 
-          <!-- LIŚCIE / TECHNOLOGIE -->
           <div class="tree__row tree__row--leaves">
-            <!-- Frontend -->
-            <button class="node node--leaf" data-node="html" data-parent="frontend" data-level="98" style="--accent:#e44d26">
-              <i class="devicon-html5-plain colored"></i>
+            <button class="node node--leaf" data-node="html" data-parent="frontend" data-level="98">
+              <svg class="ico" aria-hidden="true"><use href="#i-html"></use></svg>
               <span class="node__name">HTML</span>
               <span class="node__bar"><i style="--lvl:98%"></i></span>
               <span class="node__pct">98%</span>
             </button>
-            <button class="node node--leaf" data-node="css" data-parent="frontend" data-level="95" style="--accent:#2965f1">
-              <i class="devicon-css3-plain colored"></i>
+            <button class="node node--leaf" data-node="css" data-parent="frontend" data-level="95">
+              <svg class="ico" aria-hidden="true"><use href="#i-css"></use></svg>
               <span class="node__name">CSS</span>
               <span class="node__bar"><i style="--lvl:95%"></i></span>
               <span class="node__pct">95%</span>
             </button>
-            <button class="node node--leaf" data-node="js" data-parent="frontend" data-level="93" style="--accent:#f7df1e">
-              <i class="devicon-javascript-plain colored"></i>
+            <button class="node node--leaf" data-node="js" data-parent="frontend" data-level="93">
+              <svg class="ico" aria-hidden="true"><use href="#i-js"></use></svg>
               <span class="node__name">JavaScript</span>
               <span class="node__bar"><i style="--lvl:93%"></i></span>
               <span class="node__pct">93%</span>
             </button>
-            <button class="node node--leaf" data-node="react" data-parent="frontend" data-level="90" style="--accent:#61dafb">
-              <i class="devicon-react-original colored"></i>
+            <button class="node node--leaf" data-node="react" data-parent="frontend" data-level="90">
+              <svg class="ico" aria-hidden="true"><use href="#i-react"></use></svg>
               <span class="node__name">React</span>
               <span class="node__bar"><i style="--lvl:90%"></i></span>
               <span class="node__pct">90%</span>
             </button>
-            <button class="node node--leaf" data-node="vue" data-parent="frontend" data-level="85" style="--accent:#42b883">
-              <i class="devicon-vuejs-plain colored"></i>
+            <button class="node node--leaf" data-node="vue" data-parent="frontend" data-level="85">
+              <svg class="ico" aria-hidden="true"><use href="#i-vue"></use></svg>
               <span class="node__name">Vue</span>
               <span class="node__bar"><i style="--lvl:85%"></i></span>
               <span class="node__pct">85%</span>
             </button>
-            <button class="node node--leaf" data-node="angular" data-parent="frontend" data-level="80" style="--accent:#dd0031">
-              <i class="devicon-angularjs-plain colored"></i>
+            <button class="node node--leaf" data-node="angular" data-parent="frontend" data-level="80">
+              <svg class="ico" aria-hidden="true"><use href="#i-angular"></use></svg>
               <span class="node__name">Angular</span>
               <span class="node__bar"><i style="--lvl:80%"></i></span>
               <span class="node__pct">80%</span>
             </button>
-            <button class="node node--leaf" data-node="bootstrap" data-parent="frontend" data-level="88" style="--accent:#7952b3">
-              <i class="devicon-bootstrap-plain colored"></i>
+            <button class="node node--leaf" data-node="bootstrap" data-parent="frontend" data-level="88">
+              <svg class="ico" aria-hidden="true"><use href="#i-bootstrap"></use></svg>
               <span class="node__name">Bootstrap</span>
               <span class="node__bar"><i style="--lvl:88%"></i></span>
               <span class="node__pct">88%</span>
             </button>
 
-            <!-- Backend -->
-            <button class="node node--leaf" data-node="node" data-parent="backend" data-level="85" style="--accent:#83cd29">
-              <i class="devicon-nodejs-plain colored"></i>
+            <button class="node node--leaf" data-node="node" data-parent="backend" data-level="85">
+              <svg class="ico" aria-hidden="true"><use href="#i-node"></use></svg>
               <span class="node__name">Node.js</span>
               <span class="node__bar"><i style="--lvl:85%"></i></span>
               <span class="node__pct">85%</span>
             </button>
 
-            <!-- Bazy danych -->
-            <button class="node node--leaf" data-node="mongo" data-parent="data" data-level="82" style="--accent:#4db33d">
-              <i class="devicon-mongodb-plain colored"></i>
+            <button class="node node--leaf" data-node="mongo" data-parent="data" data-level="82">
+              <svg class="ico" aria-hidden="true"><use href="#i-mongo"></use></svg>
               <span class="node__name">MongoDB</span>
               <span class="node__bar"><i style="--lvl:82%"></i></span>
               <span class="node__pct">82%</span>
             </button>
-            <button class="node node--leaf" data-node="mysql" data-parent="data" data-level="80" style="--accent:#00758f">
-              <i class="devicon-mysql-plain colored"></i>
+            <button class="node node--leaf" data-node="mysql" data-parent="data" data-level="80">
+              <svg class="ico" aria-hidden="true"><use href="#i-mysql"></use></svg>
               <span class="node__name">MySQL</span>
               <span class="node__bar"><i style="--lvl:80%"></i></span>
               <span class="node__pct">80%</span>
@@ -351,28 +435,38 @@
       </div>
     </section>
 
-    <!-- ============ KONTAKT ============ -->
+    <!-- ============ CONTACT ============ -->
     <section class="section contact" id="contact">
-      <div class="contact__glow" aria-hidden="true"></div>
+      <div class="deco deco--a" data-parallax="-0.06" aria-hidden="true"></div>
+      <div class="deco deco--b" data-parallax="0.1" aria-hidden="true"></div>
       <div class="container">
         <header class="section__head section__head--center">
-          <span class="section__index reveal">04</span>
-          <h2 class="section__title reveal">Zróbmy coś razem</h2>
+          <span class="section__index reveal">04 / Contact</span>
+          <h2 class="section__title reveal">Let&rsquo;s build something</h2>
           <p class="section__subtitle reveal">
-            Masz pomysł na stronę lub aplikację? Napisz — zamienię go w coś, co robi WOW.
+            Got an idea for a site or an app? Message me — I&rsquo;ll turn it into
+            something that makes people go WOW.
           </p>
         </header>
 
         <div class="contact__cta reveal">
-          <a href="mailto:kontakt.lukaszewski@gmail.com" class="btn btn--primary btn--lg" data-magnetic>
-            <span>kontakt.lukaszewski@gmail.com</span>
+          <a href="https://discord.com/users/239008388544069633" class="btn btn--primary btn--lg" target="_blank" rel="noopener" data-magnetic>
+            <svg class="ico" aria-hidden="true"><use href="#s-discord"></use></svg>
+            <span>Message me on Discord</span>
           </a>
         </div>
 
         <ul class="contact__links reveal">
-          <li><a href="mailto:kontakt.lukaszewski@gmail.com" data-magnetic>E-mail</a></li>
-          <li><a href="https://github.com/arwidev" target="_blank" rel="noopener" data-magnetic>GitHub</a></li>
-          <li><a href="#" target="_blank" rel="noopener" data-magnetic>LinkedIn</a></li>
+          <li>
+            <a href="https://discord.com/users/239008388544069633" target="_blank" rel="noopener" data-magnetic>
+              <svg class="ico" aria-hidden="true"><use href="#s-discord"></use></svg> Discord
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/arqi74" target="_blank" rel="noopener" data-magnetic>
+              <svg class="ico" aria-hidden="true"><use href="#s-github"></use></svg> GitHub
+            </a>
+          </li>
         </ul>
       </div>
     </section>
@@ -382,7 +476,9 @@
     <div class="container footer__inner">
       <a href="#hero" class="footer__brand">arwi<span>dev</span></a>
       <p class="footer__copy">© <span id="year"></span> arwidev · Frontend Web Developer</p>
-      <a href="#hero" class="footer__top" data-magnetic aria-label="Do góry">↑</a>
+      <a href="#hero" class="footer__top" data-magnetic aria-label="Back to top">
+        <svg class="ico" aria-hidden="true"><use href="#ui-arrow"></use></svg>
+      </a>
     </div>
   </footer>
 
