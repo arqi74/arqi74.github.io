@@ -125,6 +125,21 @@
       <symbol id="ui-arrow" viewBox="0 0 24 24">
         <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7"/>
       </symbol>
+      <symbol id="ui-close" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
+      </symbol>
+      <symbol id="f-start" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 21V4"/>
+          <path d="M6 4.5h11l-2.2 3.2L17 11H6z"/>
+        </g>
+      </symbol>
+      <symbol id="f-end" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M8.3 12.2l2.6 2.6L16 9.4"/>
+        </g>
+      </symbol>
     </defs>
   </svg>
 
@@ -263,76 +278,81 @@
           <span class="section__index reveal">02 / Process</span>
           <h2 class="section__title reveal">My creative process</h2>
           <p class="section__subtitle reveal">
-            Every project moves through five deliberate stages — no chaos, full control.
+            An interactive, production-style flowchart of how a project is built.
+            Click any block to open a detailed breakdown of the stage, its activities
+            and the technologies behind it.
           </p>
         </header>
 
-        <ol class="timeline" id="timeline">
-          <li class="step reveal">
-            <div class="step__marker"><span>01</span></div>
-            <div class="step__card" data-tilt>
-              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-plan"></use></svg></div>
-              <h3 class="step__title">Planning</h3>
-              <p class="step__desc">
-                Requirements analysis, research, business goals and information architecture.
-                I define the scope, the stack and the project roadmap.
-              </p>
-              <ul class="step__tags"><li>Analysis</li><li>Research</li><li>Architecture</li></ul>
-            </div>
-          </li>
+        <div class="flow" id="flow">
+          <svg class="flow__wires" id="flowWires" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <marker id="flowArrow" viewBox="0 0 10 10" refX="7.5" refY="5"
+                      markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" fill="var(--accent)"></path>
+              </marker>
+            </defs>
+          </svg>
 
-          <li class="step reveal">
-            <div class="step__marker"><span>02</span></div>
-            <div class="step__card" data-tilt>
-              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-design"></use></svg></div>
-              <h3 class="step__title">Design</h3>
-              <p class="step__desc">
-                Wireframes, prototypes and a design system. UI/UX focused on clarity,
-                hierarchy and brand character.
-              </p>
-              <ul class="step__tags"><li>UI / UX</li><li>Prototype</li><li>Design System</li></ul>
-            </div>
-          </li>
+          <div class="flow__col">
+            <button class="flow__node flow__node--term" data-flow="start" data-popup="start" type="button">
+              <svg class="ico" aria-hidden="true"><use href="#f-start"></use></svg>
+              <span class="flow__title">Brief &amp; Kickoff</span>
+              <span class="flow__kind">Start</span>
+            </button>
 
-          <li class="step reveal">
-            <div class="step__marker"><span>03</span></div>
-            <div class="step__card" data-tilt>
-              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-dev"></use></svg></div>
-              <h3 class="step__title">Development</h3>
-              <p class="step__desc">
-                Clean, scalable code and reusable components. Animations, interactions
-                and logic dialled in to the last detail.
-              </p>
-              <ul class="step__tags"><li>Clean code</li><li>Components</li><li>Motion</li></ul>
-            </div>
-          </li>
+            <button class="flow__node flow__node--process" data-flow="planning" data-popup="planning" type="button">
+              <span class="flow__step">01</span>
+              <svg class="ico" aria-hidden="true"><use href="#p-plan"></use></svg>
+              <span class="flow__title">Planning</span>
+              <span class="flow__tags">Research · Scope · Architecture</span>
+            </button>
 
-          <li class="step reveal">
-            <div class="step__marker"><span>04</span></div>
-            <div class="step__card" data-tilt>
-              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-test"></use></svg></div>
-              <h3 class="step__title">Testing</h3>
-              <p class="step__desc">
-                Responsiveness, performance and accessibility testing. Cross-browser,
-                Lighthouse and polishing every detail.
-              </p>
-              <ul class="step__tags"><li>QA</li><li>Responsive</li><li>Performance</li></ul>
-            </div>
-          </li>
+            <button class="flow__node flow__node--process" data-flow="design" data-popup="design" type="button">
+              <span class="flow__step">02</span>
+              <svg class="ico" aria-hidden="true"><use href="#p-design"></use></svg>
+              <span class="flow__title">Design</span>
+              <span class="flow__tags">UI/UX · Prototype · Design system</span>
+            </button>
 
-          <li class="step reveal">
-            <div class="step__marker"><span>05</span></div>
-            <div class="step__card" data-tilt>
-              <div class="step__icon"><svg class="ico" aria-hidden="true"><use href="#p-deploy"></use></svg></div>
-              <h3 class="step__title">Deployment</h3>
-              <p class="step__desc">
-                Launch, optimisation, monitoring and ongoing growth. The project lives
-                and scales together with your business.
-              </p>
-              <ul class="step__tags"><li>Deploy</li><li>Optimise</li><li>Support</li></ul>
-            </div>
-          </li>
-        </ol>
+            <button class="flow__node flow__node--decision" data-flow="d1" data-popup="d1" type="button">
+              <span class="flow__dtext">Design<br>approved?</span>
+            </button>
+
+            <button class="flow__node flow__node--process" data-flow="development" data-popup="development" type="button">
+              <span class="flow__step">03</span>
+              <svg class="ico" aria-hidden="true"><use href="#p-dev"></use></svg>
+              <span class="flow__title">Development</span>
+              <span class="flow__tags">React · Vue · Angular · Node.js</span>
+            </button>
+
+            <button class="flow__node flow__node--process" data-flow="testing" data-popup="testing" type="button">
+              <span class="flow__step">04</span>
+              <svg class="ico" aria-hidden="true"><use href="#p-test"></use></svg>
+              <span class="flow__title">Testing</span>
+              <span class="flow__tags">QA · Responsive · Lighthouse</span>
+            </button>
+
+            <button class="flow__node flow__node--decision" data-flow="d2" data-popup="d2" type="button">
+              <span class="flow__dtext">QA<br>passed?</span>
+            </button>
+
+            <button class="flow__node flow__node--process" data-flow="deployment" data-popup="deployment" type="button">
+              <span class="flow__step">05</span>
+              <svg class="ico" aria-hidden="true"><use href="#p-deploy"></use></svg>
+              <span class="flow__title">Deployment</span>
+              <span class="flow__tags">CI/CD · Optimise · Monitor</span>
+            </button>
+
+            <button class="flow__node flow__node--term" data-flow="end" data-popup="end" type="button">
+              <svg class="ico" aria-hidden="true"><use href="#f-end"></use></svg>
+              <span class="flow__title">Launch &amp; Maintain</span>
+              <span class="flow__kind">End</span>
+            </button>
+          </div>
+
+          <span class="flow__hint reveal">Tip: click a block for details</span>
+        </div>
       </div>
     </section>
 
@@ -481,6 +501,24 @@
       </a>
     </div>
   </footer>
+
+  <!-- ============ PROCESS POPUP ============ -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-modal-close></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" id="modalClose" aria-label="Close" data-modal-close type="button">
+        <svg class="ico" aria-hidden="true"><use href="#ui-close"></use></svg>
+      </button>
+      <div class="modal__head">
+        <div class="modal__icon"><svg class="ico" aria-hidden="true"><use id="modalIconUse" href="#p-plan"></use></svg></div>
+        <span class="modal__kind" id="modalKind"></span>
+        <h3 class="modal__title" id="modalTitle"></h3>
+        <p class="modal__desc" id="modalDesc"></p>
+      </div>
+      <div class="modal__body" id="modalBody"></div>
+      <div class="modal__foot" id="modalFoot"></div>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
 </body>

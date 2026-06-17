@@ -103,15 +103,204 @@
   );
   $$(".stat__num").forEach((el) => countObserver.observe(el));
 
-  /* ---------- Timeline draw ---------- */
-  const timeline = $("#timeline");
-  if (timeline) {
+  /* =============================================================
+     PROCESS — flowchart wires + reveal
+     ============================================================= */
+  const flow = $("#flow"), flowWires = $("#flowWires");
+  const NSVG = "http://www.w3.org/2000/svg";
+
+  const flowEdges = [
+    { a: "start", b: "planning" },
+    { a: "planning", b: "design" },
+    { a: "design", b: "d1" },
+    { a: "d1", b: "development", label: "Yes", cls: "yes" },
+    { a: "development", b: "testing" },
+    { a: "testing", b: "d2" },
+    { a: "d2", b: "deployment", label: "Yes", cls: "yes" },
+    { a: "deployment", b: "end" },
+    { a: "d1", b: "design", loop: "left", label: "No", cls: "no" },
+    { a: "d2", b: "development", loop: "right", label: "No", cls: "no" },
+  ];
+
+  const buildFlow = () => {
+    if (!flow || !flowWires) return;
+    const box = flow.getBoundingClientRect();
+    flowWires.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
+    flowWires.querySelectorAll("path.wire, path.wire--flow").forEach((p) => p.remove());
+    flow.querySelectorAll(".flow__label").forEach((l) => l.remove());
+
+    const geo = (key) => {
+      const el = $(`[data-flow="${key}"]`, flow);
+      const r = el.getBoundingClientRect();
+      const x = r.left - box.left, y = r.top - box.top;
+      return { cx: x + r.width / 2, top: y, bottom: y + r.height,
+               left: x, right: x + r.width, midY: y + r.height / 2 };
+    };
+
+    flowEdges.forEach((e, i) => {
+      const a = geo(e.a), b = geo(e.b);
+      let d, lx, ly;
+      if (e.loop === "left") {
+        const off = 78;
+        d = `M ${a.left} ${a.midY} C ${a.left - off} ${a.midY}, ${b.left - off} ${b.midY}, ${b.left} ${b.midY}`;
+        lx = Math.min(a.left, b.left) - off + 6; ly = (a.midY + b.midY) / 2;
+      } else if (e.loop === "right") {
+        const off = 78;
+        d = `M ${a.right} ${a.midY} C ${a.right + off} ${a.midY}, ${b.right + off} ${b.midY}, ${b.right} ${b.midY}`;
+        lx = Math.max(a.right, b.right) + off - 6; ly = (a.midY + b.midY) / 2;
+      } else {
+        d = `M ${a.cx} ${a.bottom} L ${b.cx} ${b.top}`;
+        lx = a.cx + 26; ly = (a.bottom + b.top) / 2;
+      }
+
+      const base = document.createElementNS(NSVG, "path");
+      base.setAttribute("d", d);
+      base.setAttribute("class", "wire");
+      base.setAttribute("marker-end", "url(#flowArrow)");
+      flowWires.appendChild(base);
+      const len = base.getTotalLength();
+      base.style.setProperty("--len", len);
+      base.style.transitionDelay = (i * 0.08) + "s";
+
+      const fl = document.createElementNS(NSVG, "path");
+      fl.setAttribute("d", d);
+      fl.setAttribute("class", "wire--flow");
+      flowWires.appendChild(fl);
+
+      if (e.label) {
+        const span = document.createElement("span");
+        span.className = "flow__label flow__label--" + e.cls;
+        span.textContent = e.label;
+        span.style.left = lx + "px";
+        span.style.top = ly + "px";
+        flow.appendChild(span);
+      }
+    });
+  };
+
+  if (flow) {
+    buildFlow();
+    window.addEventListener("load", buildFlow);
+    let ft;
+    addEventListener("resize", () => { clearTimeout(ft); ft = setTimeout(buildFlow, 150); });
+
     new IntersectionObserver(
       (entries, obs) => entries.forEach((e) => {
-        if (e.isIntersecting) { timeline.classList.add("is-drawn"); obs.unobserve(e.target); }
+        if (e.isIntersecting) {
+          flow.classList.add("is-live");
+          $$(".flow__node", flow).forEach((n, i) => setTimeout(() => n.classList.add("is-in"), i * 90));
+          obs.unobserve(e.target);
+        }
       }),
-      { threshold: 0.15 }
-    ).observe(timeline);
+      { threshold: 0.2 }
+    ).observe(flow);
+  }
+
+  /* =============================================================
+     PROCESS — popups (modal)
+     ============================================================= */
+  const POPUPS = {
+    start: { icon: "#f-start", kind: "Start", title: "Brief & Kickoff",
+      desc: "Every project begins with a conversation. We align on your vision, your users and the business goals before the process kicks off.",
+      groups: [{ h: "We align on", items: ["Vision & goals", "Target audience", "Budget & timeline", "Success metrics"] }] },
+    planning: { icon: "#p-plan", kind: "Stage 01 · Planning", title: "Planning",
+      desc: "Before a single line of code I map the whole project — turning goals into a clear scope, architecture and roadmap.",
+      groups: [
+        { h: "Activities", items: ["Requirements gathering", "Market & competitor research", "Scope & timeline", "Sitemap & user flows", "Information architecture"] },
+        { h: "Tools", items: ["Notion", "Miro / FigJam", "Google Docs"] },
+        { h: "Deliverables", items: ["Project brief", "Sitemap", "Roadmap", "Tech-stack decision"] },
+      ], routes: [{ t: "Next → Design", cls: "yes" }] },
+    design: { icon: "#p-design", kind: "Stage 02 · Design", title: "Design",
+      desc: "I turn the plan into tangible screens — from low-fi wireframes to a polished, interactive prototype built on a reusable design system.",
+      groups: [
+        { h: "Activities", items: ["Wireframes", "Hi-fi UI", "Interactive prototype", "Design system & tokens", "Responsive layouts", "Contrast / a11y checks"] },
+        { h: "Tools", items: ["Figma", "Photoshop", "Illustrator"], tech: true },
+        { h: "Deliverables", items: ["Figma file", "Design system", "Clickable prototype"] },
+      ], routes: [{ t: "Next → Review", cls: "yes" }] },
+    d1: { icon: "#f-end", kind: "Decision gate", title: "Design approved?",
+      desc: "A review checkpoint. We validate the design against the brief, usability and brand. No code starts until the direction is locked — if something is off, we loop back and refine.",
+      routes: [{ t: "Yes → Development", cls: "yes" }, { t: "No → back to Design", cls: "no" }] },
+    development: { icon: "#p-dev", kind: "Stage 03 · Development", title: "Development",
+      desc: "The build. I implement the design as clean, component-based code, wire up data and APIs, and craft the interactions that make it feel alive.",
+      groups: [
+        { h: "Frontend", items: ["HTML5", "CSS3", "JavaScript (ES6+)", "React", "Vue", "Angular", "Bootstrap"], tech: true },
+        { h: "Backend & data", items: ["Node.js", "REST APIs", "MongoDB", "MySQL"], tech: true },
+        { h: "Tooling", items: ["Git & GitHub", "npm", "Vite / Webpack", "ESLint / Prettier"] },
+        { h: "Practices", items: ["Reusable components", "State management", "Responsive-first", "Semantic, accessible markup"] },
+      ], routes: [{ t: "Next → Testing", cls: "yes" }] },
+    testing: { icon: "#p-test", kind: "Stage 04 · Testing", title: "Testing",
+      desc: "Quality assurance across the board — I verify behaviour, responsiveness and performance, then fix and polish until it's rock solid on every device.",
+      groups: [
+        { h: "Checks", items: ["Responsiveness", "Cross-browser", "Accessibility (WCAG)", "Performance & Lighthouse", "Functional / unit / e2e"] },
+        { h: "Tools", items: ["Chrome DevTools", "Lighthouse", "Jest", "Cypress", "BrowserStack"], tech: true },
+        { h: "Deliverables", items: ["QA report", "Green Lighthouse", "Bug-free build"] },
+      ], routes: [{ t: "Next → QA gate", cls: "yes" }] },
+    d2: { icon: "#f-end", kind: "Decision gate", title: "QA passed?",
+      desc: "The final quality gate. Only a build that passes performance, accessibility and functional checks moves on to launch. If issues remain, it loops straight back to Development.",
+      routes: [{ t: "Yes → Deployment", cls: "yes" }, { t: "No → back to Development", cls: "no" }] },
+    deployment: { icon: "#p-deploy", kind: "Stage 05 · Deployment", title: "Deployment",
+      desc: "Go live. I ship to production with an automated pipeline, optimise assets, configure the domain and monitoring, then support and iterate.",
+      groups: [
+        { h: "Activities", items: ["Build & optimisation", "CI/CD pipeline", "Domain & HTTPS", "Monitoring & analytics", "Post-launch support"] },
+        { h: "Platforms", items: ["GitHub Pages", "Vercel", "Netlify"], tech: true },
+        { h: "Tools", items: ["GitHub Actions", "Cloudflare", "Google Analytics"] },
+      ], routes: [{ t: "Next → Launch", cls: "yes" }] },
+    end: { icon: "#f-end", kind: "End", title: "Launch & Maintain",
+      desc: "The project is live — but it's not the finish line. I monitor, maintain and keep improving it so it grows together with your business.",
+      groups: [{ h: "Ongoing", items: ["Monitoring", "Maintenance & updates", "New features", "Performance tuning"] }] },
+  };
+
+  const modal = $("#modal");
+  if (modal) {
+    const mIcon = $("#modalIconUse"), mKind = $("#modalKind"), mTitle = $("#modalTitle"),
+          mDesc = $("#modalDesc"), mBody = $("#modalBody"), mFoot = $("#modalFoot"),
+          mClose = $("#modalClose");
+    let lastFocus = null;
+
+    const render = (d) => {
+      mIcon.setAttribute("href", d.icon);
+      mKind.textContent = d.kind || "";
+      mTitle.textContent = d.title;
+      mDesc.textContent = d.desc;
+      mBody.innerHTML = (d.groups || []).map((g) =>
+        `<div class="modal__group"><h4>${g.h}</h4>` +
+        `<ul class="modal__chips${g.tech ? " modal__chips--tech" : ""}">` +
+        g.items.map((i) => `<li>${i}</li>`).join("") + `</ul></div>`).join("");
+      mFoot.innerHTML = (d.routes || []).map((r) =>
+        `<span class="modal__route modal__route--${r.cls}">${r.t}</span>`).join("");
+    };
+    const openModal = (id) => {
+      const d = POPUPS[id]; if (!d) return;
+      render(d);
+      lastFocus = document.activeElement;
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      mClose.focus();
+    };
+    const closeModal = () => {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+
+    $$("[data-popup]").forEach((el) =>
+      el.addEventListener("click", () => openModal(el.dataset.popup)));
+    $$("[data-modal-close]", modal).forEach((el) =>
+      el.addEventListener("click", closeModal));
+    document.addEventListener("keydown", (e) => {
+      if (!modal.classList.contains("is-open")) return;
+      if (e.key === "Escape") closeModal();
+      if (e.key === "Tab") {
+        const f = $$('button, [href], [tabindex]:not([tabindex="-1"])', modal)
+          .filter((el) => el.offsetParent !== null);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
   }
 
   /* ---------- Hero text rotator ---------- */
