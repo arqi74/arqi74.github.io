@@ -346,7 +346,7 @@ kbd{
 
 /* TERMINAL */
 .term{ background:var(--surface); border:1px solid var(--border-2); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); text-align:left; }
-.term__screen{ font-family:var(--mono); font-size:.84rem; line-height:1.7; padding:16px 18px; height:312px; overflow-y:auto; color:var(--ice); outline:none; cursor:text; }
+.term__screen{ font-family:var(--mono); font-size:.84rem; line-height:1.7; padding:16px 18px; height:312px; overflow-y:auto; color:var(--ice); outline:none; cursor:text; text-align:left; }
 .term__line{ white-space:pre-wrap; word-break:break-word; }
 .term__prompt{ color:var(--blue-2); }
 .term__path{ color:var(--cyan); }
