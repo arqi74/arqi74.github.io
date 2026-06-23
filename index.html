@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ARWI.DEV — nowoczesny web developer. Buduję szybkie, dopracowane aplikacje webowe w React, Vue, Angular, Node.js, TypeScript i nie tylko. Too clean for default UI." />
+  <meta name="description" content="ARWI.DEV — modern web developer. I build fast, polished web apps with React, Vue, Angular, Node.js, TypeScript and more. Too clean for default UI." />
   <meta name="author" content="ARWI.DEV" />
-  <meta name="theme-color" content="#070a12" />
+  <meta name="theme-color" content="#070a11" />
   <meta name="color-scheme" content="dark" />
 
   <meta property="og:title" content="ARWI.DEV — Modern Web Developer" />
@@ -106,7 +106,7 @@
       <symbol id="ui-arrow-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12l7 7 7-7"/></symbol>
       <symbol id="ui-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></symbol>
       <symbol id="ui-terminal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></g></symbol>
-      <symbol id="ui-command" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 6a2 2 0 10-2 2h12a2 2 0 10-2-2v12a2 2 0 102-2H6a2 2 0 102 2z"/></symbol>
+      <symbol id="ui-command" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 6a2 2 0 10-2 2h12a2 2 0 10-2-2v12a2 2 0 102 2H6a2 2 0 102 2z"/></symbol>
       <symbol id="ui-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></g></symbol>
       <symbol id="ui-external" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h4"/></g></symbol>
       <symbol id="ui-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></g></symbol>
@@ -150,14 +150,14 @@
     <div class="cmdk__panel" role="dialog" aria-modal="true" aria-label="Command palette">
       <div class="cmdk__search">
         <svg class="ic"><use href="#ui-search"/></svg>
-        <input id="cmdkInput" type="text" placeholder="Wpisz komendę lub szukaj…  (np. 'pipeline', 'discord')" autocomplete="off" spellcheck="false" />
+        <input id="cmdkInput" type="text" placeholder="Type a command or search…  (e.g. 'pipeline', 'discord')" autocomplete="off" spellcheck="false" />
         <kbd class="cmdk__esc">ESC</kbd>
       </div>
       <ul class="cmdk__list" id="cmdkList" role="listbox"></ul>
       <div class="cmdk__foot">
-        <span><kbd>↑</kbd><kbd>↓</kbd> nawigacja</span>
-        <span><kbd>↵</kbd> wybierz</span>
-        <span><kbd>esc</kbd> zamknij</span>
+        <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+        <span><kbd>↵</kbd> select</span>
+        <span><kbd>esc</kbd> close</span>
       </div>
     </div>
   </div>
@@ -165,7 +165,7 @@
   <!-- Generic modal host (popups) -->
   <div class="modal" id="modal" aria-hidden="true">
     <div class="modal__card" role="dialog" aria-modal="true" id="modalCard">
-      <button class="modal__close" id="modalClose" type="button" aria-label="Zamknij">
+      <button class="modal__close" id="modalClose" type="button" aria-label="Close">
         <svg class="ic"><use href="#ui-close"/></svg>
       </button>
       <div class="modal__body" id="modalBody"></div>
@@ -183,15 +183,15 @@
       <img src="arwi-dev-white-text.png" alt="ARWI.DEV" class="nav__logo" />
     </a>
 
-    <nav class="nav__links" id="navLinks" aria-label="Główna nawigacja">
+    <nav class="nav__links" id="navLinks" aria-label="Primary navigation">
       <a href="#stack" class="nav__link"><span class="nav__idx">01</span> Stack</a>
       <a href="#pipeline" class="nav__link"><span class="nav__idx">02</span> Pipeline</a>
       <a href="#social" class="nav__link"><span class="nav__idx">03</span> Social</a>
-      <a href="#contact" class="nav__link"><span class="nav__idx">04</span> Kontakt</a>
+      <a href="#contact" class="nav__link"><span class="nav__idx">04</span> Contact</a>
     </nav>
 
     <div class="nav__right">
-      <button class="cmdk-trigger" id="cmdkTrigger" type="button" data-magnetic aria-label="Otwórz paletę komend">
+      <button class="cmdk-trigger" id="cmdkTrigger" type="button" data-magnetic aria-label="Open command palette">
         <svg class="ic"><use href="#ui-command"/></svg>
         <span>K</span>
       </button>
@@ -200,12 +200,12 @@
   </header>
 
   <!-- Section dots -->
-  <nav class="dots" id="dots" aria-label="Sekcje">
+  <nav class="dots" id="dots" aria-label="Sections">
     <a href="#hero"     class="dots__dot" data-label="Home"></a>
     <a href="#stack"    class="dots__dot" data-label="Stack"></a>
     <a href="#pipeline" class="dots__dot" data-label="Pipeline"></a>
     <a href="#social"   class="dots__dot" data-label="Social"></a>
-    <a href="#contact"  class="dots__dot" data-label="Kontakt"></a>
+    <a href="#contact"  class="dots__dot" data-label="Contact"></a>
   </nav>
 
   <main>
@@ -214,6 +214,13 @@
     <!-- ========================================================== -->
     <section class="hero" id="hero">
       <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__hex" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <polygon points="100,10 177.9,55 177.9,145 100,190 22.1,145 22.1,55" fill="none" stroke="currentColor" stroke-width="1"/>
+          <polygon points="100,36 155.4,68 155.4,132 100,164 44.6,132 44.6,68" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 5" opacity=".7"/>
+          <circle cx="100" cy="100" r="3" fill="currentColor"/>
+        </svg>
+      </div>
 
       <div class="hero__inner">
         <div class="hero__left">
@@ -222,30 +229,30 @@
           </span>
 
           <h1 class="hero__title reveal" data-reveal>
-            Buduję web,<br>który jest
-            <span class="hero__rotator"><span id="rotator">nieziemski</span><span class="caret">▌</span></span>
+            I build web<br>that feels
+            <span class="hero__rotator"><span id="rotator">otherworldly</span><span class="caret">▌</span></span>
           </h1>
 
           <p class="hero__lead reveal" data-reveal>
-            Cześć, jestem <strong>ARWI</strong> — web developer zakochany w czystym kodzie
-            i dopracowanym UI. Łączę front-end z back-endem i tworzę produkty,
-            które działają szybko i wyglądają jak z przyszłości.
+            Hi, I'm <strong>ARWI</strong> — a web developer in love with clean code
+            and polished UI. I connect front-end with back-end and ship products
+            that run fast and look like they're from the future.
             <span class="hero__lead-comment">// too clean for default UI</span>
           </p>
 
           <div class="hero__cta reveal" data-reveal>
             <a href="#stack" class="btn btn--primary" data-magnetic>
-              <span>Zobacz mój stack</span>
+              <span>View my stack</span>
               <svg class="ic"><use href="#ui-arrow-right"/></svg>
             </a>
             <a href="#contact" class="btn btn--ghost" data-magnetic>
               <svg class="ic"><use href="#s-discord"/></svg>
-              <span>Zlećmy projekt</span>
+              <span>Start a project</span>
             </a>
           </div>
 
           <div class="hero__hint reveal" data-reveal>
-            Naciśnij <kbd>Ctrl</kbd>+<kbd>K</kbd> aby otworzyć paletę komend
+            Press <kbd>Ctrl</kbd>+<kbd>K</kbd> to open the command palette
           </div>
         </div>
 
@@ -256,42 +263,41 @@
               <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
               <span class="term__title"><svg class="ic"><use href="#ui-terminal"/></svg> arwi — zsh</span>
             </div>
-            <div class="term__screen" id="termScreen" tabindex="0" role="textbox" aria-label="Interaktywny terminal — wpisz help">
-              <!-- output injected here -->
+            <div class="term__screen" id="termScreen" tabindex="0" role="textbox" aria-label="Interactive terminal — type help">
               <div class="term__line term__input-line" id="termInputLine">
                 <span class="term__prompt">arwi@dev <span class="term__path">~</span> $</span>
                 <span class="term__typed" id="termTyped"></span><span class="term__cursor">▌</span>
               </div>
             </div>
           </div>
-          <p class="hero__term-tip">↑ kliknij i wpisz <code>help</code></p>
+          <p class="hero__term-tip">↑ click and type <code>help</code></p>
         </div>
       </div>
 
-      <a href="#stack" class="hero__scroll" aria-label="Przewiń niżej" data-magnetic>
+      <a href="#stack" class="hero__scroll" aria-label="Scroll down" data-magnetic>
         <svg class="ic"><use href="#ui-arrow-down"/></svg>
       </a>
     </section>
 
     <!-- ========================================================== -->
-    <!-- STACK / TECHNOLOGIE                                        -->
+    <!-- STACK / TECHNOLOGIES                                       -->
     <!-- ========================================================== -->
     <section class="section" id="stack">
       <div class="section__head reveal" data-reveal>
         <span class="section__kicker">// 01 — toolbox</span>
-        <h2 class="section__title">Moje technologie</h2>
+        <h2 class="section__title">My technologies</h2>
         <p class="section__sub">
-          Stack, którym buduję produkty end-to-end. Kliknij dowolny kafelek,
-          aby zobaczyć szczegóły i poziom biegłości.
+          The stack I use to ship products end-to-end. Click any tile to see
+          the details and proficiency level.
         </p>
       </div>
 
       <div class="filters reveal" id="filters" data-reveal>
-        <button class="chip is-active" data-filter="all">Wszystko</button>
+        <button class="chip is-active" data-filter="all">All</button>
         <button class="chip" data-filter="frontend">Frontend</button>
-        <button class="chip" data-filter="language">Języki</button>
+        <button class="chip" data-filter="language">Languages</button>
         <button class="chip" data-filter="backend">Backend</button>
-        <button class="chip" data-filter="database">Bazy danych</button>
+        <button class="chip" data-filter="database">Databases</button>
       </div>
 
       <div class="tech-grid" id="techGrid"><!-- cards injected by JS --></div>
@@ -303,10 +309,10 @@
     <section class="section section--pipeline" id="pipeline">
       <div class="section__head reveal" data-reveal>
         <span class="section__kicker">// 02 — workflow</span>
-        <h2 class="section__title">Pipeline produkcyjny</h2>
+        <h2 class="section__title">Production pipeline</h2>
         <p class="section__sub">
-          Każdy projekt płynie tą samą, sprawdzoną ścieżką — od pomysłu do
-          wdrożenia. Kliknij blok, aby zajrzeć do środka etapu.
+          Every project flows through the same proven path — from idea to
+          deployment. Click a block to look inside the stage.
         </p>
       </div>
 
@@ -316,7 +322,7 @@
       </div>
 
       <div class="pipe__legend reveal" data-reveal>
-        <span class="pipe__legend-item"><i class="pkg"></i> przepływ danych = commit przechodzący przez pipeline</span>
+        <span class="pipe__legend-item"><i class="pkg"></i> data flow = a commit traveling through the pipeline</span>
       </div>
     </section>
 
@@ -326,8 +332,8 @@
     <section class="section" id="social">
       <div class="section__head reveal" data-reveal>
         <span class="section__kicker">// 03 — network</span>
-        <h2 class="section__title">Znajdź mnie w sieci</h2>
-        <p class="section__sub">Dziel się wiedzą, koduję na żywo i wrzucam projekty. Dołącz.</p>
+        <h2 class="section__title">Find me online</h2>
+        <p class="section__sub">I share knowledge, code live and post projects. Come hang out.</p>
       </div>
 
       <div class="socials" id="socials">
@@ -336,28 +342,28 @@
           <svg class="ic social__ic"><use href="#s-youtube"/></svg>
           <span class="social__name">YouTube</span>
           <span class="social__handle">@arwi.dev</span>
-          <span class="social__go">Subskrybuj <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
+          <span class="social__go">Subscribe <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
         </a>
         <a class="social social--x reveal" data-reveal href="#" target="_blank" rel="noopener" data-magnetic data-net="X / Twitter">
           <span class="social__glow"></span>
           <svg class="ic social__ic"><use href="#s-x"/></svg>
           <span class="social__name">X / Twitter</span>
           <span class="social__handle">@arwidev</span>
-          <span class="social__go">Obserwuj <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
+          <span class="social__go">Follow <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
         </a>
         <a class="social social--gh reveal" data-reveal href="https://github.com/arqi74" target="_blank" rel="noopener" data-magnetic data-net="GitHub">
           <span class="social__glow"></span>
           <svg class="ic social__ic"><use href="#s-github"/></svg>
           <span class="social__name">GitHub</span>
           <span class="social__handle">@arqi74</span>
-          <span class="social__go">Zobacz repo <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
+          <span class="social__go">View repos <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
         </a>
         <a class="social social--dc reveal" data-reveal href="#contact" data-magnetic data-net="Discord">
           <span class="social__glow"></span>
           <svg class="ic social__ic"><use href="#s-discord"/></svg>
           <span class="social__name">Discord</span>
           <span class="social__handle">arwi.dev</span>
-          <span class="social__go">Dołącz <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
+          <span class="social__go">Join <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
         </a>
       </div>
     </section>
@@ -369,10 +375,10 @@
       <div class="contact">
         <div class="contact__inner reveal" data-reveal>
           <span class="section__kicker">// 04 — let's build</span>
-          <h2 class="contact__title">Masz projekt?<br>Pogadajmy na Discordzie.</h2>
+          <h2 class="contact__title">Got a project?<br>Let's talk on Discord.</h2>
           <p class="contact__sub">
-            Najszybsza droga do współpracy — opowiedz mi o pomyśle, a wycenię go
-            i zaproponuję rozwiązanie. Bez formularzy, bez czekania.
+            The fastest way to work together — tell me about your idea and I'll
+            scope it out and propose a solution. No forms, no waiting.
           </p>
 
           <div class="contact__terminal">
@@ -382,12 +388,12 @@
 
           <a class="btn btn--discord" id="discordBtn" href="https://discord.gg/your-invite" target="_blank" rel="noopener" data-magnetic>
             <svg class="ic"><use href="#s-discord"/></svg>
-            <span>Otwórz mój Discord</span>
+            <span>Open my Discord</span>
           </a>
 
           <button class="contact__copy" id="copyDiscord" type="button" data-magnetic>
             <svg class="ic"><use href="#ui-copy"/></svg>
-            <span>Skopiuj nick: <code>arwi.dev</code></span>
+            <span>Copy username: <code>arwi.dev</code></span>
           </button>
         </div>
       </div>
@@ -402,7 +408,7 @@
       <img src="arwi-dev-white-text.png" alt="ARWI.DEV" class="footer__logo" />
       <p class="footer__note">
         <span class="footer__tag">&lt; too clean for default UI /&gt;</span><br>
-        © <span id="year"></span> ARWI.DEV — zbudowane ręcznie w HTML, CSS i&nbsp;JS.
+        © <span id="year"></span> ARWI.DEV — handcrafted in HTML, CSS &amp; JS.
       </p>
       <div class="footer__mini">
         <a href="#" target="_blank" rel="noopener" aria-label="YouTube" data-magnetic><svg class="ic"><use href="#s-youtube"/></svg></a>

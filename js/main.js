@@ -15,69 +15,69 @@
      ============================================================= */
   const TECH = [
     { id:'html',    icon:'i-html',    name:'HTML5',      cat:'frontend', catLabel:'Frontend', level:96,
-      desc:'Semantyczny, dostępny markup — fundament każdego interfejsu. Dbam o strukturę, SEO i a11y.',
-      tags:['Semantyka','ARIA / a11y','SEO','Web Components'] },
+      desc:'Semantic, accessible markup — the foundation of every interface. I care about structure, SEO and a11y.',
+      tags:['Semantics','ARIA / a11y','SEO','Web Components'] },
     { id:'css',     icon:'i-css',     name:'CSS3',       cat:'frontend', catLabel:'Frontend', level:94,
-      desc:'Layouty Grid/Flexbox, animacje, custom properties i pełna responsywność. UI, które po prostu działa.',
-      tags:['Grid / Flex','Animacje','Custom props','Sass'] },
-    { id:'js',      icon:'i-js',      name:'JavaScript', cat:'language', catLabel:'Język', level:95,
-      desc:'ES2023+, async/await, moduły, Web API. Język, który ożywia każdy interfejs i spina logikę aplikacji.',
+      desc:'Grid/Flexbox layouts, animations, custom properties and full responsiveness. UI that just works.',
+      tags:['Grid / Flex','Animations','Custom props','Sass'] },
+    { id:'js',      icon:'i-js',      name:'JavaScript', cat:'language', catLabel:'Language', level:95,
+      desc:'ES2023+, async/await, modules, Web APIs. The language that brings every interface to life.',
       tags:['ES2023+','Async','DOM / Web API','Canvas'] },
-    { id:'ts',      icon:'i-ts',      name:'TypeScript', cat:'language', catLabel:'Język', level:88,
-      desc:'Typowanie statyczne, bezpieczeństwo i skalowalność dużych baz kodu. Mniej bugów, więcej pewności.',
-      tags:['Typy / Generics','Strict mode','tRPC','Zod'] },
+    { id:'ts',      icon:'i-ts',      name:'TypeScript', cat:'language', catLabel:'Language', level:88,
+      desc:'Static typing, safety and scalability for large codebases. Fewer bugs, more confidence.',
+      tags:['Types / Generics','Strict mode','tRPC','Zod'] },
     { id:'react',   icon:'i-react',   name:'React',      cat:'frontend', catLabel:'Frontend', level:92,
-      desc:'Komponenty, hooki i bogaty ekosystem. SPA oraz SSR z Next.js — wydajnie i nowocześnie.',
+      desc:'Components, hooks and a rich ecosystem. SPAs and SSR with Next.js — fast and modern.',
       tags:['Hooks','Next.js','Context','React Query'] },
     { id:'vue',     icon:'i-vue',     name:'Vue',        cat:'frontend', catLabel:'Frontend', level:85,
-      desc:'Reaktywność, Single-File Components i Composition API. Szybki, przyjemny development.',
+      desc:'Reactivity, Single-File Components and the Composition API. Fast, enjoyable development.',
       tags:['Composition API','Pinia','Nuxt','SFC'] },
     { id:'angular', icon:'i-angular', name:'Angular',    cat:'frontend', catLabel:'Frontend', level:78,
-      desc:'Pełnoprawny framework dla aplikacji enterprise — RxJS, Dependency Injection, struktura na lata.',
+      desc:'A full-featured framework for enterprise apps — RxJS, Dependency Injection, structure that lasts.',
       tags:['RxJS','DI','CLI','Standalone'] },
     { id:'node',    icon:'i-node',    name:'Node.js',    cat:'backend',  catLabel:'Backend', level:87,
-      desc:'Backend w JavaScript — REST i GraphQL API, real-time przez WebSocket, mikroserwisy.',
+      desc:'Backend in JavaScript — REST & GraphQL APIs, real-time over WebSocket, microservices.',
       tags:['Express','REST / GraphQL','WebSocket','JWT'] },
-    { id:'mongo',   icon:'i-mongo',   name:'MongoDB',    cat:'database', catLabel:'Baza danych', level:83,
-      desc:'Baza NoSQL — elastyczny schemat dokumentów, agregacje i szybkie prototypowanie.',
-      tags:['Mongoose','Aggregations','Atlas','Indexy'] },
-    { id:'mysql',   icon:'i-mysql',   name:'MySQL',      cat:'database', catLabel:'Baza danych', level:80,
-      desc:'Relacyjna baza danych — czysty SQL, transakcje i integralność. Solidne fundamenty pod dane.',
-      tags:['SQL','Transakcje','Relacje','Indexy'] },
+    { id:'mongo',   icon:'i-mongo',   name:'MongoDB',    cat:'database', catLabel:'Database', level:83,
+      desc:'A NoSQL database — flexible document schema, aggregations and fast prototyping.',
+      tags:['Mongoose','Aggregations','Atlas','Indexes'] },
+    { id:'mysql',   icon:'i-mysql',   name:'MySQL',      cat:'database', catLabel:'Database', level:80,
+      desc:'A relational database — clean SQL, transactions and integrity. Solid foundations for your data.',
+      tags:['SQL','Transactions','Relations','Indexes'] },
   ];
 
   const PIPE = [
     { id:'brief',  icon:'p-brief',  step:'01', name:'Brief & Idea', cmd:'$ git init',
-      desc:'Wymagania i cele biznesowe.',
-      long:'Wszystko zaczyna się od rozmowy. Zbieram wymagania, poznaję cel biznesowy i definiuję, co znaczy „sukces” dla projektu. Ustalamy zakres, budżet i harmonogram.',
+      desc:'Requirements and business goals.',
+      long:'It all starts with a conversation. I gather requirements, learn the business goal and define what “success” means for the project. We agree on scope, budget and timeline.',
       tools:['Notion','FigJam','User stories'] },
-    { id:'plan',   icon:'p-plan',   step:'02', name:'Architektura', cmd:'$ npm create',
-      desc:'Stack, modele danych, struktura.',
-      long:'Projektuję architekturę: dobór stacku, struktura folderów, modele danych i przepływy. Decyzje techniczne zapadają tu, zanim powstanie pierwsza linia kodu produkcyjnego.',
+    { id:'plan',   icon:'p-plan',   step:'02', name:'Architecture', cmd:'$ npm create',
+      desc:'Stack, data models, structure.',
+      long:'I design the architecture: stack selection, folder structure, data models and flows. The technical decisions are made here, before the first line of production code.',
       tools:['Excalidraw','ERD','ADR'] },
     { id:'design', icon:'p-design', step:'03', name:'UI / UX Design', cmd:'$ figma open',
-      desc:'Design system i prototyp.',
-      long:'Tworzę spójny design system i klikalny prototyp w Figmie. Dopieszczam typografię, siatkę, stany i mikrointerakcje — bo „too clean for default UI”.',
-      tools:['Figma','Design system','Prototyp'] },
+      desc:'Design system and prototype.',
+      long:'I build a consistent design system and a clickable prototype in Figma. I refine typography, grid, states and micro-interactions — because it has to be “too clean for default UI”.',
+      tools:['Figma','Design system','Prototype'] },
     { id:'dev',    icon:'p-dev',    step:'04', name:'Development', cmd:'$ git checkout -b feat',
-      desc:'Czysty, komponentowy kod.',
-      long:'Implementacja w feature-branchach, czysty komponentowy kod i konsekwentny Git flow. Małe, czytelne commity i sensowne nazewnictwo.',
+      desc:'Clean, component-based code.',
+      long:'Implementation in feature branches, clean component-based code and a consistent Git flow. Small, readable commits and meaningful naming.',
       tools:['VS Code','Git','ESLint','Prettier'] },
     { id:'review', icon:'p-review', step:'05', name:'Code Review', cmd:'$ gh pr create',
-      desc:'Pull requesty i standardy.',
-      long:'Każda zmiana przechodzi przez Pull Request. Automatyczny lint, spójne standardy i przegląd kodu pilnują jakości oraz utrzymywalności.',
+      desc:'Pull requests and standards.',
+      long:'Every change goes through a Pull Request. Automated linting, consistent standards and code review keep quality and maintainability in check.',
       tools:['GitHub PR','Conventional Commits'] },
-    { id:'test',   icon:'p-test',   step:'06', name:'Testy & QA', cmd:'$ npm test',
-      desc:'Unit, E2E i audyt wydajności.',
-      long:'Testy jednostkowe i E2E, weryfikacja cross-browser oraz audyt wydajności i dostępności. Zielony pipeline to warunek wejścia dalej.',
+    { id:'test',   icon:'p-test',   step:'06', name:'Tests & QA', cmd:'$ npm test',
+      desc:'Unit, E2E and performance audit.',
+      long:'Unit and E2E tests, cross-browser verification and a performance & accessibility audit. A green pipeline is the gate to move forward.',
       tools:['Vitest','Playwright','Lighthouse'] },
     { id:'cicd',   icon:'p-cicd',   step:'07', name:'CI / CD', cmd:'$ git push origin',
-      desc:'Automatyczny build przy pushu.',
-      long:'GitHub Actions automatycznie buduje, lintuje i wdraża aplikację przy każdym pushu. Zero ręcznych deployów, pełna powtarzalność.',
+      desc:'Automated build on every push.',
+      long:'GitHub Actions automatically builds, lints and deploys the app on every push. Zero manual deploys, fully reproducible.',
       tools:['GitHub Actions','Docker','Cache'] },
     { id:'deploy', icon:'p-deploy', step:'08', name:'Deploy & Monitor', cmd:'$ vercel --prod',
-      desc:'Wdrożenie, monitoring, iteracje.',
-      long:'Wdrożenie produkcyjne za jednym pushem, a potem monitoring błędów i metryk. Na bazie danych iterujemy i rozwijamy produkt dalej.',
+      desc:'Ship, monitor, iterate.',
+      long:'Production deploy in a single push, followed by error and metrics monitoring. Based on the data we iterate and keep growing the product.',
       tools:['Vercel','Analytics','Sentry'] },
   ];
 
@@ -377,7 +377,7 @@
      ============================================================= */
   (function rotator() {
     const el = $('#rotator'); if (!el) return;
-    const words = ['nieziemski','błyskawiczny','dopracowany','interaktywny','skalowalny'];
+    const words = ['otherworldly','lightning-fast','polished','interactive','scalable'];
     if (REDUCED) { el.textContent = words[0]; return; }
     let wi = 0, ci = 0, deleting = false;
     (function tick() {
@@ -415,23 +415,23 @@
 
     const COMMANDS = {
       help: () => print(
-        `dostępne komendy:\n` +
-        `  <span class="c">help</span>      — ta lista\n` +
-        `  <span class="c">whoami</span>    — kim jest arwi\n` +
-        `  <span class="c">stack</span>     — moje technologie\n` +
-        `  <span class="c">pipeline</span>  — etapy produkcji\n` +
-        `  <span class="c">social</span>    — gdzie mnie znaleźć\n` +
-        `  <span class="c">contact</span>   — zlećmy projekt\n` +
-        `  <span class="c">neofetch</span>  — info o systemie\n` +
-        `  <span class="c">matrix</span>    — wiesz, że chcesz\n` +
-        `  <span class="c">clear</span>     — wyczyść ekran`),
+        `available commands:\n` +
+        `  <span class="c">help</span>      — this list\n` +
+        `  <span class="c">whoami</span>    — who is arwi\n` +
+        `  <span class="c">stack</span>     — my technologies\n` +
+        `  <span class="c">pipeline</span>  — production stages\n` +
+        `  <span class="c">social</span>    — where to find me\n` +
+        `  <span class="c">contact</span>   — let's build something\n` +
+        `  <span class="c">neofetch</span>  — system info\n` +
+        `  <span class="c">matrix</span>    — you know you want to\n` +
+        `  <span class="c">clear</span>     — clear the screen`),
       whoami: () => print(`<span class="w">arwi</span> — modern web developer.\nFront-end + back-end. <span class="c">"too clean for default UI"</span>.`),
       ls: () => print(`stack/   pipeline/   social/   contact/   <span class="m">.secrets/</span>`),
       stack: () => print(TECH.map(t => `  <span class="b">${t.name.padEnd(11)}</span> <span class="m">${'█'.repeat(Math.round(t.level/10))}${'░'.repeat(10-Math.round(t.level/10))}</span> ${t.level}%`).join('\n')),
       skills: () => COMMANDS.stack(),
       pipeline: () => print(PIPE.map(p => `  <span class="c">${p.step}</span> ${p.name}`).join('  →\n')),
-      social: () => { print(`<span class="b">YouTube</span> · <span class="b">X/Twitter</span> · <span class="b">GitHub</span> · <span class="b">Discord</span>\n<span class="m">→ przewijam do sekcji social...</span>`); go('#social'); },
-      contact: () => { print(`<span class="ok">→</span> najlepiej złap mnie na Discordzie: <span class="c">${DISCORD_NICK}</span>`); go('#contact'); },
+      social: () => { print(`<span class="b">YouTube</span> · <span class="b">X/Twitter</span> · <span class="b">GitHub</span> · <span class="b">Discord</span>\n<span class="m">→ scrolling to the social section...</span>`); go('#social'); },
+      contact: () => { print(`<span class="ok">→</span> best way to reach me is Discord: <span class="c">${DISCORD_NICK}</span>`); go('#contact'); },
       discord: () => COMMANDS.contact(),
       neofetch: () => print(
 `<span class="b">      /\\___/\\        </span>  <span class="w">arwi</span>@<span class="w">dev</span>
@@ -458,13 +458,13 @@
       const [cmd, ...rest] = line.split(' ');
       const fn = COMMANDS[cmd.toLowerCase()];
       if (fn) fn(rest.join(' '));
-      else print(`<span class="m">command not found: ${esc(cmd)} — wpisz </span><span class="c">help</span>`);
+      else print(`<span class="m">command not found: ${esc(cmd)} — type </span><span class="c">help</span>`);
     }
 
     let booted = false, history = [], hi = -1;
     function bootIntro() {
       if (booted) return; booted = true;
-      print('<span class="m">// terminal gotowy. wpisz </span><span class="c">help</span><span class="m"> i naciśnij Enter.</span>');
+      print('<span class="m">// terminal ready. type </span><span class="c">help</span><span class="m"> and hit Enter.</span>');
     }
 
     input.addEventListener('input', () => { typed.textContent = input.value; });
@@ -509,7 +509,7 @@
     const grid = $('#techGrid'); if (!grid) return;
     grid.innerHTML = TECH.map(t => `
       <button class="tech-card reveal" data-reveal data-id="${t.id}" data-cat="${t.cat}" aria-label="${t.name}">
-        <span class="tech-card__hint">klik › szczegóły</span>
+        <span class="tech-card__hint">click › details</span>
         <svg class="ic tech-card__icon"><use href="#${t.icon}"/></svg>
         <div class="tech-card__cat">${t.catLabel}</div>
         <div class="tech-card__name">${t.name}</div>
@@ -545,10 +545,10 @@
         </div>
         <p class="mbody-text">${t.desc}</p>
         <div class="mlevel">
-          <div class="mlevel__top"><span>biegłość</span><span>${t.level}%</span></div>
+          <div class="mlevel__top"><span>proficiency</span><span>${t.level}%</span></div>
           <div class="mlevel__bar"><span class="mlevel__fill" data-w="${t.level}%"></span></div>
         </div>
-        <div class="mtools"><h4>czego używam</h4><div class="mtags">${t.tags.map(x => `<span class="mtag">${x}</span>`).join('')}</div></div>
+        <div class="mtools"><h4>what I use</h4><div class="mtags">${t.tags.map(x => `<span class="mtag">${x}</span>`).join('')}</div></div>
       `);
     });
 
@@ -660,11 +660,11 @@
       Modal.open(`
         <div class="mhead">
           <div class="mhead__icon"><svg class="ic"><use href="#${p.icon}"/></svg></div>
-          <div><div class="mcat">etap ${p.step} / ${PIPE.length}</div><h3>${p.name}</h3></div>
+          <div><div class="mcat">stage ${p.step} / ${PIPE.length}</div><h3>${p.name}</h3></div>
         </div>
         <p class="mbody-text">${p.long}</p>
         <div class="contact__terminal" style="margin:0 0 6px;"><span class="contact__prompt">~ $</span><span class="contact__cmd">${p.cmd}</span></div>
-        <div class="mtools"><h4>narzędzia</h4><div class="mtags">${p.tools.map(x => `<span class="mtag">${x}</span>`).join('')}</div></div>
+        <div class="mtools"><h4>tools</h4><div class="mtags">${p.tools.map(x => `<span class="mtag">${x}</span>`).join('')}</div></div>
       `);
     });
 
@@ -683,16 +683,16 @@
     const root = $('#cmdk'), input = $('#cmdkInput'), list = $('#cmdkList');
     const go = sel => { const t = $(sel); if (t) t.scrollIntoView({ behavior: REDUCED ? 'auto':'smooth' }); close(); };
     const CMDS = [
-      { icon:'ui-arrow-right', label:'Przejdź: Stack',     sub:'moje technologie',      keys:'01', kw:'stack technologie tech', run:() => go('#stack') },
-      { icon:'ui-arrow-right', label:'Przejdź: Pipeline',  sub:'proces produkcyjny',    keys:'02', kw:'pipeline proces workflow', run:() => go('#pipeline') },
-      { icon:'ui-arrow-right', label:'Przejdź: Social',    sub:'media społecznościowe', keys:'03', kw:'social youtube github x twitter discord', run:() => go('#social') },
-      { icon:'ui-arrow-right', label:'Przejdź: Kontakt',   sub:'zlećmy projekt',        keys:'04', kw:'kontakt contact projekt', run:() => go('#contact') },
-      { icon:'s-discord',  label:'Otwórz Discord',      sub:DISCORD_URL,             keys:'↵', kw:'discord kontakt', run:() => { window.open(DISCORD_URL,'_blank'); close(); } },
-      { icon:'ui-copy',    label:'Skopiuj nick Discord',sub:DISCORD_NICK,            keys:'⌘C', kw:'copy discord nick', run:() => { copyDiscord(); close(); } },
-      { icon:'s-github',   label:'Otwórz GitHub',       sub:'github.com/arqi74',     keys:'↗', kw:'github repo kod', run:() => { window.open('https://github.com/arqi74','_blank'); close(); } },
-      { icon:'ui-terminal',label:'Skup się na terminalu',sub:'wpisz help',           keys:'>', kw:'terminal konsola cli', run:() => { close(); Term.focus(); } },
-      { icon:'ui-spark',   label:'Matrix mode',         sub:'deszcz znaków',         keys:'fx', kw:'matrix deszcz efekt', run:() => { Matrix.toggle(); close(); } },
-      { icon:'ui-spark',   label:'🐺 Wolf mode',        sub:'easter egg',            keys:'fx', kw:'wolf wilk easter egg', run:() => { WolfMode(); close(); } },
+      { icon:'ui-arrow-right', label:'Go to: Stack',     sub:'my technologies',     keys:'01', kw:'stack technologies tech', run:() => go('#stack') },
+      { icon:'ui-arrow-right', label:'Go to: Pipeline',  sub:'production process',  keys:'02', kw:'pipeline process workflow', run:() => go('#pipeline') },
+      { icon:'ui-arrow-right', label:'Go to: Social',    sub:'social media',        keys:'03', kw:'social youtube github x twitter discord', run:() => go('#social') },
+      { icon:'ui-arrow-right', label:'Go to: Contact',   sub:"let's build",         keys:'04', kw:'contact project hire', run:() => go('#contact') },
+      { icon:'s-discord',  label:'Open Discord',         sub:DISCORD_URL,           keys:'↵', kw:'discord contact', run:() => { window.open(DISCORD_URL,'_blank'); close(); } },
+      { icon:'ui-copy',    label:'Copy Discord username',sub:DISCORD_NICK,          keys:'⌘C', kw:'copy discord username nick', run:() => { copyDiscord(); close(); } },
+      { icon:'s-github',   label:'Open GitHub',          sub:'github.com/arqi74',   keys:'↗', kw:'github repo code', run:() => { window.open('https://github.com/arqi74','_blank'); close(); } },
+      { icon:'ui-terminal',label:'Focus the terminal',   sub:'type help',           keys:'>', kw:'terminal console cli', run:() => { close(); Term.focus(); } },
+      { icon:'ui-spark',   label:'Matrix mode',          sub:'character rain',      keys:'fx', kw:'matrix rain effect', run:() => { Matrix.toggle(); close(); } },
+      { icon:'ui-spark',   label:'🐺 Wolf mode',         sub:'easter egg',          keys:'fx', kw:'wolf easter egg', run:() => { WolfMode(); close(); } },
     ];
     let active = 0, filtered = CMDS;
 
@@ -702,7 +702,7 @@
           <svg class="ic"><use href="#${c.icon}"/></svg>
           <span><b>${c.label}</b><small>${c.sub}</small></span>
           <span class="k">${c.keys}</span>
-        </li>`).join('') || `<li class="cmdk__item" style="cursor:default"><span><b>Brak wyników</b><small>spróbuj „pipeline” albo „discord”</small></span></li>`;
+        </li>`).join('') || `<li class="cmdk__item" style="cursor:default"><span><b>No results</b><small>try “pipeline” or “discord”</small></span></li>`;
     }
     function filter() {
       const q = input.value.trim().toLowerCase();
@@ -742,7 +742,7 @@
     setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(10px)'; t.style.transition='.4s'; setTimeout(() => t.remove(), 400); }, 2400);
   }
   function copyDiscord() {
-    const done = () => toast(`Skopiowano: <code>${DISCORD_NICK}</code>`, 'ui-copy');
+    const done = () => toast(`Copied: <code>${DISCORD_NICK}</code>`, 'ui-copy');
     if (navigator.clipboard) navigator.clipboard.writeText(DISCORD_NICK).then(done).catch(fallback);
     else fallback();
     function fallback() { const i = document.createElement('input'); i.value = DISCORD_NICK; document.body.append(i); i.select(); try{document.execCommand('copy');}catch(e){} i.remove(); done(); }
@@ -782,7 +782,7 @@
     addEventListener('keydown', e => {
       const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
       idx = (k === seq[idx]) ? idx + 1 : (k === seq[0] ? 1 : 0);
-      if (idx === seq.length) { idx = 0; WolfMode(); toast('🐺 KONAMI — sekret odblokowany!','ui-spark'); }
+      if (idx === seq.length) { idx = 0; WolfMode(); toast('🐺 KONAMI — secret unlocked!','ui-spark'); }
     });
   })();
 
