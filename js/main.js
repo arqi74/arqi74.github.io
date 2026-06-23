@@ -81,8 +81,8 @@
       tools:['Vercel','Analytics','Sentry'] },
   ];
 
-  const DISCORD_URL  = 'https://discord.gg/your-invite';
-  const DISCORD_NICK = 'arwi.dev';
+  const DISCORD_URL  = 'https://discord.com/users/239008388544069633';
+  const DISCORD_NICK = 'arwi74';
 
   /* =============================================================
      BOOT LOADER
@@ -423,8 +423,9 @@
         `  <span class="c">social</span>    — where to find me\n` +
         `  <span class="c">contact</span>   — let's build something\n` +
         `  <span class="c">neofetch</span>  — system info\n` +
-        `  <span class="c">matrix</span>    — you know you want to\n` +
-        `  <span class="c">clear</span>     — clear the screen`),
+        `  <span class="c">sudo</span>      — you know you want to\n` +
+        `  <span class="c">clear</span>     — clear the screen\n` +
+        `  <span class="c">theme</span>     — change theme`),
       whoami: () => print(`<span class="w">arwi</span> — modern web developer.\nFront-end + back-end. <span class="c">"too clean for default UI"</span>.`),
       ls: () => print(`stack/   pipeline/   social/   contact/   <span class="m">.secrets/</span>`),
       stack: () => print(TECH.map(t => `  <span class="b">${t.name.padEnd(11)}</span> <span class="m">${'█'.repeat(Math.round(t.level/10))}${'░'.repeat(10-Math.round(t.level/10))}</span> ${t.level}%`).join('\n')),
@@ -448,6 +449,7 @@
       theme: () => print('<span class="m">theme: electric-blue (locked). too clean to change.</span>'),
       clear: () => { $$('.term__line', screen).forEach(l => { if (l !== inputLine) l.remove(); }); },
       echo:  (arg) => print(esc(arg || '')),
+      wolfy: () => print(`<span class="m">Wolfy is very old ngl.. but he's cool dog</span>`)
     };
 
     function go(sel) { const t = $(sel); if (t) t.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' }); }
