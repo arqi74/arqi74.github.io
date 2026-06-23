@@ -1,40 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="arwidev — Frontend Web Developer. I craft modern, fast and polished web experiences with React, Vue, Angular, Node.js and more." />
-  <meta name="author" content="arwidev" />
-  <meta name="theme-color" content="#080b14" />
+  <meta name="description" content="ARWI.DEV — nowoczesny web developer. Buduję szybkie, dopracowane aplikacje webowe w React, Vue, Angular, Node.js, TypeScript i nie tylko. Too clean for default UI." />
+  <meta name="author" content="ARWI.DEV" />
+  <meta name="theme-color" content="#070a12" />
+  <meta name="color-scheme" content="dark" />
 
-  <meta property="og:title" content="arwidev — Frontend Web Developer" />
-  <meta property="og:description" content="I craft modern, fast and polished web experiences." />
+  <meta property="og:title" content="ARWI.DEV — Modern Web Developer" />
+  <meta property="og:description" content="Modern web design & front-end solutions. Too clean for default UI." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="arwi-dev-white-text.png" />
 
-  <title>arwidev — Frontend Web Developer</title>
+  <title>ARWI.DEV — Modern Web Developer</title>
 
+  <link rel="icon" type="image/png" href="arwi-dev-white-text.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-  <!-- ============ MONOCHROME SVG ICON SPRITE ============ -->
+<body data-loading>
+
+  <!-- ============================================================= -->
+  <!-- MONOCHROME SVG ICON SPRITE                                    -->
+  <!-- ============================================================= -->
   <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" focusable="false">
     <defs>
-      <!-- Tech -->
+      <!-- ===== Tech ===== -->
       <symbol id="i-html" viewBox="0 0 24 24">
         <path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" d="M4 3l1.4 16L12 21l6.6-2L20 3z"/>
-        <text x="12" y="14.4" text-anchor="middle" fill="currentColor" font-size="7.5" font-weight="700" font-family="'Space Grotesk',sans-serif" letter-spacing="-.3">5</text>
+        <text x="12" y="14.6" text-anchor="middle" fill="currentColor" font-size="7.4" font-weight="700" font-family="'JetBrains Mono',monospace" letter-spacing="-.3">5</text>
       </symbol>
       <symbol id="i-css" viewBox="0 0 24 24">
         <path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" d="M4 3l1.4 16L12 21l6.6-2L20 3z"/>
-        <text x="12" y="14.4" text-anchor="middle" fill="currentColor" font-size="7.5" font-weight="700" font-family="'Space Grotesk',sans-serif" letter-spacing="-.3">3</text>
+        <text x="12" y="14.6" text-anchor="middle" fill="currentColor" font-size="7.4" font-weight="700" font-family="'JetBrains Mono',monospace" letter-spacing="-.3">3</text>
       </symbol>
       <symbol id="i-js" viewBox="0 0 24 24">
         <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="12" y="15.6" text-anchor="middle" fill="currentColor" font-size="8" font-weight="700" font-family="'Space Grotesk',sans-serif" letter-spacing="-.5">JS</text>
+        <text x="12" y="15.6" text-anchor="middle" fill="currentColor" font-size="8" font-weight="700" font-family="'JetBrains Mono',monospace" letter-spacing="-.5">JS</text>
+      </symbol>
+      <symbol id="i-ts" viewBox="0 0 24 24">
+        <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        <text x="12" y="15.6" text-anchor="middle" fill="currentColor" font-size="8" font-weight="700" font-family="'JetBrains Mono',monospace" letter-spacing="-.5">TS</text>
       </symbol>
       <symbol id="i-react" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="1.7" fill="currentColor"/>
@@ -57,10 +67,6 @@
           <path d="M9.9 12.9h4.2"/>
         </g>
       </symbol>
-      <symbol id="i-bootstrap" viewBox="0 0 24 24">
-        <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="3.6" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        <text x="11.4" y="16.4" text-anchor="middle" fill="currentColor" font-size="11" font-weight="700" font-family="'Space Grotesk',sans-serif">B</text>
-      </symbol>
       <symbol id="i-node" viewBox="0 0 24 24">
         <path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" d="M12 2.4l8.3 4.8v9.6L12 21.6 3.7 16.8V7.2z"/>
         <path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M9.4 14.6c0 1 .9 1.6 2.2 1.6 1.4 0 2.3-.6 2.3-1.7 0-2.4-4.3-1-4.3-3.3 0-1 .9-1.6 2.1-1.6 1.2 0 2 .5 2.1 1.5"/>
@@ -79,447 +85,334 @@
         </g>
       </symbol>
 
-      <!-- Process -->
-      <symbol id="p-plan" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="8.6"/>
-          <path d="M15.6 8.4L13 13l-4.6 2.6L11 11z"/>
-        </g>
-      </symbol>
-      <symbol id="p-design" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3L4.5 10.5 3 17l6.5-1.5L17 8z"/>
-          <path d="M13.5 4.5l3 3"/>
-          <path d="M4.5 10.5l4 4"/>
-        </g>
-      </symbol>
-      <symbol id="p-dev" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 8l-4 4 4 4"/>
-          <path d="M16 8l4 4-4 4"/>
-          <path d="M13.5 6l-3 12"/>
-        </g>
-      </symbol>
-      <symbol id="p-test" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 3h6"/>
-          <path d="M10 3v6.2l-4.6 8.1c-.6 1 .2 2.2 1.4 2.2h10.4c1.2 0 2-1.2 1.4-2.2L14 9.2V3"/>
-          <path d="M7.4 14.5h9.2"/>
-        </g>
-      </symbol>
-      <symbol id="p-deploy" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2.8c3 1.6 5 5 5 9l-2.4 2.4H9.4L7 11.8c0-4 2-7.4 5-9z"/>
-          <circle cx="12" cy="9.4" r="1.4"/>
-          <path d="M9.4 16.8l-1.6 3M14.6 16.8l1.6 3M12 16.8v3.6"/>
-        </g>
-      </symbol>
+      <!-- ===== Pipeline stages ===== -->
+      <symbol id="p-brief" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.4 1 1.1 1 1.8v.3h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0012 3z"/></g></symbol>
+      <symbol id="p-plan" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="7" height="7" rx="1"/><rect x="13.5" y="4" width="7" height="4.5" rx="1"/><rect x="13.5" y="11.5" width="7" height="8.5" rx="1"/><rect x="3.5" y="14.5" width="7" height="5.5" rx="1"/></g></symbol>
+      <symbol id="p-design" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L4.5 10.5 3 17l6.5-1.5L17 8z"/><path d="M13.5 4.5l3 3"/></g></symbol>
+      <symbol id="p-dev" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></g></symbol>
+      <symbol id="p-review" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="9" r="2.2"/><path d="M6 8.2v7.6M8.2 6h5.6a2 2 0 012 2v.8M18 11.2V14a2 2 0 01-2 2H8.4"/></g></symbol>
+      <symbol id="p-test" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6.2l-4.6 8.1c-.6 1 .2 2.2 1.4 2.2h10.4c1.2 0 2-1.2 1.4-2.2L14 9.2V3"/><path d="M7.4 14.5h9.2"/></g></symbol>
+      <symbol id="p-cicd" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3"/><path d="M18 3v3.7h-3.7M6 21v-3.7h3.7"/></g></symbol>
+      <symbol id="p-deploy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8c3 1.6 5 5 5 9l-2.4 2.4H9.4L7 11.8c0-4 2-7.4 5-9z"/><circle cx="12" cy="9.4" r="1.4"/><path d="M9.4 16.8l-1.6 3M14.6 16.8l1.6 3M12 16.8v3.6"/></g></symbol>
 
-      <!-- Social -->
-      <symbol id="s-discord" viewBox="0 0 24 24">
-        <path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/>
-      </symbol>
-      <symbol id="s-github" viewBox="0 0 24 24">
-        <path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-      </symbol>
-      <symbol id="ui-arrow" viewBox="0 0 24 24">
-        <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7"/>
-      </symbol>
-      <symbol id="ui-close" viewBox="0 0 24 24">
-        <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
-      </symbol>
-      <symbol id="f-start" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 21V4"/>
-          <path d="M6 4.5h11l-2.2 3.2L17 11H6z"/>
-        </g>
-      </symbol>
-      <symbol id="f-end" viewBox="0 0 24 24">
-        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M8.3 12.2l2.6 2.6L16 9.4"/>
-        </g>
-      </symbol>
+      <!-- ===== Social ===== -->
+      <symbol id="s-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.3 31.3 0 000 12a31.3 31.3 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.3 31.3 0 0024 12a31.3 31.3 0 00-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></symbol>
+      <symbol id="s-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></symbol>
+      <symbol id="s-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+      <symbol id="s-discord" viewBox="0 0 24 24"><path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></symbol>
+
+      <!-- ===== UI ===== -->
+      <symbol id="ui-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="ui-arrow-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12l7 7 7-7"/></symbol>
+      <symbol id="ui-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></symbol>
+      <symbol id="ui-terminal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></g></symbol>
+      <symbol id="ui-command" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M8 6a2 2 0 10-2 2h12a2 2 0 10-2-2v12a2 2 0 102-2H6a2 2 0 102 2z"/></symbol>
+      <symbol id="ui-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></g></symbol>
+      <symbol id="ui-external" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h4"/></g></symbol>
+      <symbol id="ui-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></g></symbol>
+      <symbol id="ui-spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></symbol>
     </defs>
   </svg>
 
-  <!-- Scroll progress -->
-  <div class="scroll-progress" id="scrollProgress"></div>
+  <!-- Decorative full-page canvases -->
+  <canvas id="bgCanvas" class="fx-canvas" aria-hidden="true"></canvas>
+  <canvas id="matrixCanvas" class="fx-canvas fx-canvas--matrix" aria-hidden="true"></canvas>
+  <canvas id="burstCanvas" class="fx-canvas fx-canvas--burst" aria-hidden="true"></canvas>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
 
-  <!-- Custom (squared) cursor -->
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- Custom cursor -->
   <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
   <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
-  <!-- Preloader -->
-  <div class="preloader" id="preloader">
-    <div class="preloader__inner">
-      <span class="preloader__logo">arwi<span>dev</span></span>
-      <div class="preloader__bar"><span></span></div>
+  <!-- ============================================================= -->
+  <!-- BOOT LOADER                                                   -->
+  <!-- ============================================================= -->
+  <div class="boot" id="boot">
+    <div class="boot__win">
+      <div class="boot__bar">
+        <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+        <span class="boot__title">arwi@dev: ~/portfolio</span>
+      </div>
+      <pre class="boot__log" id="bootLog"></pre>
+      <div class="boot__progress"><span id="bootProgress"></span></div>
+    </div>
+    <button class="boot__skip" id="bootSkip" type="button">skip&nbsp;›</button>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- COMMAND PALETTE                                               -->
+  <!-- ============================================================= -->
+  <div class="cmdk" id="cmdk" aria-hidden="true">
+    <div class="cmdk__panel" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div class="cmdk__search">
+        <svg class="ic"><use href="#ui-search"/></svg>
+        <input id="cmdkInput" type="text" placeholder="Wpisz komendę lub szukaj…  (np. 'pipeline', 'discord')" autocomplete="off" spellcheck="false" />
+        <kbd class="cmdk__esc">ESC</kbd>
+      </div>
+      <ul class="cmdk__list" id="cmdkList" role="listbox"></ul>
+      <div class="cmdk__foot">
+        <span><kbd>↑</kbd><kbd>↓</kbd> nawigacja</span>
+        <span><kbd>↵</kbd> wybierz</span>
+        <span><kbd>esc</kbd> zamknij</span>
+      </div>
     </div>
   </div>
 
-  <!-- Navigation -->
+  <!-- Generic modal host (popups) -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__card" role="dialog" aria-modal="true" id="modalCard">
+      <button class="modal__close" id="modalClose" type="button" aria-label="Zamknij">
+        <svg class="ic"><use href="#ui-close"/></svg>
+      </button>
+      <div class="modal__body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <!-- ============================================================= -->
+  <!-- NAV                                                           -->
+  <!-- ============================================================= -->
   <header class="nav" id="nav">
     <a href="#hero" class="nav__brand" data-magnetic>
-      <span class="nav__brand-mark"></span>
-      <span class="nav__brand-text">arwi<span>dev</span></span>
+      <img src="arwi-dev-white-text.png" alt="ARWI.DEV" class="nav__logo" />
     </a>
 
-    <nav class="nav__links" id="navLinks">
-      <a href="#about" class="nav__link">About</a>
-      <a href="#process" class="nav__link">Process</a>
-      <a href="#skills" class="nav__link">Skills</a>
-      <a href="#contact" class="nav__link nav__link--cta">Contact</a>
+    <nav class="nav__links" id="navLinks" aria-label="Główna nawigacja">
+      <a href="#stack" class="nav__link"><span class="nav__idx">01</span> Stack</a>
+      <a href="#pipeline" class="nav__link"><span class="nav__idx">02</span> Pipeline</a>
+      <a href="#social" class="nav__link"><span class="nav__idx">03</span> Social</a>
+      <a href="#contact" class="nav__link"><span class="nav__idx">04</span> Kontakt</a>
     </nav>
 
-    <button class="nav__toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav__right">
+      <button class="cmdk-trigger" id="cmdkTrigger" type="button" data-magnetic aria-label="Otwórz paletę komend">
+        <svg class="ic"><use href="#ui-command"/></svg>
+        <span>K</span>
+      </button>
+      <button class="nav__burger" id="navBurger" type="button" aria-label="Menu"><span></span><span></span></button>
+    </div>
   </header>
 
+  <!-- Section dots -->
+  <nav class="dots" id="dots" aria-label="Sekcje">
+    <a href="#hero"     class="dots__dot" data-label="Home"></a>
+    <a href="#stack"    class="dots__dot" data-label="Stack"></a>
+    <a href="#pipeline" class="dots__dot" data-label="Pipeline"></a>
+    <a href="#social"   class="dots__dot" data-label="Social"></a>
+    <a href="#contact"  class="dots__dot" data-label="Kontakt"></a>
+  </nav>
+
   <main>
-    <!-- ============ HERO ============ -->
+    <!-- ========================================================== -->
+    <!-- HERO                                                       -->
+    <!-- ========================================================== -->
     <section class="hero" id="hero">
-      <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
-      <div class="hero__grid" data-parallax="0.04" aria-hidden="true"></div>
       <div class="hero__glow" aria-hidden="true"></div>
 
-      <!-- Floating geometric squares (parallax) -->
-      <div class="shape shape--1" data-parallax="0.22" aria-hidden="true"></div>
-      <div class="shape shape--2" data-parallax="-0.16" aria-hidden="true"></div>
-      <div class="shape shape--3" data-parallax="0.1" aria-hidden="true"></div>
-      <div class="shape shape--4" data-parallax="-0.08" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="hero__left">
+          <span class="tag reveal" data-reveal>
+            <svg class="ic"><use href="#ui-spark"/></svg> Modern Web Design &amp; Front-End Solutions
+          </span>
 
-      <div class="hero__content" data-parallax="0.05">
-        <p class="hero__eyebrow reveal">
-          <span class="hero__status-dot"></span> Available for work
-        </p>
-        <h1 class="hero__title">
-          <span class="hero__line"><span>Hi, I&rsquo;m</span></span>
-          <span class="hero__line hero__title-name"><span>arwidev</span></span>
-        </h1>
-        <p class="hero__role reveal">
-          Frontend Web Developer
-          <span class="hero__role-sep">—</span>
-          <span class="hero__rotator" id="rotator" aria-hidden="true"></span>
-        </p>
-        <p class="hero__lead reveal">
-          I turn ideas into modern, fast and polished web experiences —
-          from the first line of the plan to the final deployment.
-        </p>
-        <div class="hero__actions reveal">
-          <a href="#skills" class="btn btn--primary" data-magnetic>
-            <span>View skills</span>
-            <svg class="ico" aria-hidden="true"><use href="#ui-arrow"></use></svg>
-          </a>
-          <a href="#contact" class="btn btn--ghost" data-magnetic>
-            <span>Get in touch</span>
-          </a>
-        </div>
-      </div>
+          <h1 class="hero__title reveal" data-reveal>
+            Buduję web,<br>który jest
+            <span class="hero__rotator"><span id="rotator">nieziemski</span><span class="caret">▌</span></span>
+          </h1>
 
-      <a href="#about" class="hero__scroll" aria-label="Scroll down">
-        <span class="hero__scroll-text">scroll</span>
-        <span class="hero__scroll-line"></span>
-      </a>
-    </section>
+          <p class="hero__lead reveal" data-reveal>
+            Cześć, jestem <strong>ARWI</strong> — web developer zakochany w czystym kodzie
+            i dopracowanym UI. Łączę front-end z back-endem i tworzę produkty,
+            które działają szybko i wyglądają jak z przyszłości.
+            <span class="hero__lead-comment">// too clean for default UI</span>
+          </p>
 
-    <!-- ============ ABOUT ============ -->
-    <section class="section about" id="about">
-      <div class="container">
-        <header class="section__head">
-          <span class="section__index reveal">01 / About</span>
-          <h2 class="section__title reveal">About me</h2>
-        </header>
-
-        <div class="about__grid">
-          <div class="about__text">
-            <p class="about__lead reveal">
-              I&rsquo;m a frontend developer in love with detail, motion and clean code.
-            </p>
-            <p class="reveal">
-              I build websites and apps that don&rsquo;t just look great — they&rsquo;re blazing
-              fast and a joy to use. I pair engineering craft with an eye for design, so the
-              result feels <strong>WOW</strong> while staying neatly organised under the hood.
-            </p>
-            <p class="reveal">
-              I work with a modern stack (React, Vue, Angular, Node.js) and care about
-              performance, accessibility and responsiveness. Every project is craft —
-              from plan, through design, to deployment.
-            </p>
+          <div class="hero__cta reveal" data-reveal>
+            <a href="#stack" class="btn btn--primary" data-magnetic>
+              <span>Zobacz mój stack</span>
+              <svg class="ic"><use href="#ui-arrow-right"/></svg>
+            </a>
+            <a href="#contact" class="btn btn--ghost" data-magnetic>
+              <svg class="ic"><use href="#s-discord"/></svg>
+              <span>Zlećmy projekt</span>
+            </a>
           </div>
 
-          <ul class="stats">
-            <li class="stat reveal">
-              <span class="stat__num" data-count="50" data-suffix="+">0</span>
-              <span class="stat__label">Projects delivered</span>
-            </li>
-            <li class="stat reveal">
-              <span class="stat__num" data-count="10" data-suffix="">0</span>
-              <span class="stat__label">Technologies</span>
-            </li>
-            <li class="stat reveal">
-              <span class="stat__num" data-count="100" data-suffix="%">0</span>
-              <span class="stat__label">Commitment</span>
-            </li>
-            <li class="stat reveal">
-              <span class="stat__num" data-count="∞" data-suffix="">∞</span>
-              <span class="stat__label">Cups of coffee</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ PROCESS ============ -->
-    <section class="section process" id="process">
-      <div class="container">
-        <header class="section__head">
-          <span class="section__index reveal">02 / Process</span>
-          <h2 class="section__title reveal">My creative process</h2>
-          <p class="section__subtitle reveal">
-            An interactive, production-style flowchart of how a project is built.
-            Click any block to open a detailed breakdown of the stage, its activities
-            and the technologies behind it.
-          </p>
-        </header>
-
-        <div class="flow" id="flow">
-          <svg class="flow__wires" id="flowWires" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <marker id="flowArrow" viewBox="0 0 10 10" refX="7.5" refY="5"
-                      markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M0 0L10 5L0 10z" fill="var(--accent)"></path>
-              </marker>
-            </defs>
-          </svg>
-
-          <div class="flow__col">
-            <button class="flow__node flow__node--term" data-flow="start" data-popup="start" type="button">
-              <svg class="ico" aria-hidden="true"><use href="#f-start"></use></svg>
-              <span class="flow__title">Brief &amp; Kickoff</span>
-              <span class="flow__kind">Start</span>
-            </button>
-
-            <button class="flow__node flow__node--process" data-flow="planning" data-popup="planning" type="button">
-              <span class="flow__step">01</span>
-              <svg class="ico" aria-hidden="true"><use href="#p-plan"></use></svg>
-              <span class="flow__title">Planning</span>
-              <span class="flow__tags">Research · Scope · Architecture</span>
-            </button>
-
-            <button class="flow__node flow__node--process" data-flow="design" data-popup="design" type="button">
-              <span class="flow__step">02</span>
-              <svg class="ico" aria-hidden="true"><use href="#p-design"></use></svg>
-              <span class="flow__title">Design</span>
-              <span class="flow__tags">UI/UX · Prototype · Design system</span>
-            </button>
-
-            <button class="flow__node flow__node--decision" data-flow="d1" data-popup="d1" type="button">
-              <span class="flow__dtext">Design<br>approved?</span>
-            </button>
-
-            <button class="flow__node flow__node--process" data-flow="development" data-popup="development" type="button">
-              <span class="flow__step">03</span>
-              <svg class="ico" aria-hidden="true"><use href="#p-dev"></use></svg>
-              <span class="flow__title">Development</span>
-              <span class="flow__tags">React · Vue · Angular · Node.js</span>
-            </button>
-
-            <button class="flow__node flow__node--process" data-flow="testing" data-popup="testing" type="button">
-              <span class="flow__step">04</span>
-              <svg class="ico" aria-hidden="true"><use href="#p-test"></use></svg>
-              <span class="flow__title">Testing</span>
-              <span class="flow__tags">QA · Responsive · Lighthouse</span>
-            </button>
-
-            <button class="flow__node flow__node--decision" data-flow="d2" data-popup="d2" type="button">
-              <span class="flow__dtext">QA<br>passed?</span>
-            </button>
-
-            <button class="flow__node flow__node--process" data-flow="deployment" data-popup="deployment" type="button">
-              <span class="flow__step">05</span>
-              <svg class="ico" aria-hidden="true"><use href="#p-deploy"></use></svg>
-              <span class="flow__title">Deployment</span>
-              <span class="flow__tags">CI/CD · Optimise · Monitor</span>
-            </button>
-
-            <button class="flow__node flow__node--term" data-flow="end" data-popup="end" type="button">
-              <svg class="ico" aria-hidden="true"><use href="#f-end"></use></svg>
-              <span class="flow__title">Launch &amp; Maintain</span>
-              <span class="flow__kind">End</span>
-            </button>
+          <div class="hero__hint reveal" data-reveal>
+            Naciśnij <kbd>Ctrl</kbd>+<kbd>K</kbd> aby otworzyć paletę komend
           </div>
-
-          <span class="flow__hint reveal">Tip: click a block for details</span>
         </div>
-      </div>
-    </section>
 
-    <!-- ============ SKILLS / TREE ============ -->
-    <section class="section skills" id="skills">
-      <div class="deco deco--a" data-parallax="0.07" aria-hidden="true"></div>
-      <div class="deco deco--c" data-parallax="-0.05" aria-hidden="true"></div>
-      <div class="container">
-        <header class="section__head">
-          <span class="section__index reveal">03 / Skills</span>
-          <h2 class="section__title reveal">Skill tree</h2>
-          <p class="section__subtitle reveal">
-            Hover a branch to reveal proficiency. Everything grows from solid foundations.
-          </p>
-        </header>
-
-        <div class="tree" id="tree">
-          <svg class="tree__lines" id="treeLines" preserveAspectRatio="none" aria-hidden="true"></svg>
-
-          <div class="tree__row tree__row--root">
-            <div class="node node--root" data-node="root">
-              <div class="node__core">
-                <span class="node__title">arwidev</span>
-                <span class="node__sub">core</span>
+        <div class="hero__right">
+          <!-- Interactive terminal -->
+          <div class="term reveal" id="term" data-reveal>
+            <div class="term__bar">
+              <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+              <span class="term__title"><svg class="ic"><use href="#ui-terminal"/></svg> arwi — zsh</span>
+            </div>
+            <div class="term__screen" id="termScreen" tabindex="0" role="textbox" aria-label="Interaktywny terminal — wpisz help">
+              <!-- output injected here -->
+              <div class="term__line term__input-line" id="termInputLine">
+                <span class="term__prompt">arwi@dev <span class="term__path">~</span> $</span>
+                <span class="term__typed" id="termTyped"></span><span class="term__cursor">▌</span>
               </div>
             </div>
           </div>
-
-          <div class="tree__row tree__row--branch">
-            <div class="node node--branch" data-node="frontend"><span class="node__label">Frontend</span></div>
-            <div class="node node--branch" data-node="backend"><span class="node__label">Backend</span></div>
-            <div class="node node--branch" data-node="data"><span class="node__label">Database</span></div>
-          </div>
-
-          <div class="tree__row tree__row--leaves">
-            <button class="node node--leaf" data-node="html" data-parent="frontend" data-level="98">
-              <svg class="ico" aria-hidden="true"><use href="#i-html"></use></svg>
-              <span class="node__name">HTML</span>
-              <span class="node__bar"><i style="--lvl:98%"></i></span>
-              <span class="node__pct">98%</span>
-            </button>
-            <button class="node node--leaf" data-node="css" data-parent="frontend" data-level="95">
-              <svg class="ico" aria-hidden="true"><use href="#i-css"></use></svg>
-              <span class="node__name">CSS</span>
-              <span class="node__bar"><i style="--lvl:95%"></i></span>
-              <span class="node__pct">95%</span>
-            </button>
-            <button class="node node--leaf" data-node="js" data-parent="frontend" data-level="93">
-              <svg class="ico" aria-hidden="true"><use href="#i-js"></use></svg>
-              <span class="node__name">JavaScript</span>
-              <span class="node__bar"><i style="--lvl:93%"></i></span>
-              <span class="node__pct">93%</span>
-            </button>
-            <button class="node node--leaf" data-node="react" data-parent="frontend" data-level="90">
-              <svg class="ico" aria-hidden="true"><use href="#i-react"></use></svg>
-              <span class="node__name">React</span>
-              <span class="node__bar"><i style="--lvl:90%"></i></span>
-              <span class="node__pct">90%</span>
-            </button>
-            <button class="node node--leaf" data-node="vue" data-parent="frontend" data-level="85">
-              <svg class="ico" aria-hidden="true"><use href="#i-vue"></use></svg>
-              <span class="node__name">Vue</span>
-              <span class="node__bar"><i style="--lvl:85%"></i></span>
-              <span class="node__pct">85%</span>
-            </button>
-            <button class="node node--leaf" data-node="angular" data-parent="frontend" data-level="80">
-              <svg class="ico" aria-hidden="true"><use href="#i-angular"></use></svg>
-              <span class="node__name">Angular</span>
-              <span class="node__bar"><i style="--lvl:80%"></i></span>
-              <span class="node__pct">80%</span>
-            </button>
-            <button class="node node--leaf" data-node="bootstrap" data-parent="frontend" data-level="88">
-              <svg class="ico" aria-hidden="true"><use href="#i-bootstrap"></use></svg>
-              <span class="node__name">Bootstrap</span>
-              <span class="node__bar"><i style="--lvl:88%"></i></span>
-              <span class="node__pct">88%</span>
-            </button>
-
-            <button class="node node--leaf" data-node="node" data-parent="backend" data-level="85">
-              <svg class="ico" aria-hidden="true"><use href="#i-node"></use></svg>
-              <span class="node__name">Node.js</span>
-              <span class="node__bar"><i style="--lvl:85%"></i></span>
-              <span class="node__pct">85%</span>
-            </button>
-
-            <button class="node node--leaf" data-node="mongo" data-parent="data" data-level="82">
-              <svg class="ico" aria-hidden="true"><use href="#i-mongo"></use></svg>
-              <span class="node__name">MongoDB</span>
-              <span class="node__bar"><i style="--lvl:82%"></i></span>
-              <span class="node__pct">82%</span>
-            </button>
-            <button class="node node--leaf" data-node="mysql" data-parent="data" data-level="80">
-              <svg class="ico" aria-hidden="true"><use href="#i-mysql"></use></svg>
-              <span class="node__name">MySQL</span>
-              <span class="node__bar"><i style="--lvl:80%"></i></span>
-              <span class="node__pct">80%</span>
-            </button>
-          </div>
+          <p class="hero__term-tip">↑ kliknij i wpisz <code>help</code></p>
         </div>
+      </div>
+
+      <a href="#stack" class="hero__scroll" aria-label="Przewiń niżej" data-magnetic>
+        <svg class="ic"><use href="#ui-arrow-down"/></svg>
+      </a>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- STACK / TECHNOLOGIE                                        -->
+    <!-- ========================================================== -->
+    <section class="section" id="stack">
+      <div class="section__head reveal" data-reveal>
+        <span class="section__kicker">// 01 — toolbox</span>
+        <h2 class="section__title">Moje technologie</h2>
+        <p class="section__sub">
+          Stack, którym buduję produkty end-to-end. Kliknij dowolny kafelek,
+          aby zobaczyć szczegóły i poziom biegłości.
+        </p>
+      </div>
+
+      <div class="filters reveal" id="filters" data-reveal>
+        <button class="chip is-active" data-filter="all">Wszystko</button>
+        <button class="chip" data-filter="frontend">Frontend</button>
+        <button class="chip" data-filter="language">Języki</button>
+        <button class="chip" data-filter="backend">Backend</button>
+        <button class="chip" data-filter="database">Bazy danych</button>
+      </div>
+
+      <div class="tech-grid" id="techGrid"><!-- cards injected by JS --></div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- PIPELINE                                                   -->
+    <!-- ========================================================== -->
+    <section class="section section--pipeline" id="pipeline">
+      <div class="section__head reveal" data-reveal>
+        <span class="section__kicker">// 02 — workflow</span>
+        <h2 class="section__title">Pipeline produkcyjny</h2>
+        <p class="section__sub">
+          Każdy projekt płynie tą samą, sprawdzoną ścieżką — od pomysłu do
+          wdrożenia. Kliknij blok, aby zajrzeć do środka etapu.
+        </p>
+      </div>
+
+      <div class="pipe reveal" id="pipe" data-reveal>
+        <svg class="pipe__svg" id="pipeSvg" aria-hidden="true"></svg>
+        <div class="pipe__grid" id="pipeGrid"><!-- nodes injected by JS --></div>
+      </div>
+
+      <div class="pipe__legend reveal" data-reveal>
+        <span class="pipe__legend-item"><i class="pkg"></i> przepływ danych = commit przechodzący przez pipeline</span>
       </div>
     </section>
 
-    <!-- ============ CONTACT ============ -->
-    <section class="section contact" id="contact">
-      <div class="deco deco--a" data-parallax="-0.06" aria-hidden="true"></div>
-      <div class="deco deco--b" data-parallax="0.1" aria-hidden="true"></div>
-      <div class="container">
-        <header class="section__head section__head--center">
-          <span class="section__index reveal">04 / Contact</span>
-          <h2 class="section__title reveal">Let&rsquo;s build something</h2>
-          <p class="section__subtitle reveal">
-            Got an idea for a site or an app? Message me — I&rsquo;ll turn it into
-            something that makes people go WOW.
+    <!-- ========================================================== -->
+    <!-- SOCIAL                                                     -->
+    <!-- ========================================================== -->
+    <section class="section" id="social">
+      <div class="section__head reveal" data-reveal>
+        <span class="section__kicker">// 03 — network</span>
+        <h2 class="section__title">Znajdź mnie w sieci</h2>
+        <p class="section__sub">Dziel się wiedzą, koduję na żywo i wrzucam projekty. Dołącz.</p>
+      </div>
+
+      <div class="socials" id="socials">
+        <a class="social social--yt reveal" data-reveal href="#" target="_blank" rel="noopener" data-magnetic data-net="YouTube">
+          <span class="social__glow"></span>
+          <svg class="ic social__ic"><use href="#s-youtube"/></svg>
+          <span class="social__name">YouTube</span>
+          <span class="social__handle">@arwi.dev</span>
+          <span class="social__go">Subskrybuj <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
+        </a>
+        <a class="social social--x reveal" data-reveal href="#" target="_blank" rel="noopener" data-magnetic data-net="X / Twitter">
+          <span class="social__glow"></span>
+          <svg class="ic social__ic"><use href="#s-x"/></svg>
+          <span class="social__name">X / Twitter</span>
+          <span class="social__handle">@arwidev</span>
+          <span class="social__go">Obserwuj <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
+        </a>
+        <a class="social social--gh reveal" data-reveal href="https://github.com/arqi74" target="_blank" rel="noopener" data-magnetic data-net="GitHub">
+          <span class="social__glow"></span>
+          <svg class="ic social__ic"><use href="#s-github"/></svg>
+          <span class="social__name">GitHub</span>
+          <span class="social__handle">@arqi74</span>
+          <span class="social__go">Zobacz repo <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
+        </a>
+        <a class="social social--dc reveal" data-reveal href="#contact" data-magnetic data-net="Discord">
+          <span class="social__glow"></span>
+          <svg class="ic social__ic"><use href="#s-discord"/></svg>
+          <span class="social__name">Discord</span>
+          <span class="social__handle">arwi.dev</span>
+          <span class="social__go">Dołącz <svg class="ic"><use href="#ui-arrow-right"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- CONTACT                                                    -->
+    <!-- ========================================================== -->
+    <section class="section section--contact" id="contact">
+      <div class="contact">
+        <div class="contact__inner reveal" data-reveal>
+          <span class="section__kicker">// 04 — let's build</span>
+          <h2 class="contact__title">Masz projekt?<br>Pogadajmy na Discordzie.</h2>
+          <p class="contact__sub">
+            Najszybsza droga do współpracy — opowiedz mi o pomyśle, a wycenię go
+            i zaproponuję rozwiązanie. Bez formularzy, bez czekania.
           </p>
-        </header>
 
-        <div class="contact__cta reveal">
-          <a href="https://discord.com/users/239008388544069633" class="btn btn--primary btn--lg" target="_blank" rel="noopener" data-magnetic>
-            <svg class="ico" aria-hidden="true"><use href="#s-discord"></use></svg>
-            <span>Message me on Discord</span>
+          <div class="contact__terminal">
+            <span class="contact__prompt">arwi@dev ~ $</span>
+            <span class="contact__cmd" id="contactCmd"></span><span class="term__cursor">▌</span>
+          </div>
+
+          <a class="btn btn--discord" id="discordBtn" href="https://discord.gg/your-invite" target="_blank" rel="noopener" data-magnetic>
+            <svg class="ic"><use href="#s-discord"/></svg>
+            <span>Otwórz mój Discord</span>
           </a>
-        </div>
 
-        <ul class="contact__links reveal">
-          <li>
-            <a href="https://discord.com/users/239008388544069633" target="_blank" rel="noopener" data-magnetic>
-              <svg class="ico" aria-hidden="true"><use href="#s-discord"></use></svg> Discord
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/arqi74" target="_blank" rel="noopener" data-magnetic>
-              <svg class="ico" aria-hidden="true"><use href="#s-github"></use></svg> GitHub
-            </a>
-          </li>
-        </ul>
+          <button class="contact__copy" id="copyDiscord" type="button" data-magnetic>
+            <svg class="ic"><use href="#ui-copy"/></svg>
+            <span>Skopiuj nick: <code>arwi.dev</code></span>
+          </button>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- ============================================================= -->
+  <!-- FOOTER                                                        -->
+  <!-- ============================================================= -->
   <footer class="footer">
-    <div class="container footer__inner">
-      <a href="#hero" class="footer__brand">arwi<span>dev</span></a>
-      <p class="footer__copy">© <span id="year"></span> arwidev · Frontend Web Developer</p>
-      <a href="#hero" class="footer__top" data-magnetic aria-label="Back to top">
-        <svg class="ico" aria-hidden="true"><use href="#ui-arrow"></use></svg>
-      </a>
+    <div class="footer__inner">
+      <img src="arwi-dev-white-text.png" alt="ARWI.DEV" class="footer__logo" />
+      <p class="footer__note">
+        <span class="footer__tag">&lt; too clean for default UI /&gt;</span><br>
+        © <span id="year"></span> ARWI.DEV — zbudowane ręcznie w HTML, CSS i&nbsp;JS.
+      </p>
+      <div class="footer__mini">
+        <a href="#" target="_blank" rel="noopener" aria-label="YouTube" data-magnetic><svg class="ic"><use href="#s-youtube"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" aria-label="X" data-magnetic><svg class="ic"><use href="#s-x"/></svg></a>
+        <a href="https://github.com/arqi74" target="_blank" rel="noopener" aria-label="GitHub" data-magnetic><svg class="ic"><use href="#s-github"/></svg></a>
+        <a href="#contact" aria-label="Discord" data-magnetic><svg class="ic"><use href="#s-discord"/></svg></a>
+      </div>
     </div>
   </footer>
 
-  <!-- ============ PROCESS POPUP ============ -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal__backdrop" data-modal-close></div>
-    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal__close" id="modalClose" aria-label="Close" data-modal-close type="button">
-        <svg class="ico" aria-hidden="true"><use href="#ui-close"></use></svg>
-      </button>
-      <div class="modal__head">
-        <div class="modal__icon"><svg class="ico" aria-hidden="true"><use id="modalIconUse" href="#p-plan"></use></svg></div>
-        <span class="modal__kind" id="modalKind"></span>
-        <h3 class="modal__title" id="modalTitle"></h3>
-        <p class="modal__desc" id="modalDesc"></p>
-      </div>
-      <div class="modal__body" id="modalBody"></div>
-      <div class="modal__foot" id="modalFoot"></div>
-    </div>
-  </div>
-
-  <script src="js/main.js"></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>

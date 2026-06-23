@@ -1,550 +1,809 @@
-/* =============================================================
-   arwidev — interactions, motion, parallax (vanilla JS)
-   ============================================================= */
-(function () {
-  "use strict";
+/* =================================================================
+   ARWI.DEV — main.js
+   Vanilla JS. No dependencies. Organised in small modules.
+   ================================================================= */
+(() => {
+  'use strict';
 
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const isTouch = window.matchMedia("(max-width: 900px)").matches || "ontouchstart" in window;
   const $  = (s, c = document) => c.querySelector(s);
-  const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
-
-  /* ---------- Footer year ---------- */
-  const yearEl = $("#year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  /* ---------- Preloader ---------- */
-  window.addEventListener("load", () => {
-    const pre = $("#preloader");
-    if (pre) setTimeout(() => pre.classList.add("is-done"), 550);
-  });
-
-  /* ---------- Scroll progress ---------- */
-  const progress = $("#scrollProgress");
-  const onScrollProgress = () => {
-    const h = document.documentElement;
-    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
-    if (progress) progress.style.width = (scrolled * 100) + "%";
-  };
-
-  /* ---------- Nav ---------- */
-  const nav = $("#nav");
-  const navToggle = $("#navToggle");
-  const navLinks = $("#navLinks");
-  const onNavScroll = () => { if (nav) nav.classList.toggle("is-scrolled", window.scrollY > 40); };
-
-  if (navToggle && navLinks) {
-    navToggle.addEventListener("click", () => {
-      const open = navLinks.classList.toggle("is-open");
-      navToggle.classList.toggle("is-open", open);
-      navToggle.setAttribute("aria-expanded", String(open));
-    });
-    $$(".nav__link", navLinks).forEach((l) =>
-      l.addEventListener("click", () => {
-        navLinks.classList.remove("is-open");
-        navToggle.classList.remove("is-open");
-        navToggle.setAttribute("aria-expanded", "false");
-      })
-    );
-  }
-
-  /* ---------- Active link by section ---------- */
-  const linkFor = {};
-  $$(".nav__link").forEach((l) => {
-    const id = l.getAttribute("href").slice(1);
-    if (id) linkFor[id] = l;
-  });
-  const sectionObserver = new IntersectionObserver(
-    (entries) => entries.forEach((e) => {
-      if (e.isIntersecting) {
-        Object.values(linkFor).forEach((l) => l.classList.remove("is-active"));
-        if (linkFor[e.target.id]) linkFor[e.target.id].classList.add("is-active");
-      }
-    }),
-    { rootMargin: "-45% 0px -50% 0px" }
-  );
-  $$("section[id]").forEach((s) => sectionObserver.observe(s));
-
-  /* ---------- Reveal on scroll (staggered) ---------- */
-  const revealObserver = new IntersectionObserver(
-    (entries, obs) => entries.forEach((e) => {
-      if (e.isIntersecting) {
-        const siblings = $$(".reveal", e.target.parentElement);
-        const idx = siblings.indexOf(e.target);
-        e.target.style.transitionDelay = Math.min(idx, 6) * 0.07 + "s";
-        e.target.classList.add("is-visible");
-        obs.unobserve(e.target);
-      }
-    }),
-    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-  );
-  $$(".reveal").forEach((el) => revealObserver.observe(el));
-
-  /* ---------- Counters ---------- */
-  const animateCount = (el) => {
-    const raw = el.dataset.count;
-    const suffix = el.dataset.suffix || "";
-    const target = parseInt(raw, 10);
-    if (isNaN(target)) { el.textContent = raw; return; }
-    if (prefersReduced) { el.textContent = target + suffix; return; }
-    const dur = 1600, start = performance.now();
-    const tick = (now) => {
-      const p = Math.min((now - start) / dur, 1);
-      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
-  const countObserver = new IntersectionObserver(
-    (entries, obs) => entries.forEach((e) => {
-      if (e.isIntersecting) { animateCount(e.target); obs.unobserve(e.target); }
-    }),
-    { threshold: 0.6 }
-  );
-  $$(".stat__num").forEach((el) => countObserver.observe(el));
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* =============================================================
-     PROCESS — flowchart wires + reveal
+     DATA
      ============================================================= */
-  const flow = $("#flow"), flowWires = $("#flowWires");
-  const NSVG = "http://www.w3.org/2000/svg";
-
-  const flowEdges = [
-    { a: "start", b: "planning" },
-    { a: "planning", b: "design" },
-    { a: "design", b: "d1" },
-    { a: "d1", b: "development", label: "Yes", cls: "yes" },
-    { a: "development", b: "testing" },
-    { a: "testing", b: "d2" },
-    { a: "d2", b: "deployment", label: "Yes", cls: "yes" },
-    { a: "deployment", b: "end" },
-    { a: "d1", b: "design", loop: "left", label: "No", cls: "no" },
-    { a: "d2", b: "development", loop: "right", label: "No", cls: "no" },
+  const TECH = [
+    { id:'html',    icon:'i-html',    name:'HTML5',      cat:'frontend', catLabel:'Frontend', level:96,
+      desc:'Semantyczny, dostępny markup — fundament każdego interfejsu. Dbam o strukturę, SEO i a11y.',
+      tags:['Semantyka','ARIA / a11y','SEO','Web Components'] },
+    { id:'css',     icon:'i-css',     name:'CSS3',       cat:'frontend', catLabel:'Frontend', level:94,
+      desc:'Layouty Grid/Flexbox, animacje, custom properties i pełna responsywność. UI, które po prostu działa.',
+      tags:['Grid / Flex','Animacje','Custom props','Sass'] },
+    { id:'js',      icon:'i-js',      name:'JavaScript', cat:'language', catLabel:'Język', level:95,
+      desc:'ES2023+, async/await, moduły, Web API. Język, który ożywia każdy interfejs i spina logikę aplikacji.',
+      tags:['ES2023+','Async','DOM / Web API','Canvas'] },
+    { id:'ts',      icon:'i-ts',      name:'TypeScript', cat:'language', catLabel:'Język', level:88,
+      desc:'Typowanie statyczne, bezpieczeństwo i skalowalność dużych baz kodu. Mniej bugów, więcej pewności.',
+      tags:['Typy / Generics','Strict mode','tRPC','Zod'] },
+    { id:'react',   icon:'i-react',   name:'React',      cat:'frontend', catLabel:'Frontend', level:92,
+      desc:'Komponenty, hooki i bogaty ekosystem. SPA oraz SSR z Next.js — wydajnie i nowocześnie.',
+      tags:['Hooks','Next.js','Context','React Query'] },
+    { id:'vue',     icon:'i-vue',     name:'Vue',        cat:'frontend', catLabel:'Frontend', level:85,
+      desc:'Reaktywność, Single-File Components i Composition API. Szybki, przyjemny development.',
+      tags:['Composition API','Pinia','Nuxt','SFC'] },
+    { id:'angular', icon:'i-angular', name:'Angular',    cat:'frontend', catLabel:'Frontend', level:78,
+      desc:'Pełnoprawny framework dla aplikacji enterprise — RxJS, Dependency Injection, struktura na lata.',
+      tags:['RxJS','DI','CLI','Standalone'] },
+    { id:'node',    icon:'i-node',    name:'Node.js',    cat:'backend',  catLabel:'Backend', level:87,
+      desc:'Backend w JavaScript — REST i GraphQL API, real-time przez WebSocket, mikroserwisy.',
+      tags:['Express','REST / GraphQL','WebSocket','JWT'] },
+    { id:'mongo',   icon:'i-mongo',   name:'MongoDB',    cat:'database', catLabel:'Baza danych', level:83,
+      desc:'Baza NoSQL — elastyczny schemat dokumentów, agregacje i szybkie prototypowanie.',
+      tags:['Mongoose','Aggregations','Atlas','Indexy'] },
+    { id:'mysql',   icon:'i-mysql',   name:'MySQL',      cat:'database', catLabel:'Baza danych', level:80,
+      desc:'Relacyjna baza danych — czysty SQL, transakcje i integralność. Solidne fundamenty pod dane.',
+      tags:['SQL','Transakcje','Relacje','Indexy'] },
   ];
 
-  const buildFlow = () => {
-    if (!flow || !flowWires) return;
-    const box = flow.getBoundingClientRect();
-    flowWires.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
-    flowWires.querySelectorAll("path.wire, path.wire--flow").forEach((p) => p.remove());
-    flow.querySelectorAll(".flow__label").forEach((l) => l.remove());
+  const PIPE = [
+    { id:'brief',  icon:'p-brief',  step:'01', name:'Brief & Idea', cmd:'$ git init',
+      desc:'Wymagania i cele biznesowe.',
+      long:'Wszystko zaczyna się od rozmowy. Zbieram wymagania, poznaję cel biznesowy i definiuję, co znaczy „sukces” dla projektu. Ustalamy zakres, budżet i harmonogram.',
+      tools:['Notion','FigJam','User stories'] },
+    { id:'plan',   icon:'p-plan',   step:'02', name:'Architektura', cmd:'$ npm create',
+      desc:'Stack, modele danych, struktura.',
+      long:'Projektuję architekturę: dobór stacku, struktura folderów, modele danych i przepływy. Decyzje techniczne zapadają tu, zanim powstanie pierwsza linia kodu produkcyjnego.',
+      tools:['Excalidraw','ERD','ADR'] },
+    { id:'design', icon:'p-design', step:'03', name:'UI / UX Design', cmd:'$ figma open',
+      desc:'Design system i prototyp.',
+      long:'Tworzę spójny design system i klikalny prototyp w Figmie. Dopieszczam typografię, siatkę, stany i mikrointerakcje — bo „too clean for default UI”.',
+      tools:['Figma','Design system','Prototyp'] },
+    { id:'dev',    icon:'p-dev',    step:'04', name:'Development', cmd:'$ git checkout -b feat',
+      desc:'Czysty, komponentowy kod.',
+      long:'Implementacja w feature-branchach, czysty komponentowy kod i konsekwentny Git flow. Małe, czytelne commity i sensowne nazewnictwo.',
+      tools:['VS Code','Git','ESLint','Prettier'] },
+    { id:'review', icon:'p-review', step:'05', name:'Code Review', cmd:'$ gh pr create',
+      desc:'Pull requesty i standardy.',
+      long:'Każda zmiana przechodzi przez Pull Request. Automatyczny lint, spójne standardy i przegląd kodu pilnują jakości oraz utrzymywalności.',
+      tools:['GitHub PR','Conventional Commits'] },
+    { id:'test',   icon:'p-test',   step:'06', name:'Testy & QA', cmd:'$ npm test',
+      desc:'Unit, E2E i audyt wydajności.',
+      long:'Testy jednostkowe i E2E, weryfikacja cross-browser oraz audyt wydajności i dostępności. Zielony pipeline to warunek wejścia dalej.',
+      tools:['Vitest','Playwright','Lighthouse'] },
+    { id:'cicd',   icon:'p-cicd',   step:'07', name:'CI / CD', cmd:'$ git push origin',
+      desc:'Automatyczny build przy pushu.',
+      long:'GitHub Actions automatycznie buduje, lintuje i wdraża aplikację przy każdym pushu. Zero ręcznych deployów, pełna powtarzalność.',
+      tools:['GitHub Actions','Docker','Cache'] },
+    { id:'deploy', icon:'p-deploy', step:'08', name:'Deploy & Monitor', cmd:'$ vercel --prod',
+      desc:'Wdrożenie, monitoring, iteracje.',
+      long:'Wdrożenie produkcyjne za jednym pushem, a potem monitoring błędów i metryk. Na bazie danych iterujemy i rozwijamy produkt dalej.',
+      tools:['Vercel','Analytics','Sentry'] },
+  ];
 
-    const geo = (key) => {
-      const el = $(`[data-flow="${key}"]`, flow);
-      const r = el.getBoundingClientRect();
-      const x = r.left - box.left, y = r.top - box.top;
-      return { cx: x + r.width / 2, top: y, bottom: y + r.height,
-               left: x, right: x + r.width, midY: y + r.height / 2 };
-    };
-
-    flowEdges.forEach((e, i) => {
-      const a = geo(e.a), b = geo(e.b);
-      let d, lx, ly;
-      if (e.loop === "left") {
-        const off = 78;
-        d = `M ${a.left} ${a.midY} C ${a.left - off} ${a.midY}, ${b.left - off} ${b.midY}, ${b.left} ${b.midY}`;
-        lx = Math.min(a.left, b.left) - off + 6; ly = (a.midY + b.midY) / 2;
-      } else if (e.loop === "right") {
-        const off = 78;
-        d = `M ${a.right} ${a.midY} C ${a.right + off} ${a.midY}, ${b.right + off} ${b.midY}, ${b.right} ${b.midY}`;
-        lx = Math.max(a.right, b.right) + off - 6; ly = (a.midY + b.midY) / 2;
-      } else {
-        d = `M ${a.cx} ${a.bottom} L ${b.cx} ${b.top}`;
-        lx = a.cx + 26; ly = (a.bottom + b.top) / 2;
-      }
-
-      const base = document.createElementNS(NSVG, "path");
-      base.setAttribute("d", d);
-      base.setAttribute("class", "wire");
-      base.setAttribute("marker-end", "url(#flowArrow)");
-      flowWires.appendChild(base);
-      const len = base.getTotalLength();
-      base.style.setProperty("--len", len);
-      base.style.transitionDelay = (i * 0.08) + "s";
-
-      const fl = document.createElementNS(NSVG, "path");
-      fl.setAttribute("d", d);
-      fl.setAttribute("class", "wire--flow");
-      flowWires.appendChild(fl);
-
-      if (e.label) {
-        const span = document.createElement("span");
-        span.className = "flow__label flow__label--" + e.cls;
-        span.textContent = e.label;
-        span.style.left = lx + "px";
-        span.style.top = ly + "px";
-        flow.appendChild(span);
-      }
-    });
-  };
-
-  if (flow) {
-    buildFlow();
-    window.addEventListener("load", buildFlow);
-    let ft;
-    addEventListener("resize", () => { clearTimeout(ft); ft = setTimeout(buildFlow, 150); });
-
-    new IntersectionObserver(
-      (entries, obs) => entries.forEach((e) => {
-        if (e.isIntersecting) {
-          flow.classList.add("is-live");
-          $$(".flow__node", flow).forEach((n, i) => setTimeout(() => n.classList.add("is-in"), i * 90));
-          obs.unobserve(e.target);
-        }
-      }),
-      { threshold: 0.2 }
-    ).observe(flow);
-  }
+  const DISCORD_URL  = 'https://discord.gg/your-invite';
+  const DISCORD_NICK = 'arwi.dev';
 
   /* =============================================================
-     PROCESS — popups (modal)
+     BOOT LOADER
      ============================================================= */
-  const POPUPS = {
-    start: { icon: "#f-start", kind: "Start", title: "Brief & Kickoff",
-      desc: "Every project begins with a conversation. We align on your vision, your users and the business goals before the process kicks off.",
-      groups: [{ h: "We align on", items: ["Vision & goals", "Target audience", "Budget & timeline", "Success metrics"] }] },
-    planning: { icon: "#p-plan", kind: "Stage 01 · Planning", title: "Planning",
-      desc: "Before a single line of code I map the whole project — turning goals into a clear scope, architecture and roadmap.",
-      groups: [
-        { h: "Activities", items: ["Requirements gathering", "Market & competitor research", "Scope & timeline", "Sitemap & user flows", "Information architecture"] },
-        { h: "Tools", items: ["Notion", "Miro / FigJam", "Google Docs"] },
-        { h: "Deliverables", items: ["Project brief", "Sitemap", "Roadmap", "Tech-stack decision"] },
-      ], routes: [{ t: "Next → Design", cls: "yes" }] },
-    design: { icon: "#p-design", kind: "Stage 02 · Design", title: "Design",
-      desc: "I turn the plan into tangible screens — from low-fi wireframes to a polished, interactive prototype built on a reusable design system.",
-      groups: [
-        { h: "Activities", items: ["Wireframes", "Hi-fi UI", "Interactive prototype", "Design system & tokens", "Responsive layouts", "Contrast / a11y checks"] },
-        { h: "Tools", items: ["Figma", "Photoshop", "Illustrator"], tech: true },
-        { h: "Deliverables", items: ["Figma file", "Design system", "Clickable prototype"] },
-      ], routes: [{ t: "Next → Review", cls: "yes" }] },
-    d1: { icon: "#f-end", kind: "Decision gate", title: "Design approved?",
-      desc: "A review checkpoint. We validate the design against the brief, usability and brand. No code starts until the direction is locked — if something is off, we loop back and refine.",
-      routes: [{ t: "Yes → Development", cls: "yes" }, { t: "No → back to Design", cls: "no" }] },
-    development: { icon: "#p-dev", kind: "Stage 03 · Development", title: "Development",
-      desc: "The build. I implement the design as clean, component-based code, wire up data and APIs, and craft the interactions that make it feel alive.",
-      groups: [
-        { h: "Frontend", items: ["HTML5", "CSS3", "JavaScript (ES6+)", "React", "Vue", "Angular", "Bootstrap"], tech: true },
-        { h: "Backend & data", items: ["Node.js", "REST APIs", "MongoDB", "MySQL"], tech: true },
-        { h: "Tooling", items: ["Git & GitHub", "npm", "Vite / Webpack", "ESLint / Prettier"] },
-        { h: "Practices", items: ["Reusable components", "State management", "Responsive-first", "Semantic, accessible markup"] },
-      ], routes: [{ t: "Next → Testing", cls: "yes" }] },
-    testing: { icon: "#p-test", kind: "Stage 04 · Testing", title: "Testing",
-      desc: "Quality assurance across the board — I verify behaviour, responsiveness and performance, then fix and polish until it's rock solid on every device.",
-      groups: [
-        { h: "Checks", items: ["Responsiveness", "Cross-browser", "Accessibility (WCAG)", "Performance & Lighthouse", "Functional / unit / e2e"] },
-        { h: "Tools", items: ["Chrome DevTools", "Lighthouse", "Jest", "Cypress", "BrowserStack"], tech: true },
-        { h: "Deliverables", items: ["QA report", "Green Lighthouse", "Bug-free build"] },
-      ], routes: [{ t: "Next → QA gate", cls: "yes" }] },
-    d2: { icon: "#f-end", kind: "Decision gate", title: "QA passed?",
-      desc: "The final quality gate. Only a build that passes performance, accessibility and functional checks moves on to launch. If issues remain, it loops straight back to Development.",
-      routes: [{ t: "Yes → Deployment", cls: "yes" }, { t: "No → back to Development", cls: "no" }] },
-    deployment: { icon: "#p-deploy", kind: "Stage 05 · Deployment", title: "Deployment",
-      desc: "Go live. I ship to production with an automated pipeline, optimise assets, configure the domain and monitoring, then support and iterate.",
-      groups: [
-        { h: "Activities", items: ["Build & optimisation", "CI/CD pipeline", "Domain & HTTPS", "Monitoring & analytics", "Post-launch support"] },
-        { h: "Platforms", items: ["GitHub Pages", "Vercel", "Netlify"], tech: true },
-        { h: "Tools", items: ["GitHub Actions", "Cloudflare", "Google Analytics"] },
-      ], routes: [{ t: "Next → Launch", cls: "yes" }] },
-    end: { icon: "#f-end", kind: "End", title: "Launch & Maintain",
-      desc: "The project is live — but it's not the finish line. I monitor, maintain and keep improving it so it grows together with your business.",
-      groups: [{ h: "Ongoing", items: ["Monitoring", "Maintenance & updates", "New features", "Performance tuning"] }] },
-  };
+  const Boot = (() => {
+    const boot = $('#boot'), log = $('#bootLog'), prog = $('#bootProgress'), skip = $('#bootSkip');
+    const lines = [
+      { t:'$ arwi-dev/portfolio :: boot', cls:'b' },
+      { t:'> loading modules ............ ', cls:'m', tail:'ok',            tcls:'ok' },
+      { t:'> mounting <Hero/> ........... ', cls:'m', tail:'ok',            tcls:'ok' },
+      { t:'> compiling shaders .......... ', cls:'m', tail:'ok',            tcls:'ok' },
+      { t:'> npm run build .............. ', cls:'m', tail:'done in 0.42s', tcls:'ok' },
+      { t:'> deploy → arwi.dev .......... ', cls:'m', tail:'live',          tcls:'ok' },
+      { t:'', cls:'m' },
+      { t:'welcome, visitor.', cls:'b' },
+    ];
+    let done = false;
+    const esc = s => s.replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
 
-  const modal = $("#modal");
-  if (modal) {
-    const mIcon = $("#modalIconUse"), mKind = $("#modalKind"), mTitle = $("#modalTitle"),
-          mDesc = $("#modalDesc"), mBody = $("#modalBody"), mFoot = $("#modalFoot"),
-          mClose = $("#modalClose");
-    let lastFocus = null;
+    function finish() {
+      if (done) return; done = true;
+      boot.classList.add('is-done');
+      document.body.removeAttribute('data-loading');
+      window.dispatchEvent(new Event('arwi:ready'));
+      setTimeout(() => boot.remove(), 600);
+    }
 
-    const render = (d) => {
-      mIcon.setAttribute("href", d.icon);
-      mKind.textContent = d.kind || "";
-      mTitle.textContent = d.title;
-      mDesc.textContent = d.desc;
-      mBody.innerHTML = (d.groups || []).map((g) =>
-        `<div class="modal__group"><h4>${g.h}</h4>` +
-        `<ul class="modal__chips${g.tech ? " modal__chips--tech" : ""}">` +
-        g.items.map((i) => `<li>${i}</li>`).join("") + `</ul></div>`).join("");
-      mFoot.innerHTML = (d.routes || []).map((r) =>
-        `<span class="modal__route modal__route--${r.cls}">${r.t}</span>`).join("");
-    };
-    const openModal = (id) => {
-      const d = POPUPS[id]; if (!d) return;
-      render(d);
-      lastFocus = document.activeElement;
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("modal-open");
-      mClose.focus();
-    };
-    const closeModal = () => {
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("modal-open");
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    };
+    function run() {
+      if (REDUCED) { log.textContent = 'welcome, visitor.'; prog.style.width = '100%'; setTimeout(finish, 200); return; }
+      const total = lines.reduce((s, l) => s + l.t.length + (l.tail ? l.tail.length : 0), 0);
+      const completed = [];
+      let li = 0, phase = 'main', ci = 0, typed = 0;
 
-    $$("[data-popup]").forEach((el) =>
-      el.addEventListener("click", () => openModal(el.dataset.popup)));
-    $$("[data-modal-close]", modal).forEach((el) =>
-      el.addEventListener("click", closeModal));
-    document.addEventListener("keydown", (e) => {
-      if (!modal.classList.contains("is-open")) return;
-      if (e.key === "Escape") closeModal();
-      if (e.key === "Tab") {
-        const f = $$('button, [href], [tabindex]:not([tabindex="-1"])', modal)
-          .filter((el) => el.offsetParent !== null);
-        if (!f.length) return;
-        const first = f[0], last = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-      }
-    });
-  }
+      const curHTML = () => {
+        const l = lines[li];
+        const mainLen = phase === 'main' ? ci : l.t.length;
+        let html = `<span class="${l.cls}">${esc(l.t.slice(0, mainLen))}</span>`;
+        if (l.tail) {
+          const tailLen = phase === 'main' ? 0 : (phase === 'tail' ? ci : l.tail.length);
+          if (tailLen > 0) html += `<span class="${l.tcls}">${esc(l.tail.slice(0, tailLen))}</span>`;
+        }
+        return html;
+      };
 
-  /* ---------- Hero text rotator ---------- */
-  const rotator = $("#rotator");
-  if (rotator && !prefersReduced) {
-    const words = ["React", "Vue", "Angular", "Node.js", "interfaces", "performance", "clean code"];
-    let wi = 0, ci = 0, deleting = false;
-    const type = () => {
-      const word = words[wi];
-      rotator.textContent = word.slice(0, ci);
-      if (!deleting && ci < word.length) { ci++; setTimeout(type, 85); }
-      else if (!deleting && ci === word.length) { deleting = true; setTimeout(type, 1500); }
-      else if (deleting && ci > 0) { ci--; setTimeout(type, 40); }
-      else { deleting = false; wi = (wi + 1) % words.length; setTimeout(type, 220); }
-    };
-    setTimeout(type, 1100);
-  }
+      (function tick() {
+        if (li >= lines.length) { prog.style.width = '100%'; setTimeout(finish, 350); return; }
+        const l = lines[li];
+        if (phase === 'main') {
+          if (ci < l.t.length) { ci++; typed++; } else { phase = l.tail ? 'tail' : 'done'; ci = 0; }
+        } else if (phase === 'tail') {
+          if (ci < l.tail.length) { ci++; typed++; } else phase = 'done';
+        }
+        log.innerHTML = [...completed, curHTML()].join('\n');
+        prog.style.width = clamp((typed / total) * 100, 0, 100) + '%';
+        log.scrollTop = log.scrollHeight;
+        if (phase === 'done') { completed.push(curHTML()); li++; phase = 'main'; ci = 0; }
+        setTimeout(tick, 13);
+      })();
+    }
 
-  /* ---------- Custom cursor + magnetic + hover ---------- */
-  const dot = $("#cursorDot"), ring = $("#cursorRing");
-  if (!isTouch && dot && ring) {
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-    addEventListener("mousemove", (e) => {
+    skip.addEventListener('click', finish);
+    addEventListener('keydown', e => { if (!done && (e.key === 'Escape' || e.key === 'Enter')) finish(); });
+    return { run, finish };
+  })();
+
+  /* =============================================================
+     CUSTOM CURSOR
+     ============================================================= */
+  (function cursor() {
+    if (matchMedia('(pointer:coarse)').matches) return;
+    const dot = $('#cursorDot'), ring = $('#cursorRing');
+    let rx = innerWidth/2, ry = innerHeight/2, mx = rx, my = ry;
+    addEventListener('pointermove', e => {
       mx = e.clientX; my = e.clientY;
-      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    });
+    addEventListener('pointerdown', () => ring.classList.add('is-down'));
+    addEventListener('pointerup',   () => ring.classList.remove('is-down'));
+    document.addEventListener('pointerover', e => {
+      const hit = e.target.closest('a,button,.tech-card,.pnode,[data-magnetic],input,.cmdk__item');
+      ring.classList.toggle('is-hover', !!hit);
     });
     (function loop() {
       rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
       requestAnimationFrame(loop);
     })();
-    $$("a, button, [data-magnetic], .node--leaf").forEach((el) => {
-      el.addEventListener("mouseenter", () => ring.classList.add("is-hover"));
-      el.addEventListener("mouseleave", () => ring.classList.remove("is-hover"));
-    });
-    $$("[data-magnetic]").forEach((el) => {
-      el.addEventListener("mousemove", (e) => {
-        const r = el.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width / 2;
-        const y = e.clientY - r.top - r.height / 2;
-        el.style.transform = `translate(${x * 0.22}px, ${y * 0.3}px)`;
-      });
-      el.addEventListener("mouseleave", () => { el.style.transform = ""; });
-    });
-  }
-
-  /* ---------- Tilt + glow on cards ---------- */
-  if (!isTouch) {
-    $$("[data-tilt]").forEach((card) => {
-      card.addEventListener("mousemove", (e) => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-        card.style.setProperty("--mx", px * 100 + "%");
-        card.style.setProperty("--my", py * 100 + "%");
-        card.style.transform =
-          `perspective(900px) rotateX(${(py - 0.5) * -5}deg) rotateY(${(px - 0.5) * 5}deg) translateY(-3px)`;
-      });
-      card.addEventListener("mouseleave", () => { card.style.transform = ""; });
-    });
-  }
-
-  /* ---------- Parallax (scroll + mouse) ---------- */
-  const parallaxEls = $$("[data-parallax]");
-  let mouseX = 0, mouseY = 0;
-  const applyParallax = () => {
-    const sc = window.scrollY;
-    parallaxEls.forEach((el) => {
-      const speed = parseFloat(el.dataset.parallax) || 0;
-      const ty = sc * speed + mouseY * speed * 70;
-      const tx = mouseX * speed * 70;
-      el.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
-    });
-  };
-  if (!prefersReduced) {
-    addEventListener("mousemove", (e) => {
-      mouseX = (e.clientX / innerWidth - 0.5) * 2;
-      mouseY = (e.clientY / innerHeight - 0.5) * 2;
-      requestAnimationFrame(applyParallax);
-    });
-  }
-
-  /* ---------- Scroll loop (rAF) ---------- */
-  let ticking = false;
-  const onScroll = () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        onScrollProgress(); onNavScroll();
-        if (!prefersReduced) applyParallax();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  };
-  addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  })();
 
   /* =============================================================
-     SKILL TREE — SVG connectors + grow
+     CONSTELLATION BACKGROUND
      ============================================================= */
-  const tree = $("#tree"), svg = $("#treeLines");
+  (function constellation() {
+    const cv = $('#bgCanvas'); if (!cv) return;
+    const ctx = cv.getContext('2d');
+    let w, h, pts = [], dpr = Math.min(devicePixelRatio || 1, 2);
+    const mouse = { x: -999, y: -999 };
 
-  const buildTreeLines = () => {
-    if (!tree || !svg) return;
-    const box = tree.getBoundingClientRect();
-    svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
-    svg.innerHTML = "";
-    const center = (el) => {
-      const r = el.getBoundingClientRect();
-      return { x: r.left - box.left + r.width / 2, y: r.top - box.top + r.height / 2,
-               top: r.top - box.top, bottom: r.bottom - box.top };
-    };
-    const root = $('[data-node="root"]', tree);
-    const branches = $$(".node--branch", tree);
-    const leaves = $$(".node--leaf", tree);
-    if (!root) return;
-
-    const rootC = center(root);
-    const paths = [];
-    branches.forEach((b) => {
-      const c = center(b);
-      const midY = (rootC.bottom + c.top) / 2;
-      paths.push(`M ${rootC.x} ${rootC.bottom} C ${rootC.x} ${midY}, ${c.x} ${midY}, ${c.x} ${c.top}`);
-    });
-    leaves.forEach((leaf) => {
-      const b = branches.find((x) => x.dataset.node === leaf.dataset.parent);
-      if (!b) return;
-      const bc = center(b), lc = center(leaf);
-      const midY = (bc.bottom + lc.top) / 2;
-      paths.push(`M ${bc.x} ${bc.bottom} C ${bc.x} ${midY}, ${lc.x} ${midY}, ${lc.x} ${lc.top}`);
-    });
-
-    const NS = "http://www.w3.org/2000/svg";
-    paths.forEach((d) => {
-      const p = document.createElementNS(NS, "path");
-      p.setAttribute("d", d);
-      svg.appendChild(p);
-      const len = p.getTotalLength();
-      p.style.strokeDasharray = len;
-      p.style.strokeDashoffset = tree.classList.contains("is-grown") ? 0 : len;
-      p.style.transition = "stroke-dashoffset 1.4s var(--ease)";
-    });
-  };
-
-  const growTree = () => {
-    tree.classList.add("is-grown");
-    $$("#treeLines path").forEach((p, i) => setTimeout(() => { p.style.strokeDashoffset = 0; }, i * 55));
-  };
-
-  if (tree) {
-    buildTreeLines();
-    new IntersectionObserver(
-      (entries, obs) => entries.forEach((e) => {
-        if (e.isIntersecting) { growTree(); obs.unobserve(e.target); }
-      }),
-      { threshold: 0.25 }
-    ).observe(tree);
-
-    const branches = $$(".node--branch", tree), leaves = $$(".node--leaf", tree);
-    const highlight = (cat) => {
-      tree.classList.add("is-dim");
-      leaves.forEach((l) => l.classList.toggle("is-hl", l.dataset.parent === cat));
-      branches.forEach((b) => b.classList.toggle("is-hl", b.dataset.node === cat));
-    };
-    const clear = () => {
-      tree.classList.remove("is-dim");
-      [...leaves, ...branches].forEach((n) => n.classList.remove("is-hl"));
-    };
-    leaves.forEach((l) => {
-      l.addEventListener("mouseenter", () => highlight(l.dataset.parent));
-      l.addEventListener("mouseleave", clear);
-      l.addEventListener("focus", () => highlight(l.dataset.parent));
-      l.addEventListener("blur", clear);
-    });
-    branches.forEach((b) => {
-      b.addEventListener("mouseenter", () => highlight(b.dataset.node));
-      b.addEventListener("mouseleave", clear);
-    });
-
-    let rt;
-    addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(buildTreeLines, 150); });
-  }
-
-  /* =============================================================
-     HERO — subtle squared "blueprint" field (toned down)
-     ============================================================= */
-  const canvas = $("#heroCanvas");
-  if (canvas && !prefersReduced) {
-    const ctx = canvas.getContext("2d");
-    const hero = $("#hero");
-    let w, h, dpr, dots = [], raf;
-
-    const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = hero.offsetWidth; h = hero.offsetHeight;
-      canvas.width = w * dpr; canvas.height = h * dpr;
-      canvas.style.width = w + "px"; canvas.style.height = h + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.min(Math.floor((w * h) / 20000), 80);
-      dots = Array.from({ length: count }, () => ({
+    function resize() {
+      w = cv.width = innerWidth * dpr; h = cv.height = innerHeight * dpr;
+      cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+      const count = clamp(Math.floor((innerWidth * innerHeight) / 17000), 36, 110);
+      pts = Array.from({ length: count }, () => ({
         x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
-        s: Math.random() * 2 + 1.5,
+        vx: (Math.random() - .5) * 0.22 * dpr, vy: (Math.random() - .5) * 0.22 * dpr,
       }));
-    };
+    }
+    addEventListener('pointermove', e => { mouse.x = e.clientX * dpr; mouse.y = e.clientY * dpr; });
 
-    let px = -999, py = -999;
-    hero.addEventListener("mousemove", (e) => {
-      const r = hero.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top;
-    });
-    hero.addEventListener("mouseleave", () => { px = -999; py = -999; });
-
-    const draw = () => {
+    function frame() {
       ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < dots.length; i++) {
-        const p = dots[i];
+      for (const p of pts) {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > w) p.vx *= -1;
         if (p.y < 0 || p.y > h) p.vy *= -1;
-
-        const dx = p.x - px, dy = p.y - py, d = Math.hypot(dx, dy);
-        if (d < 110) { p.x += (dx / d) * 0.6; p.y += (dy / d) * 0.6; }
-
-        // small squares (theme) instead of glowing circles
-        ctx.fillStyle = "rgba(132, 166, 255, 0.28)";
-        ctx.fillRect(p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
-
-        for (let j = i + 1; j < dots.length; j++) {
-          const q = dots[j], ddx = p.x - q.x, ddy = p.y - q.y, dist = Math.hypot(ddx, ddy);
-          if (dist < 140) {
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(91, 140, 255, ${0.08 * (1 - dist / 140)})`;
-            ctx.lineWidth = 1; ctx.stroke();
+        const dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.hypot(dx, dy);
+        if (d < 140 * dpr) { p.x += dx / d * 0.6; p.y += dy / d * 0.6; }
+      }
+      const maxD = 130 * dpr;
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.hypot(dx, dy);
+          if (d < maxD) {
+            ctx.strokeStyle = `rgba(74,163,255,${(1 - d / maxD) * 0.22})`;
+            ctx.lineWidth = dpr;
+            ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke();
           }
         }
+        ctx.fillStyle = 'rgba(120,200,255,.6)';
+        ctx.beginPath(); ctx.arc(pts[i].x, pts[i].y, 1.4 * dpr, 0, 7); ctx.fill();
       }
-      raf = requestAnimationFrame(draw);
+      raf = requestAnimationFrame(frame);
+    }
+    let raf;
+    resize(); addEventListener('resize', resize);
+    if (!REDUCED) frame();
+    else { // single static frame
+      ctx.fillStyle = 'rgba(120,200,255,.5)';
+      pts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 1.4*dpr, 0, 7); ctx.fill(); });
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (REDUCED) return;
+      if (document.hidden) cancelAnimationFrame(raf); else frame();
+    });
+  })();
+
+  /* =============================================================
+     MATRIX RAIN (toggleable)
+     ============================================================= */
+  const Matrix = (() => {
+    const cv = $('#matrixCanvas'), ctx = cv.getContext('2d');
+    let w, h, cols, drops = [], raf = null, on = false;
+    const glyphs = 'アカサタナハマ0123456789{}[]<>/$;=&|+*ABCDEF'.split('');
+    function resize() {
+      w = cv.width = innerWidth; h = cv.height = innerHeight;
+      cols = Math.floor(w / 16); drops = Array(cols).fill(0).map(() => Math.random() * -50);
+    }
+    function frame() {
+      ctx.fillStyle = 'rgba(7,10,18,.08)'; ctx.fillRect(0, 0, w, h);
+      ctx.font = '15px JetBrains Mono, monospace';
+      for (let i = 0; i < cols; i++) {
+        const ch = glyphs[(Math.random() * glyphs.length) | 0];
+        const x = i * 16, y = drops[i] * 16;
+        ctx.fillStyle = Math.random() > .96 ? '#9fdcff' : '#2e8dff';
+        ctx.fillText(ch, x, y);
+        if (y > h && Math.random() > .975) drops[i] = 0;
+        drops[i] += 0.5;
+      }
+      raf = requestAnimationFrame(frame);
+    }
+    function toggle(force) {
+      on = force ?? !on;
+      cv.classList.toggle('is-on', on);
+      if (on && !raf) { resize(); frame(); }
+      if (!on && raf) { cancelAnimationFrame(raf); raf = null; ctx.clearRect(0,0,w,h); }
+      return on;
+    }
+    addEventListener('resize', () => { if (on) resize(); });
+    return { toggle };
+  })();
+
+  /* =============================================================
+     CLICK BURST (code symbols)
+     ============================================================= */
+  (function burst() {
+    if (REDUCED) return;
+    const cv = $('#burstCanvas'), ctx = cv.getContext('2d');
+    let w, h, parts = [], raf = null, dpr = Math.min(devicePixelRatio || 1, 2);
+    const chars = ['{','}','<','>','/',';','(',')','$','#','*','=','&&','=>','[]','0','1'];
+    function resize() { w = cv.width = innerWidth*dpr; h = cv.height = innerHeight*dpr; cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px'; }
+    resize(); addEventListener('resize', resize);
+    addEventListener('pointerdown', e => {
+      if (e.target.closest('input, textarea, .term__screen')) return;
+      const n = 9 + (Math.random()*5|0);
+      for (let i = 0; i < n; i++) {
+        const a = Math.random() * Math.PI * 2, sp = (1.6 + Math.random()*4) * dpr;
+        parts.push({
+          x: e.clientX*dpr, y: e.clientY*dpr,
+          vx: Math.cos(a)*sp, vy: Math.sin(a)*sp - 1*dpr,
+          life: 1, ch: chars[(Math.random()*chars.length)|0],
+          size: (11 + Math.random()*9) * dpr, rot: Math.random()*6,
+        });
+      }
+      if (!raf) frame();
+    });
+    function frame() {
+      ctx.clearRect(0,0,w,h);
+      parts = parts.filter(p => p.life > 0);
+      for (const p of parts) {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.12*dpr; p.life -= 0.022; p.rot += 0.06;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.globalAlpha = clamp(p.life,0,1);
+        ctx.fillStyle = Math.random() > .5 ? '#5ad1ff' : '#2e8dff';
+        ctx.font = `700 ${p.size}px JetBrains Mono, monospace`; ctx.textAlign='center';
+        ctx.fillText(p.ch, 0, 0); ctx.restore();
+      }
+      if (parts.length) raf = requestAnimationFrame(frame); else { raf = null; ctx.clearRect(0,0,w,h); }
+    }
+  })();
+
+  /* =============================================================
+     MAGNETIC + RADIAL FOLLOW
+     ============================================================= */
+  (function magnetic() {
+    if (matchMedia('(pointer:coarse)').matches) return;
+    $$('[data-magnetic]').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width/2), dy = e.clientY - (r.top + r.height/2);
+        el.style.transform = `translate(${dx*0.25}px, ${dy*0.35}px)`;
+        el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        el.style.setProperty('--my', `${e.clientY - r.top}px`);
+      });
+      el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+    });
+    // radial light follow for cards/buttons
+    document.addEventListener('pointermove', e => {
+      const card = e.target.closest('.tech-card, .btn');
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  })();
+
+  /* =============================================================
+     REVEAL ON SCROLL
+     ============================================================= */
+  (function reveal() {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en, i) => {
+        if (en.isIntersecting) {
+          setTimeout(() => en.target.classList.add('is-in'), Math.min(i * 60, 240));
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    $$('[data-reveal]').forEach(el => io.observe(el));
+  })();
+
+  /* =============================================================
+     NAV: stuck, active link, dots, burger
+     ============================================================= */
+  (function nav() {
+    const nav = $('#nav'), prog = $('#scrollProgress');
+    const links = $$('.nav__link'), dots = $$('.dots__dot');
+    const sections = ['hero','stack','pipeline','social','contact'].map(id => $('#'+id));
+    const burger = $('#navBurger');
+
+    function onScroll() {
+      const sc = scrollY, docH = document.documentElement.scrollHeight - innerHeight;
+      prog.style.width = (docH > 0 ? (sc / docH) * 100 : 0) + '%';
+      nav.classList.toggle('is-stuck', sc > 40);
+    }
+    addEventListener('scroll', onScroll, { passive:true }); onScroll();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        const id = en.target.id;
+        links.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#'+id));
+        dots.forEach(d => d.classList.toggle('is-active', d.getAttribute('href') === '#'+id));
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(s => s && io.observe(s));
+
+    burger.addEventListener('click', () => nav.classList.toggle('is-open'));
+    $$('.nav__link').forEach(l => l.addEventListener('click', () => nav.classList.remove('is-open')));
+  })();
+
+  /* =============================================================
+     HERO ROTATOR
+     ============================================================= */
+  (function rotator() {
+    const el = $('#rotator'); if (!el) return;
+    const words = ['nieziemski','błyskawiczny','dopracowany','interaktywny','skalowalny'];
+    if (REDUCED) { el.textContent = words[0]; return; }
+    let wi = 0, ci = 0, deleting = false;
+    (function tick() {
+      const word = words[wi];
+      el.textContent = word.slice(0, ci);
+      if (!deleting && ci < word.length) ci++;
+      else if (!deleting && ci === word.length) { deleting = true; return setTimeout(tick, 1600); }
+      else if (deleting && ci > 0) ci--;
+      else { deleting = false; wi = (wi + 1) % words.length; }
+      setTimeout(tick, deleting ? 45 : 95);
+    })();
+  })();
+
+  /* =============================================================
+     INTERACTIVE TERMINAL
+     ============================================================= */
+  const Term = (() => {
+    const screen = $('#termScreen'), inputLine = $('#termInputLine'), typed = $('#termTyped');
+    const input = document.createElement('input');
+    input.setAttribute('aria-hidden','true');
+    input.style.cssText = 'position:absolute;opacity:0;width:1px;height:1px;border:0;padding:0;left:-9999px;';
+    input.autocapitalize = 'off'; input.autocomplete = 'off'; input.spellcheck = false;
+    screen.appendChild(input);
+
+    function print(html, cls = 'term__out') {
+      const div = document.createElement('div');
+      div.className = 'term__line ' + cls; div.innerHTML = html;
+      screen.insertBefore(div, inputLine);
+      screen.scrollTop = screen.scrollHeight;
+    }
+    function printCmd(cmd) {
+      print(`<span class="term__prompt">arwi@dev <span class="term__path">~</span> $</span> <span class="w">${esc(cmd)}</span>`, 'term__line');
+    }
+    const esc = s => s.replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+
+    const COMMANDS = {
+      help: () => print(
+        `dostępne komendy:\n` +
+        `  <span class="c">help</span>      — ta lista\n` +
+        `  <span class="c">whoami</span>    — kim jest arwi\n` +
+        `  <span class="c">stack</span>     — moje technologie\n` +
+        `  <span class="c">pipeline</span>  — etapy produkcji\n` +
+        `  <span class="c">social</span>    — gdzie mnie znaleźć\n` +
+        `  <span class="c">contact</span>   — zlećmy projekt\n` +
+        `  <span class="c">neofetch</span>  — info o systemie\n` +
+        `  <span class="c">matrix</span>    — wiesz, że chcesz\n` +
+        `  <span class="c">clear</span>     — wyczyść ekran`),
+      whoami: () => print(`<span class="w">arwi</span> — modern web developer.\nFront-end + back-end. <span class="c">"too clean for default UI"</span>.`),
+      ls: () => print(`stack/   pipeline/   social/   contact/   <span class="m">.secrets/</span>`),
+      stack: () => print(TECH.map(t => `  <span class="b">${t.name.padEnd(11)}</span> <span class="m">${'█'.repeat(Math.round(t.level/10))}${'░'.repeat(10-Math.round(t.level/10))}</span> ${t.level}%`).join('\n')),
+      skills: () => COMMANDS.stack(),
+      pipeline: () => print(PIPE.map(p => `  <span class="c">${p.step}</span> ${p.name}`).join('  →\n')),
+      social: () => { print(`<span class="b">YouTube</span> · <span class="b">X/Twitter</span> · <span class="b">GitHub</span> · <span class="b">Discord</span>\n<span class="m">→ przewijam do sekcji social...</span>`); go('#social'); },
+      contact: () => { print(`<span class="ok">→</span> najlepiej złap mnie na Discordzie: <span class="c">${DISCORD_NICK}</span>`); go('#contact'); },
+      discord: () => COMMANDS.contact(),
+      neofetch: () => print(
+`<span class="b">      /\\___/\\        </span>  <span class="w">arwi</span>@<span class="w">dev</span>
+<span class="b">     ( o   o )       </span>  ------------
+<span class="b">     (  =^=  )       </span>  <span class="c">OS</span>: ArwiOS (web)
+<span class="b">      )     (        </span>  <span class="c">Shell</span>: zsh
+<span class="b">     (       )       </span>  <span class="c">Stack</span>: JS·TS·React·Node
+<span class="b">    ( (  )  ( ) )     </span>  <span class="c">Editor</span>: VS Code
+<span class="b">   (__(__)___(__)__)  </span>  <span class="c">Uptime</span>: caffeinated`),
+      matrix: () => { const on = Matrix.toggle(); print(on ? '<span class="ok">matrix:</span> enabled — follow the white rabbit.' : 'matrix: disabled.'); },
+      wolf:  () => { WolfMode(); print('<span class="c">🐺 wolf mode engaged.</span>'); },
+      sudo:  () => print(`<span class="m">arwi is not in the sudoers file. This incident will be reported. 😏</span>`),
+      date:  () => print(new Date().toString()),
+      theme: () => print('<span class="m">theme: electric-blue (locked). too clean to change.</span>'),
+      clear: () => { $$('.term__line', screen).forEach(l => { if (l !== inputLine) l.remove(); }); },
+      echo:  (arg) => print(esc(arg || '')),
     };
 
-    resize(); draw();
-    let rzt;
-    addEventListener("resize", () => { clearTimeout(rzt); rzt = setTimeout(resize, 200); });
-    new IntersectionObserver((entries) => entries.forEach((e) => {
-      if (e.isIntersecting) { if (!raf) draw(); }
-      else { cancelAnimationFrame(raf); raf = null; }
-    }), { threshold: 0 }).observe(hero);
+    function go(sel) { const t = $(sel); if (t) t.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' }); }
+
+    function exec(raw) {
+      const line = raw.trim(); if (!line) return;
+      printCmd(line);
+      const [cmd, ...rest] = line.split(' ');
+      const fn = COMMANDS[cmd.toLowerCase()];
+      if (fn) fn(rest.join(' '));
+      else print(`<span class="m">command not found: ${esc(cmd)} — wpisz </span><span class="c">help</span>`);
+    }
+
+    let booted = false, history = [], hi = -1;
+    function bootIntro() {
+      if (booted) return; booted = true;
+      print('<span class="m">// terminal gotowy. wpisz </span><span class="c">help</span><span class="m"> i naciśnij Enter.</span>');
+    }
+
+    input.addEventListener('input', () => { typed.textContent = input.value; });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const v = input.value; if (v.trim()) { history.unshift(v); hi = -1; }
+        exec(v); input.value = ''; typed.textContent = '';
+      } else if (e.key === 'ArrowUp')   { e.preventDefault(); if (hi < history.length-1) { hi++; input.value = history[hi]; typed.textContent = input.value; } }
+      else if (e.key === 'ArrowDown')   { e.preventDefault(); if (hi > 0) { hi--; input.value = history[hi]; } else { hi=-1; input.value=''; } typed.textContent = input.value; }
+    });
+    screen.addEventListener('click', () => { bootIntro(); input.focus({ preventScroll:true }); });
+
+    return { exec, focus: () => { bootIntro(); input.focus({ preventScroll:true }); }, run: (c) => { go('#hero'); bootIntro(); exec(c); } };
+  })();
+
+  /* =============================================================
+     MODAL
+     ============================================================= */
+  const Modal = (() => {
+    const root = $('#modal'), body = $('#modalBody'), closeBtn = $('#modalClose'), card = $('#modalCard');
+    let lastFocus = null;
+    function open(html) {
+      lastFocus = document.activeElement;
+      body.innerHTML = html; root.classList.add('is-open'); root.setAttribute('aria-hidden','false');
+      // animate level fills
+      requestAnimationFrame(() => $$('.mlevel__fill', body).forEach(f => f.style.width = f.dataset.w));
+      closeBtn.focus();
+    }
+    function close() {
+      root.classList.remove('is-open'); root.setAttribute('aria-hidden','true');
+      lastFocus && lastFocus.focus && lastFocus.focus();
+    }
+    closeBtn.addEventListener('click', close);
+    root.addEventListener('click', e => { if (e.target === root) close(); });
+    return { open, close, isOpen: () => root.classList.contains('is-open') };
+  })();
+
+  /* =============================================================
+     TECH GRID
+     ============================================================= */
+  (function techGrid() {
+    const grid = $('#techGrid'); if (!grid) return;
+    grid.innerHTML = TECH.map(t => `
+      <button class="tech-card reveal" data-reveal data-id="${t.id}" data-cat="${t.cat}" aria-label="${t.name}">
+        <span class="tech-card__hint">klik › szczegóły</span>
+        <svg class="ic tech-card__icon"><use href="#${t.icon}"/></svg>
+        <div class="tech-card__cat">${t.catLabel}</div>
+        <div class="tech-card__name">${t.name}</div>
+        <div class="tech-card__bar"><span class="tech-card__fill" data-w="${t.level}%"></span></div>
+      </button>`).join('');
+
+    // animate bars when in view
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting) { $('.tech-card__fill', en.target).style.width = $('.tech-card__fill', en.target).dataset.w; io.unobserve(en.target); }
+    }), { threshold: .4 });
+    $$('.tech-card', grid).forEach(c => io.observe(c));
+
+    // 3D tilt
+    if (!matchMedia('(pointer:coarse)').matches) {
+      $$('.tech-card', grid).forEach(card => {
+        card.addEventListener('pointermove', e => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+          card.style.transform = `perspective(700px) rotateX(${-py*9}deg) rotateY(${px*11}deg) translateY(-4px)`;
+        });
+        card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+      });
+    }
+
+    // click → modal
+    grid.addEventListener('click', e => {
+      const card = e.target.closest('.tech-card'); if (!card) return;
+      const t = TECH.find(x => x.id === card.dataset.id); if (!t) return;
+      Modal.open(`
+        <div class="mhead">
+          <div class="mhead__icon"><svg class="ic"><use href="#${t.icon}"/></svg></div>
+          <div><div class="mcat">${t.catLabel}</div><h3>${t.name}</h3></div>
+        </div>
+        <p class="mbody-text">${t.desc}</p>
+        <div class="mlevel">
+          <div class="mlevel__top"><span>biegłość</span><span>${t.level}%</span></div>
+          <div class="mlevel__bar"><span class="mlevel__fill" data-w="${t.level}%"></span></div>
+        </div>
+        <div class="mtools"><h4>czego używam</h4><div class="mtags">${t.tags.map(x => `<span class="mtag">${x}</span>`).join('')}</div></div>
+      `);
+    });
+
+    // filters
+    $('#filters').addEventListener('click', e => {
+      const chip = e.target.closest('.chip'); if (!chip) return;
+      $$('.chip', $('#filters')).forEach(c => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      const f = chip.dataset.filter;
+      $$('.tech-card', grid).forEach(c => c.classList.toggle('is-hidden', f !== 'all' && c.dataset.cat !== f));
+    });
+  })();
+
+  /* =============================================================
+     PIPELINE — nodes, snake layout, animated connectors
+     ============================================================= */
+  (function pipeline() {
+    const wrap = $('#pipe'), gridEl = $('#pipeGrid'), svg = $('#pipeSvg'); if (!wrap) return;
+    const SVGNS = 'http://www.w3.org/2000/svg';
+
+    // build nodes
+    gridEl.innerHTML = PIPE.map(p => `
+      <button class="pnode" data-id="${p.id}" aria-label="${p.name}">
+        <span class="pnode__step">${p.step}</span>
+        <div class="pnode__icon"><svg class="ic"><use href="#${p.icon}"/></svg></div>
+        <div class="pnode__name">${p.name}</div>
+        <div class="pnode__desc">${p.desc}</div>
+        <div class="pnode__cmd">${p.cmd}</div>
+      </button>`).join('');
+    const nodes = $$('.pnode', gridEl);
+
+    function cols() { const w = wrap.clientWidth; return w >= 900 ? 4 : w >= 560 ? 2 : 1; }
+
+    function layout(c) {
+      gridEl.style.gridTemplateColumns = `repeat(${c}, 1fr)`;
+      nodes.forEach((n, i) => {
+        const row = Math.floor(i / c), pos = i % c;
+        const col = row % 2 === 0 ? pos + 1 : c - pos;   // snake
+        n.style.gridColumn = col; n.style.gridRow = row + 1;
+      });
+    }
+
+    function drawConnectors() {
+      const wrapRect = wrap.getBoundingClientRect();
+      svg.innerHTML = `<defs><linearGradient id="pipeGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#1d6fe0"/><stop offset="1" stop-color="#5ad1ff"/></linearGradient></defs>`;
+      const drawn = REDUCED;
+      for (let i = 0; i < nodes.length - 1; i++) {
+        const a = nodes[i].getBoundingClientRect(), b = nodes[i+1].getBoundingClientRect();
+        const ax = a.left - wrapRect.left, ay = a.top - wrapRect.top;
+        const bx = b.left - wrapRect.left, by = b.top - wrapRect.top;
+        const acx = ax + a.width/2, acy = ay + a.height/2;
+        const bcx = bx + b.width/2, bcy = by + b.height/2;
+        let d;
+        if (Math.abs(acy - bcy) < 6) {                 // same row → horizontal
+          if (bcx > acx) d = `M ${ax + a.width} ${acy} L ${bx} ${bcy}`;
+          else           d = `M ${ax} ${acy} L ${bx + b.width} ${bcy}`;
+        } else {                                       // wrap → vertical
+          d = `M ${acx} ${ay + a.height} L ${bcx} ${by}`;
+        }
+        // base + highlight
+        const base = document.createElementNS(SVGNS, 'path');
+        base.setAttribute('d', d); base.setAttribute('class', 'pipe-path');
+        svg.appendChild(base);
+
+        const hi = document.createElementNS(SVGNS, 'path');
+        hi.setAttribute('d', d); hi.setAttribute('class', 'pipe-path-draw');
+        hi.id = `pp-${i}`;
+        svg.appendChild(hi);
+        const len = hi.getTotalLength();
+        hi.style.strokeDasharray = len;
+        hi.style.strokeDashoffset = (drawn || drawnOnce) ? 0 : len;
+
+        if (!REDUCED) {
+          // animated packet
+          const pk = document.createElementNS(SVGNS, 'circle');
+          pk.setAttribute('r', '4'); pk.setAttribute('class', 'pipe-packet');
+          const am = document.createElementNS(SVGNS, 'animateMotion');
+          am.setAttribute('dur', '2.6s'); am.setAttribute('begin', `${i * 0.42}s`);
+          am.setAttribute('repeatCount', 'indefinite'); am.setAttribute('rotate', 'auto');
+          const mp = document.createElementNS(SVGNS, 'mpath');
+          mp.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `#pp-${i}`);
+          mp.setAttribute('href', `#pp-${i}`);
+          am.appendChild(mp); pk.appendChild(am); svg.appendChild(pk);
+        }
+      }
+    }
+
+    let drawnOnce = false;
+    function build() { layout(cols()); requestAnimationFrame(drawConnectors); }
+
+    // draw highlight lines progressively when in view
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting && !drawnOnce) {
+        drawnOnce = true;
+        $$('.pipe-path-draw', svg).forEach((p, i) => {
+          p.style.transition = 'stroke-dashoffset 1.1s var(--ease)';
+          setTimeout(() => p.style.strokeDashoffset = 0, 160 + i * 130);
+        });
+      }
+    }), { threshold: .25 });
+    io.observe(wrap);
+
+    // node click → modal + pulse
+    gridEl.addEventListener('click', e => {
+      const node = e.target.closest('.pnode'); if (!node) return;
+      node.classList.remove('is-pulse'); void node.offsetWidth; node.classList.add('is-pulse');
+      const p = PIPE.find(x => x.id === node.dataset.id); if (!p) return;
+      Modal.open(`
+        <div class="mhead">
+          <div class="mhead__icon"><svg class="ic"><use href="#${p.icon}"/></svg></div>
+          <div><div class="mcat">etap ${p.step} / ${PIPE.length}</div><h3>${p.name}</h3></div>
+        </div>
+        <p class="mbody-text">${p.long}</p>
+        <div class="contact__terminal" style="margin:0 0 6px;"><span class="contact__prompt">~ $</span><span class="contact__cmd">${p.cmd}</span></div>
+        <div class="mtools"><h4>narzędzia</h4><div class="mtags">${p.tools.map(x => `<span class="mtag">${x}</span>`).join('')}</div></div>
+      `);
+    });
+
+    let rid;
+    addEventListener('resize', () => { clearTimeout(rid); rid = setTimeout(build, 160); });
+    build();
+    // redraw after fonts/images settle
+    addEventListener('arwi:ready', () => setTimeout(build, 80));
+    addEventListener('load', () => setTimeout(build, 120));
+  })();
+
+  /* =============================================================
+     COMMAND PALETTE (Ctrl/Cmd + K)
+     ============================================================= */
+  const Cmdk = (() => {
+    const root = $('#cmdk'), input = $('#cmdkInput'), list = $('#cmdkList');
+    const go = sel => { const t = $(sel); if (t) t.scrollIntoView({ behavior: REDUCED ? 'auto':'smooth' }); close(); };
+    const CMDS = [
+      { icon:'ui-arrow-right', label:'Przejdź: Stack',     sub:'moje technologie',      keys:'01', kw:'stack technologie tech', run:() => go('#stack') },
+      { icon:'ui-arrow-right', label:'Przejdź: Pipeline',  sub:'proces produkcyjny',    keys:'02', kw:'pipeline proces workflow', run:() => go('#pipeline') },
+      { icon:'ui-arrow-right', label:'Przejdź: Social',    sub:'media społecznościowe', keys:'03', kw:'social youtube github x twitter discord', run:() => go('#social') },
+      { icon:'ui-arrow-right', label:'Przejdź: Kontakt',   sub:'zlećmy projekt',        keys:'04', kw:'kontakt contact projekt', run:() => go('#contact') },
+      { icon:'s-discord',  label:'Otwórz Discord',      sub:DISCORD_URL,             keys:'↵', kw:'discord kontakt', run:() => { window.open(DISCORD_URL,'_blank'); close(); } },
+      { icon:'ui-copy',    label:'Skopiuj nick Discord',sub:DISCORD_NICK,            keys:'⌘C', kw:'copy discord nick', run:() => { copyDiscord(); close(); } },
+      { icon:'s-github',   label:'Otwórz GitHub',       sub:'github.com/arqi74',     keys:'↗', kw:'github repo kod', run:() => { window.open('https://github.com/arqi74','_blank'); close(); } },
+      { icon:'ui-terminal',label:'Skup się na terminalu',sub:'wpisz help',           keys:'>', kw:'terminal konsola cli', run:() => { close(); Term.focus(); } },
+      { icon:'ui-spark',   label:'Matrix mode',         sub:'deszcz znaków',         keys:'fx', kw:'matrix deszcz efekt', run:() => { Matrix.toggle(); close(); } },
+      { icon:'ui-spark',   label:'🐺 Wolf mode',        sub:'easter egg',            keys:'fx', kw:'wolf wilk easter egg', run:() => { WolfMode(); close(); } },
+    ];
+    let active = 0, filtered = CMDS;
+
+    function render() {
+      list.innerHTML = filtered.map((c, i) => `
+        <li class="cmdk__item ${i===active?'is-active':''}" data-i="${i}" role="option">
+          <svg class="ic"><use href="#${c.icon}"/></svg>
+          <span><b>${c.label}</b><small>${c.sub}</small></span>
+          <span class="k">${c.keys}</span>
+        </li>`).join('') || `<li class="cmdk__item" style="cursor:default"><span><b>Brak wyników</b><small>spróbuj „pipeline” albo „discord”</small></span></li>`;
+    }
+    function filter() {
+      const q = input.value.trim().toLowerCase();
+      filtered = !q ? CMDS : CMDS.filter(c => (c.label + ' ' + c.sub + ' ' + c.kw).toLowerCase().includes(q));
+      active = 0; render();
+    }
+    function open() {
+      root.classList.add('is-open'); root.setAttribute('aria-hidden','false');
+      input.value = ''; filter(); setTimeout(() => input.focus(), 30);
+    }
+    function close() { root.classList.remove('is-open'); root.setAttribute('aria-hidden','true'); }
+    function isOpen() { return root.classList.contains('is-open'); }
+    function exec() { const c = filtered[active]; if (c && c.run) c.run(); }
+
+    input.addEventListener('input', filter);
+    list.addEventListener('mousemove', e => { const it = e.target.closest('.cmdk__item'); if (it && it.dataset.i!=null){ active = +it.dataset.i; render(); } });
+    list.addEventListener('click', e => { const it = e.target.closest('.cmdk__item'); if (it && it.dataset.i!=null){ active = +it.dataset.i; exec(); } });
+    root.addEventListener('click', e => { if (e.target === root) close(); });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); active = (active+1) % filtered.length; render(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); active = (active-1+filtered.length) % filtered.length; render(); }
+      else if (e.key === 'Enter') { e.preventDefault(); exec(); }
+    });
+
+    $('#cmdkTrigger').addEventListener('click', open);
+    return { open, close, isOpen };
+  })();
+
+  /* =============================================================
+     TOASTS + COPY
+     ============================================================= */
+  function toast(msg, icon = 'ui-spark') {
+    const host = $('#toasts');
+    const t = document.createElement('div');
+    t.className = 'toast'; t.innerHTML = `<svg class="ic"><use href="#${icon}"/></svg><span>${msg}</span>`;
+    host.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(10px)'; t.style.transition='.4s'; setTimeout(() => t.remove(), 400); }, 2400);
   }
+  function copyDiscord() {
+    const done = () => toast(`Skopiowano: <code>${DISCORD_NICK}</code>`, 'ui-copy');
+    if (navigator.clipboard) navigator.clipboard.writeText(DISCORD_NICK).then(done).catch(fallback);
+    else fallback();
+    function fallback() { const i = document.createElement('input'); i.value = DISCORD_NICK; document.body.append(i); i.select(); try{document.execCommand('copy');}catch(e){} i.remove(); done(); }
+  }
+  $('#copyDiscord').addEventListener('click', copyDiscord);
+  $('#discordBtn').setAttribute('href', DISCORD_URL);
+
+  /* =============================================================
+     CONTACT typing line
+     ============================================================= */
+  (function contactType() {
+    const el = $('#contactCmd'); if (!el) return;
+    const text = 'npx create-project --with arwi';
+    if (REDUCED) { el.textContent = text; return; }
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (!en.isIntersecting) return; io.disconnect();
+      let i = 0; (function t(){ el.textContent = text.slice(0, i++); if (i <= text.length) setTimeout(t, 55); })();
+    }), { threshold:.6 });
+    io.observe($('#contact'));
+  })();
+
+  /* =============================================================
+     WOLF MODE (easter egg) + KONAMI
+     ============================================================= */
+  let wolfOn = false;
+  function WolfMode() {
+    wolfOn = !wolfOn;
+    Matrix.toggle(wolfOn);
+    toast(wolfOn ? '🐺 Wolf mode ON — the pack runs at night.' : 'Wolf mode off.', 'ui-spark');
+    if (wolfOn && !REDUCED) document.documentElement.animate(
+      [{ filter:'hue-rotate(0deg)' },{ filter:'hue-rotate(-18deg)' },{ filter:'hue-rotate(0deg)' }],
+      { duration: 900, easing:'ease-in-out' });
+  }
+  (function konami() {
+    const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let idx = 0;
+    addEventListener('keydown', e => {
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      idx = (k === seq[idx]) ? idx + 1 : (k === seq[0] ? 1 : 0);
+      if (idx === seq.length) { idx = 0; WolfMode(); toast('🐺 KONAMI — sekret odblokowany!','ui-spark'); }
+    });
+  })();
+
+  /* =============================================================
+     GLOBAL KEYS
+     ============================================================= */
+  addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); Cmdk.isOpen() ? Cmdk.close() : Cmdk.open(); return; }
+    if (e.key === 'Escape') {
+      if (Cmdk.isOpen()) return Cmdk.close();
+      if (Modal.isOpen()) return Modal.close();
+    }
+  });
+
+  /* =============================================================
+     MISC
+     ============================================================= */
+  $('#year').textContent = new Date().getFullYear();
+
+  // kick off
+  if (document.readyState === 'complete' || document.readyState === 'interactive') Boot.run();
+  else addEventListener('DOMContentLoaded', Boot.run);
+
 })();
