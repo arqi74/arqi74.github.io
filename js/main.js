@@ -516,10 +516,17 @@
         <div class="tech-card__bar"><span class="tech-card__fill" data-w="${t.level}%"></span></div>
       </button>`).join('');
 
-    // animate bars when in view
-    const io = new IntersectionObserver(es => es.forEach(en => {
-      if (en.isIntersecting) { $('.tech-card__fill', en.target).style.width = $('.tech-card__fill', en.target).dataset.w; io.unobserve(en.target); }
-    }), { threshold: .4 });
+    // reveal cards + animate bars when in view
+    // NOTE: cards are injected after the global reveal observer ran, so we
+    // reveal them here ourselves (otherwise they stay at opacity:0 — invisible
+    // yet still clickable).
+    const io = new IntersectionObserver(es => es.forEach((en, i) => {
+      if (!en.isIntersecting) return;
+      setTimeout(() => en.target.classList.add('is-in'), Math.min(i * 45, 270));
+      const fill = $('.tech-card__fill', en.target);
+      if (fill) fill.style.width = fill.dataset.w;
+      io.unobserve(en.target);
+    }), { threshold: .15, rootMargin: '0px 0px -8% 0px' });
     $$('.tech-card', grid).forEach(c => io.observe(c));
 
     // 3D tilt
