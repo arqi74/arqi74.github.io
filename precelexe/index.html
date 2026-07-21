@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Maszyna wymówek Precellexe — automat, który losuje absurdalną wymówkę na brak streama. Lekkie myszki, tlen gamingowy, rękawy, UFO i Tesla w komplecie." />
+  <meta name="theme-color" content="#070a11" />
+  <meta name="color-scheme" content="dark" />
+  <meta property="og:title" content="🎰 Maszyna Wymówek Precellexe" />
+  <meta property="og:description" content="Pociągnij za dźwignię i sprawdź, dlaczego dziś znowu nie ma streama." />
+  <meta property="og:type" content="website" />
+
+  <title>🎰 Maszyna Wymówek Precellexe</title>
+
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%B0%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+  :root{
+    --bg:#070a11; --bg-elev:#0a0e18; --surface:#0e131f; --surface-2:#141a28;
+    --border:#1b2334; --border-2:#2a3550;
+    --blue:#2f81f7; --blue-2:#4f9dff; --cyan:#56d4ff; --ice:#a9e0ff;
+    --gold:#ffcf3f; --gold-2:#ffb300; --red:#ff4d5e; --green:#38e08a;
+    --text:#eef2fb; --muted:#8b97b0; --dim:#5a647c;
+    --radius:14px; --radius-sm:10px; --radius-lg:20px;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:'Space Grotesk',system-ui,-apple-system,sans-serif;
+    --display:'Sora',var(--sans);
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:var(--sans); color:var(--text); line-height:1.6;
+    min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(1200px 700px at 50% -10%, rgba(47,129,247,.14), transparent 60%),
+      radial-gradient(900px 600px at 90% 110%, rgba(86,212,255,.08), transparent 55%),
+      var(--bg);
+    display:flex; flex-direction:column; align-items:center;
+    padding:clamp(16px,4vw,48px) 16px 64px;
+  }
+  ::selection{ background:rgba(255,207,63,.32); color:#fff; }
+
+  a{ color:var(--cyan); text-decoration:none; }
+  a:hover{ color:var(--ice); }
+
+  /* ---------- header ---------- */
+  .top{ width:100%; max-width:760px; text-align:center; margin-bottom:clamp(20px,4vw,34px); }
+  .back{
+    display:inline-flex; align-items:center; gap:.5em; font-family:var(--mono);
+    font-size:.8rem; color:var(--muted); padding:.4em .8em; border:1px solid var(--border);
+    border-radius:999px; background:var(--surface); margin-bottom:22px; transition:.2s var(--ease);
+  }
+  .back:hover{ color:var(--ice); border-color:var(--border-2); transform:translateY(-1px); }
+  .kicker{
+    font-family:var(--mono); font-size:.74rem; letter-spacing:.34em; text-transform:uppercase;
+    color:var(--cyan); margin-bottom:12px;
+  }
+  h1{
+    font-family:var(--display); font-weight:800; line-height:1.02;
+    font-size:clamp(2.1rem,7vw,3.7rem); letter-spacing:-.02em;
+  }
+  h1 .glow{
+    background:linear-gradient(120deg,var(--gold),var(--gold-2) 45%,var(--red));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 0 22px rgba(255,179,0,.35));
+  }
+  .sub{ color:var(--muted); font-size:clamp(.95rem,2.4vw,1.08rem); margin-top:14px; }
+
+  /* ---------- cabinet ---------- */
+  .cabinet{
+    width:100%; max-width:640px; position:relative;
+    padding:clamp(16px,3.5vw,26px);
+    border-radius:var(--radius-lg);
+    background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    border:1px solid var(--border-2);
+    box-shadow:0 40px 90px -40px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .cabinet::before{
+    content:""; position:absolute; inset:6px; border-radius:16px; pointer-events:none;
+    border:1px solid rgba(255,207,63,.14);
+  }
+
+  /* marquee bulbs */
+  .marquee{
+    display:flex; justify-content:center; gap:clamp(8px,2.4vw,14px); margin-bottom:16px;
+  }
+  .bulb{
+    width:11px; height:11px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#fff,var(--gold) 45%,var(--gold-2) 100%);
+    box-shadow:0 0 10px rgba(255,179,0,.7); opacity:.35;
+    animation:chase 1.1s steps(1) infinite;
+  }
+  .bulb:nth-child(2){ animation-delay:.13s } .bulb:nth-child(3){ animation-delay:.26s }
+  .bulb:nth-child(4){ animation-delay:.39s } .bulb:nth-child(5){ animation-delay:.52s }
+  .bulb:nth-child(6){ animation-delay:.65s } .bulb:nth-child(7){ animation-delay:.78s }
+  @keyframes chase{ 0%,100%{opacity:.3} 50%{opacity:1} }
+
+  .brand-plate{
+    text-align:center; font-family:var(--mono); letter-spacing:.28em; text-transform:uppercase;
+    font-size:.72rem; color:var(--gold); margin-bottom:14px;
+  }
+
+  /* reels */
+  .reels{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(8px,2vw,14px);
+    padding:clamp(10px,2.4vw,16px);
+    background:#04060b; border-radius:14px;
+    border:1px solid var(--border);
+    box-shadow:inset 0 6px 24px rgba(0,0,0,.8);
+    position:relative;
+  }
+  .reels::after{ /* payline */
+    content:""; position:absolute; left:8px; right:8px; top:50%; height:2px; transform:translateY(-1px);
+    background:linear-gradient(90deg,transparent,rgba(255,77,94,.65),transparent); pointer-events:none;
+  }
+  .reel{
+    height:clamp(96px,26vw,132px); overflow:hidden; position:relative; border-radius:10px;
+    background:linear-gradient(180deg,#0c111d,#070b13);
+    border:1px solid var(--border-2);
+    box-shadow:inset 0 20px 26px -20px #000, inset 0 -20px 26px -20px #000;
+  }
+  .strip{ position:absolute; left:0; right:0; top:0; display:flex; flex-direction:column; will-change:transform; }
+  .sym{
+    height:clamp(96px,26vw,132px); display:grid; place-items:center;
+    font-size:clamp(2.6rem,10vw,3.6rem); line-height:1;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.6));
+  }
+  .reel.win{ border-color:var(--gold); box-shadow:inset 0 0 0 1px var(--gold), 0 0 22px rgba(255,179,0,.4); }
+
+  /* result panel */
+  .result{
+    margin-top:18px; padding:clamp(16px,3vw,22px);
+    min-height:132px; display:flex; align-items:center; justify-content:center; text-align:center;
+    border-radius:14px; position:relative;
+    background:radial-gradient(120% 140% at 50% 0%, rgba(47,129,247,.10), transparent 60%), #05080f;
+    border:1px solid var(--border);
+  }
+  .result .tag{
+    position:absolute; top:10px; left:14px; font-family:var(--mono); font-size:.64rem;
+    letter-spacing:.24em; text-transform:uppercase; color:var(--dim);
+  }
+  .excuse{
+    font-family:var(--display); font-weight:700; letter-spacing:-.01em;
+    font-size:clamp(1.05rem,3.4vw,1.5rem); line-height:1.3;
+  }
+  .excuse .em{ color:var(--gold); }
+  .result.jackpot{ border-color:var(--gold); box-shadow:0 0 40px -6px rgba(255,179,0,.5); }
+  .jack-banner{
+    position:absolute; top:8px; right:12px; font-family:var(--mono); font-weight:700;
+    font-size:.7rem; letter-spacing:.2em; color:#0a0e18; background:var(--gold);
+    padding:.2em .6em; border-radius:6px; transform:rotate(4deg);
+  }
+  .placeholder{ color:var(--muted); font-family:var(--mono); font-size:.9rem; letter-spacing:.02em; }
+
+  /* controls */
+  .controls{ display:flex; gap:12px; margin-top:20px; align-items:stretch; flex-wrap:wrap; }
+  .spin{
+    flex:1 1 auto; min-width:200px;
+    font-family:var(--display); font-weight:800; font-size:clamp(1rem,2.6vw,1.2rem);
+    letter-spacing:.04em; text-transform:uppercase; color:#1a0f00;
+    padding:16px 22px; border-radius:14px; cursor:pointer;
+    background:linear-gradient(180deg,#ffe07a,var(--gold) 40%,var(--gold-2));
+    box-shadow:0 10px 24px -8px rgba(255,179,0,.6), inset 0 1px 0 rgba(255,255,255,.5);
+    transition:transform .12s var(--ease), filter .2s var(--ease);
+  }
+  .spin:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+  .spin:active{ transform:translateY(1px); }
+  .spin:disabled{ cursor:not-allowed; filter:grayscale(.5) brightness(.8); transform:none; }
+  .lever{
+    flex:0 0 auto; width:60px; border-radius:14px; cursor:pointer;
+    background:var(--surface); border:1px solid var(--border-2); color:var(--red);
+    display:grid; place-items:center; font-size:1.5rem; transition:.15s var(--ease);
+  }
+  .lever:hover{ border-color:var(--red); transform:translateY(-2px); }
+  .lever:disabled{ opacity:.4; cursor:not-allowed; transform:none; }
+  .copy{
+    flex:0 0 auto; width:60px; border-radius:14px; cursor:pointer;
+    background:var(--surface); border:1px solid var(--border-2); color:var(--cyan);
+    display:grid; place-items:center; font-size:1.3rem; transition:.15s var(--ease);
+  }
+  .copy:hover{ border-color:var(--cyan); transform:translateY(-2px); color:var(--ice); }
+  .copy:disabled{ opacity:.4; cursor:not-allowed; transform:none; }
+
+  /* stats */
+  .stats{
+    display:flex; justify-content:center; gap:26px; margin-top:20px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:.82rem; color:var(--muted);
+  }
+  .stats b{ color:var(--gold); font-weight:700; }
+
+  .foot{
+    margin-top:30px; text-align:center; color:var(--dim);
+    font-family:var(--mono); font-size:.74rem; letter-spacing:.04em; max-width:560px;
+  }
+  .foot .heart{ color:var(--red); }
+
+  /* toast */
+  .toast{
+    position:fixed; left:50%; bottom:26px; transform:translate(-50%,20px);
+    background:var(--surface-2); border:1px solid var(--border-2); color:var(--ice);
+    padding:.7em 1.1em; border-radius:12px; font-family:var(--mono); font-size:.82rem;
+    opacity:0; pointer-events:none; transition:.28s var(--ease); box-shadow:0 20px 40px -20px #000;
+  }
+  .toast.show{ opacity:1; transform:translate(-50%,0); }
+
+  @media (prefers-reduced-motion: reduce){
+    .bulb{ animation:none; opacity:.7; }
+    *{ transition:none !important; }
+  }
+  </style>
+</head>
+<body>
+
+  <header class="top">
+    <a class="back" href="../">← wróć na arwi.dev</a>
+    <div class="kicker">twitch.tv/precellexe · dept. wymówek</div>
+    <h1>Maszyna <span class="glow">Wymówek</span></h1>
+    <p class="sub">Pociągnij za dźwignię i dowiedz się, dlaczego <b>Precellexe</b> <u>dziś znowu nie streamuje</u>.</p>
+  </header>
+
+  <main class="cabinet" aria-live="polite">
+    <div class="marquee" aria-hidden="true">
+      <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+      <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+    </div>
+    <div class="brand-plate">★ Precellexe Excuse-O-Matic 3000 ★</div>
+
+    <div class="reels" id="reels">
+      <div class="reel"><div class="strip" data-reel="0"></div></div>
+      <div class="reel"><div class="strip" data-reel="1"></div></div>
+      <div class="reel"><div class="strip" data-reel="2"></div></div>
+    </div>
+
+    <div class="result" id="result">
+      <span class="tag">// wymówka</span>
+      <p class="placeholder" id="excuse">Pociągnij dźwignię, żeby wylosować wymówkę…</p>
+    </div>
+
+    <div class="controls">
+      <button class="spin" id="spin">🎰 Losuj wymówkę</button>
+      <button class="lever" id="lever" title="Pociągnij dźwignię" aria-label="Pociągnij dźwignię">🕹️</button>
+      <button class="copy" id="copy" title="Skopiuj wymówkę" aria-label="Skopiuj wymówkę" disabled>📋</button>
+    </div>
+
+    <div class="stats">
+      <span>Wylosowano: <b id="count">0</b></span>
+      <span>Jackpoty: <b id="jack">0</b></span>
+      <span>Streamów dziś: <b>0</b></span>
+    </div>
+  </main>
+
+  <p class="foot">
+    Strona satyryczna dla beki. Żadna Tesla, myszka ani butla tlenu gamingowego nie ucierpiały.
+    Zrobione z <span class="heart">♥</span> dla społeczności Precellexe.
+  </p>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  /* =========================================================
+     WYMÓWKI — absurdalne, dużo, z motywami:
+     lekkie myszki · tlen gamingowy · rękawy gamingowe · UFO · Tesla
+     ========================================================= */
+  const EXCUSES = [
+    // --- lekkie myszki ---
+    "Moja myszka waży 34&nbsp;g i uznałem, że to o 2&nbsp;g za dużo, więc czekam aż schudnie.",
+    "Nowa mysz jest tak lekka, że przy przeciągu odleciała przez okno. Streamuję jak wróci.",
+    "Całą noc ręcznie wierciłem dziurki w myszce, żeby zbić wagę do 27&nbsp;g. Ręce mi drżą, nie da się grać.",
+    "Kupiłem mysz za 900&nbsp;zł ważącą 29&nbsp;g, ale czuję każdy dodatkowy gram kabla, więc reklamuję.",
+    "Myszka była tak lekka, że wystrzeliła w kosmos przy pierwszym flicku. Czekam na jej powrót z orbity.",
+    "Zważyłem mysz na wadze jubilerskiej — 31,4&nbsp;g. To o 0,4&nbsp;g za dużo na dzisiejszy stream.",
+    "Odkurzyłem myszkę i przez to schudła o 3&nbsp;g, teraz sensor jest niezbalansowany. Muszę ją dokalibrować.",
+    "Zamontowałem w myszce dziury tak duże, że palec wpada do środka. Zamawiam wersję jeszcze lżejszą.",
+    "Mysz jest lżejsza od powietrza w pokoju, więc unosi się pod sufit. Nie dosięgam.",
+    "Musiałem oddać krew przed streamem, żeby moja ręka też ważyła mniej niż myszka.",
+
+    // --- tlen gamingowy ---
+    "Skończył mi się <span class='em'>tlen gamingowy</span>, a na zwykłym powietrzu mam o 40 ping więcej.",
+    "Butla z tlenem gamingowym się rozszczelniła i cały pokój ma teraz zbyt niski poziom aima.",
+    "Kurier z tlenem gamingowym utknął w korku, a bez niego widzę tylko w 60&nbsp;Hz.",
+    "Wdychałem tlen gamingowy premium i teraz mam takie wysokie IQ, że gra mnie nudzi. Muszę ochłonąć.",
+    "Pomyliłem butle i wdychałem zwykły tlen — natychmiast spadłem z Diamentu na Silver.",
+    "Tlen gamingowy trzeba wietrzyć 6 godzin po otwarciu, inaczej daje tylko +200 aim zamiast +400.",
+    "Zamówiłem tlen gamingowy o smaku energetyka, ale przyszedł o smaku waniliowym. Nie gram na waniliowym.",
+    "Mój koncentrator tlenu gamingowego się przegrzał, bo stał za blisko myszki, która była za lekka.",
+
+    // --- rękawy gamingowe ---
+    "Wyprałem <span class='em'>rękawy gamingowe</span> i jeszcze nie wyschły. Bez nich ręka ślizga się po myszce jak po lodzie.",
+    "Pralka zjadła jeden rękaw gamingowy. Nie streamuję asymetrycznie, to byłby handicap.",
+    "Rękaw gamingowy się skurczył w praniu i teraz odcina mi krążenie w nadgarstku APM.",
+    "Założyłem rękawy gamingowe do góry nogami i przez cały dzień grałem w -30% precyzji. Muszę je odwrócić.",
+    "Mój rękaw gamingowy ma dziś zbyt duży współczynnik tarcia, wilgotność powietrza wynosi aż 41%.",
+    "Rękawy gamingowe pojechały do pralni chemicznej razem z aurą zwycięzcy. Odbiór w czwartek.",
+
+    // --- UFO / kosmici ---
+    "Nad domem zawisło <span class='em'>UFO</span> i zagłusza mi sygnał do serwerów. Czekam aż odleci.",
+    "Kosmici pożyczyli moją myszkę do testów, bo była lżejsza od ich technologii. Oddadzą w piątek.",
+    "UFO porwało mój router, żeby zbadać skąd biorę tak niski ping. Bez routera ani rusz.",
+    "Zielony ludzik zaprosił mnie na ranked w galaktyce Andromedy — mecz trwa 4 lata świetlne.",
+    "Promień z UFO wessał mi krzesło gamingowe. Na zwykłym taborecie nie da się osiągnąć flow.",
+    "Kosmici zostawili na dachu talerz z tlenem gamingowym, ale nie umiem otworzyć obcej butli.",
+    "UFO robiło mi tak mocny abdukcyjny lag, że respawn trwał 3 dni. Dopiero wróciłem.",
+
+    // --- Tesla ---
+    "Moja <span class='em'>Tesla</span> odjechała sama na Supercharger i zabrała w bagażniku cały setup.",
+    "Autopilot Tesli zawiózł mnie na LAN party zamiast do domu. Wracam 300&nbsp;km na jednym pasie.",
+    "Ładuję Teslę z gniazdka, do którego był podłączony PC. Trzeba było wybrać, wybrałem auto.",
+    "Tesla zaktualizowała oprogramowanie i teraz wymaga, żebym też zrobił restart. Śpię od 8 godzin.",
+    "Zostawiłem myszkę w Tesli, a ona pojechała w tryb Sentry i nie chce mnie wpuścić do własnego auta.",
+    "Tesla w trybie Ludicrous rozpędziła mi fotel gamingowy do 100&nbsp;km/h. Utknąłem w salonie o ścianę.",
+    "Elon zablokował mi konto Tesli, bo napisałem, że myszka przyspiesza lepiej niż Model&nbsp;S.",
+
+    // --- prąd / rachunki / dom ---
+    "Zapomniałem opłacić <span class='em'>rachunek za prąd</span> i teraz gram przy świeczce, a woltaż świeczki jest za niski na 240&nbsp;Hz.",
+    "Wyłączyli mi prąd, więc podłączyłem PC do Tesli, ale wtedy Tesla odjechała (patrz: inne wymówki).",
+    "Rachunek za prąd był tak wysoki, że komputer się rozpłakał i odmówił bootowania.",
+    "Prąd wrócił, ale internet obraził się, że go zostawiłem samego, i teraz nie chce się połączyć.",
+    "Sąsiad podpiął się pod mój prąd, żeby ładować hulajnogę, i zabrał mi dokładnie te 3 klatki, których potrzebuję.",
+
+    // --- sprzęt / peryferia ---
+    "Klawiatura ma za ciężkie klawisze — po dziesięciu latach na lekkiej myszce nie unoszę już spacji.",
+    "Mój monitor 540&nbsp;Hz działa tak szybko, że wyświetlił stream, zanim go włączyłem. Już było.",
+    "Podkładka pod mysz była za śliska, mysz się rozpędziła i przebiła ścianę. Czekam na murarza.",
+    "RGB w kompie świeciło w niewłaściwym odcieniu niebieskiego i psuło mi vibe. Kalibruję taśmę kolorów.",
+    "Słuchawki wykryły, że mam za ciężkie myśli, i weszły w tryb oszczędzania. Muszę pomyśleć o czymś lżejszym.",
+    "Kabel od myszki splątał się w węzeł tak lekki, że rozwiązanie go łamie prawa fizyki. Dzwonię po fizyka.",
+
+    // --- zdrowie / bio ---
+    "Zbyt intensywnie ćwiczyłem nadgarstek na lekkiej myszce i teraz mam mięśnie zbyt ciężkie na granie.",
+    "Lekarz zalecił 8 godzin snu, a ja przespałem 8 godzin i teraz jestem za wypoczęty na tilt-proof gameplay.",
+    "Obciąłem paznokcie i teraz palce są o 0,2&nbsp;g lżejsze — muszę od nowa nauczyć się gripu.",
+    "Piłem tyle energetyków, że widzę już przyszłość i wiem, że i tak przegram, więc po co grać.",
+
+    // --- pogoda / świat ---
+    "Grawitacja dziś jest za mocna — sprawdzałem, myszka waży aż 34&nbsp;g zamiast wczorajszych 33&nbsp;g.",
+    "Retrogradacja Merkurego zwiększyła mi input lag o 4&nbsp;ms. Nie ryzykuję rankeda przy takich planetach.",
+    "Za oknem świeci słońce, a odbicie w monitorze pokazuje mnie zbyt przystojnego — nie mogę się skupić.",
+    "Wiał tak silny wiatr, że porwał moją lekką myszkę razem z UFO i Teslą naraz. Combo.",
+
+    // --- absurd czysty ---
+    "Mój kot usiadł na myszce i przez jego wagę sensor pokazał, że ważę 4&nbsp;kg. Musiałem udowodnić, że to nie ja.",
+    "Streamowałbym, ale liczba w liczniku widzów była nieparzysta, a ja gram tylko na parzystych.",
+    "Wczoraj wygrałem wszystko, więc dziś nie ma już czego wygrywać. Czekam, aż ranga odrośnie.",
+    "Zgubiłem hasło do własnego pokoju gamingowego. Ślusarz mówi, że w piątek.",
+    "Chciałem streamować, ale najpierw musiałem wytłumaczyć tę stronę mamie i zeszło mi 6 godzin.",
+    "Pomyliłem dni tygodnia, bo mysz była tak lekka, że przyspieszyła czas. Dziś jest wczoraj.",
+  ];
+
+  const SYMBOLS = ["🖱️","🛸","⚡","🫁","🧤","💸","🪶","👽","🎮","🔋"];
+
+  const $ = s => document.querySelector(s);
+  const reelsEls = [...document.querySelectorAll(".strip")];
+  const resultEl = $("#result");
+  const excuseEl = $("#excuse");
+  const spinBtn = $("#spin");
+  const leverBtn = $("#lever");
+  const copyBtn = $("#copy");
+  const countEl = $("#count");
+  const jackEl = $("#jack");
+  const toastEl = $("#toast");
+
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const SYM_H = () => document.querySelector(".sym")?.offsetHeight || 120;
+
+  let spinning = false, count = 0, jacks = 0, lastText = "";
+
+  // Each reel window shows exactly one symbol. The strip holds STRIP_LEN
+  // symbols; symbol at index k is centred on the payline when the strip is
+  // translated by -(k * symbolHeight). We land on a fixed high index so the
+  // spin scrolls through many symbols before stopping.
+  const STRIP_LEN = 40;
+  const LAND_IDX = STRIP_LEN - 4; // 36 — leaves fillers below the payline
+  function buildStrips(){
+    reelsEls.forEach(strip => {
+      let html = "";
+      for(let i=0;i<STRIP_LEN;i++){
+        html += `<div class="sym">${SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)]}</div>`;
+      }
+      strip.innerHTML = html;
+      strip.style.transition = "none";
+      strip.style.transform = "translateY(0px)";
+    });
+  }
+  buildStrips();
+
+  function landReel(strip, targetSym, delay){
+    return new Promise(resolve => {
+      const h = SYM_H();
+      // regenerate a fresh random strip, planting the target on the payline row
+      let html = "";
+      for(let i=0;i<STRIP_LEN;i++){
+        const s = (i === LAND_IDX) ? targetSym : SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)];
+        html += `<div class="sym">${s}</div>`;
+      }
+      strip.innerHTML = html;
+      const finalY = -(LAND_IDX * h);
+      if(reduce){
+        strip.style.transition = "none";
+        strip.style.transform = `translateY(${finalY}px)`;
+        setTimeout(resolve, 60);
+        return;
+      }
+      // snap to top, then decelerate down onto the target
+      strip.style.transition = "none";
+      strip.style.transform = "translateY(0px)";
+      strip.getBoundingClientRect(); // force reflow so the transition applies
+      const dur = 1500 + delay;
+      strip.style.transition = `transform ${dur}ms cubic-bezier(.16,.84,.3,1)`;
+      requestAnimationFrame(()=> {
+        strip.style.transform = `translateY(${finalY}px)`;
+      });
+      setTimeout(resolve, dur + 40);
+    });
+  }
+
+  function pickSymbols(jackpot){
+    if(jackpot){
+      const s = SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)];
+      return [s,s,s];
+    }
+    let a,b,c;
+    do{
+      a = SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)];
+      b = SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)];
+      c = SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)];
+    } while(a===b && b===c); // avoid accidental jackpot visuals
+    return [a,b,c];
+  }
+
+  let lastIdx = -1;
+  function pickExcuse(){
+    let idx;
+    do { idx = Math.floor(Math.random()*EXCUSES.length); }
+    while(EXCUSES.length > 1 && idx === lastIdx);
+    lastIdx = idx;
+    return EXCUSES[idx];
+  }
+
+  // tiny WebAudio blip (optional, subtle)
+  let actx;
+  function blip(freq, t){
+    try{
+      actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type="square"; o.frequency.value=freq;
+      g.gain.value=0.03;
+      o.connect(g); g.connect(actx.destination);
+      const now = actx.currentTime;
+      g.gain.setValueAtTime(0.03, now);
+      g.gain.exponentialRampToValueAtTime(0.0001, now+0.12);
+      o.start(now); o.stop(now+0.13);
+    }catch(e){}
+  }
+
+  async function spin(){
+    if(spinning) return;
+    spinning = true;
+    spinBtn.disabled = true; leverBtn.disabled = true; copyBtn.disabled = true;
+    resultEl.classList.remove("jackpot");
+    const oldBanner = resultEl.querySelector(".jack-banner"); if(oldBanner) oldBanner.remove();
+    document.querySelectorAll(".reel").forEach(r=>r.classList.remove("win"));
+    excuseEl.className = "placeholder";
+    excuseEl.textContent = "Kręci się…";
+
+    const jackpot = Math.random() < 0.10; // ~1 na 10 to JACKPOT
+    const syms = pickSymbols(jackpot);
+
+    blip(440,0);
+    await Promise.all([
+      landReel(reelsEls[0], syms[0], 0).then(()=>blip(520)),
+      landReel(reelsEls[1], syms[1], 250).then(()=>blip(600)),
+      landReel(reelsEls[2], syms[2], 500).then(()=>blip(jackpot?880:700)),
+    ]);
+
+    const text = pickExcuse();
+    lastText = text.replace(/&nbsp;/g," ").replace(/<[^>]+>/g,"");
+    excuseEl.className = "excuse";
+    excuseEl.innerHTML = text;
+
+    count++; countEl.textContent = count;
+    if(jackpot){
+      jacks++; jackEl.textContent = jacks;
+      resultEl.classList.add("jackpot");
+      const b = document.createElement("div");
+      b.className = "jack-banner"; b.textContent = "JACKPOT!";
+      resultEl.appendChild(b);
+      document.querySelectorAll(".reel").forEach(r=>r.classList.add("win"));
+      blip(1046); setTimeout(()=>blip(1318),90);
+    }
+
+    copyBtn.disabled = false;
+    spinBtn.disabled = false; leverBtn.disabled = false;
+    spinning = false;
+  }
+
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add("show");
+    clearTimeout(toast._t); toast._t = setTimeout(()=>toastEl.classList.remove("show"), 1800);
+  }
+
+  spinBtn.addEventListener("click", spin);
+  leverBtn.addEventListener("click", spin);
+  copyBtn.addEventListener("click", async ()=>{
+    if(!lastText) return;
+    try{
+      await navigator.clipboard.writeText(`Precellexe dziś nie streamuje, bo: „${lastText}”`);
+      toast("Skopiowano wymówkę 📋");
+    }catch(e){ toast("Nie udało się skopiować :("); }
+  });
+  addEventListener("keydown", e=>{
+    if(e.code==="Space" || e.code==="Enter"){
+      if(document.activeElement===copyBtn) return;
+      e.preventDefault(); spin();
+    }
+  });
+  </script>
+</body>
+</html>
